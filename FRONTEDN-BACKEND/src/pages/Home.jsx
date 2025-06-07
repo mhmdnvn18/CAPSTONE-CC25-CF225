@@ -1,13 +1,10 @@
 import React, { useState } from 'react';
 import PredictionForm from '../components/PredictionForm';
 import PredictionResult from '../components/PredictionResult';
-import { fetchSupabaseData } from '../services/api';
+import '../styles/Home.css'; // Import the necessary CSS
+
 function Home() {
   const [result, setResult] = useState(null);
-
-  // React.useEffect(() => {
-  //   fetchSupabaseData().then(console.log).catch(console.error);
-  // }, []);
 
   return (
     <div className="min-vh-100 d-flex flex-column align-items-center justify-content-center bg-light px-2">
