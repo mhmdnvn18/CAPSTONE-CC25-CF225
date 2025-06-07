@@ -1,77 +1,50 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import AnimatedPage from '../components/AnimatedPage';
-
+import React, { useState } from 'react';
+import PredictionForm from '../components/PredictionForm';
+import PredictionResult from '../components/PredictionResult';
+import { fetchSupabaseData } from '../services/api';
 function Home() {
-  const navigate = useNavigate();
+  const [result, setResult] = useState(null);
+
+  // React.useEffect(() => {
+  //   fetchSupabaseData().then(console.log).catch(console.error);
+  // }, []);
 
   return (
-    <AnimatedPage>
-      <div className="min-vh-100 d-flex flex-column">
-        {/* Navbar */}
-        <nav className="navbar navbar-expand-lg" style={{ backgroundColor: '#E31937' }}>
-          <div className="container">
-            <div className="d-flex align-items-center">
-              <img src="/logo.png" alt="CardioRisk" height="40" />
-              <a className="navbar-brand text-white ms-2" href="/">
-                |||Detect</a></div>
-                
-            <div className="d-flex gap-2">
-              <button className="btn text-white">Home</button>
-              <button className="btn text-white">About</button>
-              <button className="btn text-white">Services</button>
-              <button className="btn text-white">Contact</button>
-            </div>
+    <div className="min-vh-100 d-flex flex-column align-items-center justify-content-center bg-light px-2">
+      <header className="w-100" style={{ maxWidth: 700 }}>
+        <div className="d-flex align-items-center gap-3 mb-2 mt-4">
+          <span className="d-flex align-items-center justify-content-center rounded-circle shadow bg-primary-subtle" style={{ width: 48, height: 48 }}>
+            <i className="fa-solid fa-heart-pulse fs-2 text-danger"></i>
+          </span>
+          <span className="fs-3 fw-bold text-primary">CardioPredict</span>
+        </div>
+        <h1 className="fw-bold fs-2 text-primary text-center mb-2 d-flex align-items-center justify-content-center gap-2">
+          <i className="fa-solid fa-stethoscope text-primary"></i>
+          Deteksi Dini Penyakit Kardiovaskular
+        </h1>
+        <p className="text-secondary text-center mb-2">
+          Prediksi risiko penyakit kardiovaskular Anda secara cepat dan mudah. Data Anda aman dan hanya digunakan untuk prediksi.
+        </p>
+      </header>
+      <main className="w-100" style={{ maxWidth: 700 }}>
+        <div className="w-100">
+          <PredictionForm onResult={setResult} />
+        </div>
+        {result && (
+          <div className="w-100">
+            <PredictionResult result={result} />
           </div>
-        </nav>
-
-        {/* Hero Section */}
-        <div className="container py-5">
-          <div className="row align-items-center">
-            <motion.div 
-              className="col-lg-6"
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.4, duration: 0.6 }}
-            >
-              <img 
-                src="/heart-illustration.svg" 
-                alt="Heart Illustration" 
-                className="img-fluid"
-                style={{ maxHeight: '400px' }}
-              />
-            </motion.div>
-            <motion.div 
-              className="col-lg-6"
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.2, duration: 0.6 }}
-            >
-              <h1 className="display-4 fw-bold mb-4" style={{ color: '#2C3E50' }}>
-                HALO! SELAMAT DATANG DI LAYANAN KESEHATAN JANTUNG
-              </h1>
-              <p className="lead text-secondary mb-4">
-                Deteksi dini penyakit jantung di sini. Ayo mulai mengetahui kondisi jantung Anda sejauh ini! 
-                Kami akan membantu Anda memeriksa jantung dengan mengidentifikasi gejala yang 
-                dialami berdasarkan keadaan dan kondisi kesehatan yang Anda alami saat ini.
-              </p>
-              <button 
-                className="btn btn-success btn-lg px-4"
-                onClick={() => navigate('/predict')}
-              >
-                Mulai Diagnosis
-              </button>
-            </motion.div>
+        )}
+        <div className="mt-4 w-100 mx-auto" style={{ maxWidth: 500 }}>
+          <div className="bg-info-subtle border border-info rounded-3 p-3 small text-secondary text-center">
+            <span className="fw-semibold text-primary">Disclaimer:</span> Hasil prediksi ini bersifat estimasi dan tidak menggantikan diagnosis dokter. Konsultasikan hasil ke tenaga medis profesional.
           </div>
         </div>
-
-        {/* Footer */}
-        <footer className="mt-auto py-3 text-center" style={{ backgroundColor: '#FFC107' }}>
-          <p className="mb-0">© 2025 CardioRisk Predictor - All rights reserved</p>
-        </footer>
-      </div>
-    </AnimatedPage>
+      </main>
+      <footer className="mt-5 mb-3 text-muted small text-center w-100">
+        &copy; {new Date().getFullYear()} Capstone Coding Camp &mdash; CardioPredict
+      </footer>
+    </div>
   );
 }
 
