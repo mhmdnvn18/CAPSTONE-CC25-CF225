@@ -1,5 +1,5 @@
 import { defineConfig } from 'vite';
 
-export default defineConfig({module.exports = defineConfig({
+export default defineConfig({
   root: 'public',
 });
