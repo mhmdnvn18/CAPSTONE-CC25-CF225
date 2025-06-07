@@ -1,3 +1,23 @@
+<!-- Badges -->
+<p align="center">
+  <a href="https://github.com/cc25-cf225/illdetect/actions">
+    <img src="https://img.shields.io/github/actions/workflow/status/cc25-cf225/illdetect/ci.yml?branch=main&label=Build&logo=github" alt="Build Status"/>
+  </a>
+  <a href="https://github.com/cc25-cf225/illdetect/blob/main/LICENSE">
+    <img src="https://img.shields.io/github/license/cc25-cf225/illdetect?color=blue" alt="License"/>
+  </a>
+  <a href="https://codecov.io/gh/cc25-cf225/illdetect">
+    <img src="https://codecov.io/gh/cc25-cf225/illdetect/branch/main/graph/badge.svg?token=CODECOV_TOKEN" alt="Coverage"/>
+  </a>
+</p>
+
+<!-- Demo Link -->
+<p align="center">
+  <a href="https://capstone-cc25-cf225.netlify.app/" target="_blank">
+    <b>🌐 Lihat Demo Aplikasi IllDetect</b>
+  </a>
+</p>
+
 # IllDetect: Sistem Deteksi Risiko Penyakit Kardiovaskular
 
 <p align="center">
@@ -170,9 +190,6 @@ Penyakit kardiovaskular merupakan penyebab utama kematian di dunia dan sering ti
 - JavaScript
 - Bootstrap
 - Flask
-- Docker
-- Google Cloud Platform
-- GitHub Actions
 - TailwindCSS (untuk styling frontend)
 - Vite (build tool)
 - Service Worker & Web Manifest (untuk PWA)
@@ -242,8 +259,50 @@ Proyek ini dilisensikan di bawah MIT License – lihat file LICENSE untuk detail
 
 ---
 
+## FAQ
+
+**Q: Apakah aplikasi ini gratis digunakan?**  
+A: Ya, IllDetect dapat digunakan secara gratis oleh siapa saja.
+
+**Q: Apakah data saya aman dan tidak dikirim ke server?**  
+A: Ya, seluruh proses prediksi dilakukan secara lokal di perangkat Anda. Data tidak dikirim ke server.
+
+**Q: Bagaimana jika saya ingin berkontribusi pada proyek ini?**  
+A: Silakan fork repository ini dan ajukan pull request, atau hubungi tim pengembang melalui kontak yang tersedia.
+
+**Q: Apakah aplikasi ini bisa digunakan di perangkat mobile?**  
+A: Ya, IllDetect mendukung PWA dan dapat diinstal di perangkat mobile maupun desktop.
+
+**Q: Dari mana sumber data yang digunakan untuk pelatihan model?**  
+A: Dataset diambil dari Kaggle, lihat bagian Referensi di bawah.
+
+---
+
+## Referensi
+
+- [Cardiovascular Disease Dataset - Kaggle](https://www.kaggle.com/datasets/sulianova/cardiovascular-disease-dataset)
+- Dokumentasi dan sumber lain tercantum di dalam notebook dan kode sumber proyek.
+
+---
+
 <p align="center">
   <a href="https://codingcamp.id/" target="_blank">
     <img src="Images/CODING-CAMP.png" alt="Coding Camp Logo" width="800"/>
   </a>
 </p>
+
+## Tangkapan Layar Aplikasi
+
+<p align="center">
+  <img src="Images/WEB-Beranda.png" alt="Tampilan Beranda IllDetect" width="600"/>
+  <br>
+  <i>Tampilan Beranda IllDetect</i>
+</p>
+
+<p align="center">
+  <img src="Images/WEB-Prediksi.png" alt="Tampilan Halaman Prediksi IllDetect" width="600"/>
+  <br>
+  <i>Tampilan Halaman Prediksi IllDetect</i>
+</p>
+
+
