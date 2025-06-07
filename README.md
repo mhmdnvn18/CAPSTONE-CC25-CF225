@@ -21,7 +21,7 @@
 # IllDetect: Sistem Deteksi Risiko Penyakit Kardiovaskular
 
 <p align="center">
-  <img src="Images/CODING-CAMP.png" alt="Coding Camp Logo" width="250"/>
+  <img src="Images/Banner.png" alt="Coding Camp Logo" width="700"/>
 </p>
 
 ## Ringkasan
