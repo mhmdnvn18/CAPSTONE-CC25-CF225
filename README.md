@@ -131,40 +131,32 @@ Penyakit kardiovaskular adalah salah satu penyebab utama kematian di dunia dan s
   <tr>
     <td valign="top">
       <ul>
-        <li>🐍 <strong>Python</strong> - Bahasa pemrograman utama</li>
-        <li>🤖 <strong>TensorFlow/Keras</strong> - Framework deep learning</li>
-        <li>🔍 <strong>Scikit-learn</strong> - Algoritma machine learning</li>
-        <li>🐼 <strong>Pandas</strong> - Manipulasi dan analisis data</li>
-        <li>🔢 <strong>NumPy</strong> - Komputasi numerik</li>
-        <li>📊 <strong>Matplotlib/Seaborn</strong> - Visualisasi data</li>
-        <li>📋 <strong>PyTorch-TabNet</strong> - Pemodelan data tabular</li>
-        <li>🌐 <strong>TensorFlow.js</strong> - Deployment model ke web</li>
-        <li>📓 <strong>Jupyter Notebooks</strong> - Pengembangan interaktif</li>
+        <li><strong>Python</strong></li>
+        <li><strong>TensorFlow/Keras</strong></li>
+        <li><strong>Scikit-learn</strong></li>
+        <li><strong>Pandas</strong></li>
+        <li><strong>NumPy</strong></li>
+        <li><strong>Matplotlib/Seaborn</strong></li>
       </ul>
     </td>
     <td valign="top">
       <ul>
         <li><strong>Frontend:</strong></li>
         <ul>
-          <li>🎨 <strong>HTML5/CSS3</strong> - Struktur dan styling</li>
-          <li>⚡ <strong>JavaScript/TypeScript</strong> - Logika sisi klien</li>
-          <li>⚛️ <strong>React.js</strong> - Framework frontend</li>
-          <li>📱 <strong>Bootstrap</strong> - Desain responsif</li>
-          <li>📈 <strong>Chart.js</strong> - Visualisasi data</li>
+          <li><strong>React.js</strong></li>
+          <li><strong>HTML5/CSS3</strong></li>
+          <li><strong>JavaScript</strong></li>
+          <li><strong>Bootstrap</strong></li>
         </ul>
         <li><strong>Backend:</strong></li>
         <ul>
-          <li>🐍 <strong>Flask</strong> - Framework web Python</li>
-          <li>🟢 <strong>Node.js</strong> - Runtime JavaScript</li>
-          <li>🚀 <strong>Express.js</strong> - Framework aplikasi web</li>
-          <li>🗄️ <strong>MongoDB</strong> - Basis data</li>
-          <li>🔌 <strong>RESTful APIs</strong> - Arsitektur API</li>
+          <li><strong>Flask</strong></li>
         </ul>
-        <li><strong>Deployment:</strong></li>
+        <li><strong>Deployment & Lainnya:</strong></li>
         <ul>
-          <li>☁️ <strong>Google Cloud Platform</strong> - Layanan cloud</li>
-          <li>🐳 <strong>Docker</strong> - Kontainerisasi</li>
-          <li>🔄 <strong>GitHub Actions</strong> - CI/CD</li>
+          <li><strong>Docker</strong></li>
+          <li><strong>Google Cloud Platform</strong></li>
+          <li><strong>GitHub Actions</strong></li>
         </ul>
       </ul>
     </td>
