@@ -5,9 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "chmod +x node_modules/.bin/vite && vite build",
-    "serve": "vite preview",
-    "postinstall": "chmod +x node_modules/.bin/vite"
+    "build": "vite build",
+    "serve": "vite preview"
   },
   "dependencies": {
     "@tensorflow/tfjs": "^4.22.0",
