@@ -77,7 +77,7 @@ function PredictionForm({ onResult }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white rounded-4 shadow-lg p-4 border border-primary">
+    <form onSubmit={handleSubmit}>
       <div className="row g-3">
         <div className="col-md-6">
           <label className="form-label">Usia (tahun)</label>
@@ -201,12 +201,23 @@ function PredictionForm({ onResult }) {
           </select>
         </div>
       </div>
-      
-      {error && <div className="alert alert-danger mt-3">{error}</div>}
-      
-      <div className="text-center mt-4">
-        <button type="submit" className="btn btn-primary btn-lg px-5" disabled={loading}>
-          {loading ? 'Memproses...' : 'Prediksi'}
+      <div className="d-grid mt-4">
+        <button 
+          type="submit" 
+          className="btn btn-danger btn-lg"
+          disabled={loading}
+        >
+          {loading ? (
+            <>
+              <span className="spinner-border spinner-border-sm me-2" />
+              Memproses...
+            </>
+          ) : (
+            <>
+              <i className="fa-solid fa-stethoscope me-2"></i>
+              Analisis Sekarang
+            </>
+          )}
         </button>
       </div>
     </form>
