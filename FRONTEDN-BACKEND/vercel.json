@@ -1,15 +1,6 @@
 {
-  "buildCommand": "cd FRONTEDN-BACKEND && npm install && npm run build",
-  "outputDirectory": "FRONTEDN-BACKEND/dist",
+  "output": "static",
   "rewrites": [
-    { "source": "/", "destination": "/FRONTEDN-BACKEND/index.html" },
-    { "source": "/index.html", "destination": "/FRONTEDN-BACKEND/index.html" },
-    { "source": "/manifest.json", "destination": "/FRONTEDN-BACKEND/manifest.json" },
-    { "source": "/sw.js", "destination": "/FRONTEDN-BACKEND/sw.js" },
-    { "source": "/src/:match*", "destination": "/FRONTEDN-BACKEND/src/:match*" },
-    { "source": "/public/:match*", "destination": "/FRONTEDN-BACKEND/public/:match*" }
-  ],
-  "static": {
-    "directory": "FRONTEDN-BACKEND"
-  }
+    { "source": "/(.*)", "destination": "/" }
+  ]
 }
