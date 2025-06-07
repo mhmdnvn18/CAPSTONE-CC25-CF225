@@ -3,3 +3,11 @@
     { "source": "/(.*)", "destination": "/" }
   ]
 }
+
+1. File <mcfile name="vercel.json" path="c:\.Github_mhmdnvn18@gmail.com\CAPSTONE-CC25-CF225\vercel.json"></mcfile> sudah dikonfigurasi dengan benar untuk menangani routing SPA:
+```json
+{
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/" }
+  ]
+}
