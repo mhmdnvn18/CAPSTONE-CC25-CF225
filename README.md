@@ -36,11 +36,21 @@ Penyakit kardiovaskular merupakan penyebab utama kematian di dunia dan sering ti
           🆔 MC008D5X2348<br>
           <small>💡 Keahlian: Analisis Data, Feature Engineering, Pengembangan Model</small><br>
           <b>Kontak:</b>
-          <ul>
-            <li>Instagram: <a href="#">[Tambahkan Akun]</a></li>
-            <li>LinkedIn: <a href="#">[Tambahkan Akun]</a></li>
-            <li>Portofolio: <a href="#">[Tambahkan Link]</a></li>
-          </ul>
+          <!-- Kontak menggunakan tabel dan icon agar lebih rapi -->
+          <table>
+            <tr>
+              <td>📸 Instagram</td>
+              <td><a href="#">[Tambahkan Akun]</a></td>
+            </tr>
+            <tr>
+              <td>💼 LinkedIn</td>
+              <td><a href="#">[Tambahkan Akun]</a></td>
+            </tr>
+            <tr>
+              <td>🌐 Portofolio</td>
+              <td><a href="#">[Tambahkan Link]</a></td>
+            </tr>
+          </table>
         </li>
         <li>
           <strong>Syifa Azzahra Susilo</strong><br>
@@ -49,11 +59,21 @@ Penyakit kardiovaskular merupakan penyebab utama kematian di dunia dan sering ti
           🆔 MC008D5X2087<br>
           <small>💡 Keahlian: Pelatihan Model, Optimasi Hyperparameter</small><br>
           <b>Kontak:</b>
-          <ul>
-            <li>Instagram: <a href="#">[Tambahkan Akun]</a></li>
-            <li>LinkedIn: <a href="#">[Tambahkan Akun]</a></li>
-            <li>Portofolio: <a href="#">[Tambahkan Link]</a></li>
-          </ul>
+          <!-- Kontak menggunakan tabel dan icon agar lebih rapi -->
+          <table>
+            <tr>
+              <td>📸 Instagram</td>
+              <td><a href="#">[Tambahkan Akun]</a></td>
+            </tr>
+            <tr>
+              <td>💼 LinkedIn</td>
+              <td><a href="#">[Tambahkan Akun]</a></td>
+            </tr>
+            <tr>
+              <td>🌐 Portofolio</td>
+              <td><a href="#">[Tambahkan Link]</a></td>
+            </tr>
+          </table>
         </li>
         <li>
           <strong>Indara Nurwulandari</strong><br>
@@ -62,11 +82,21 @@ Penyakit kardiovaskular merupakan penyebab utama kematian di dunia dan sering ti
           🆔 MC008D5X2388<br>
           <small>💡 Keahlian: Pra-pemrosesan Data, Evaluasi Model</small><br>
           <b>Kontak:</b>
-          <ul>
-            <li>Instagram: <a href="#">[Tambahkan Akun]</a></li>
-            <li>LinkedIn: <a href="#">[Tambahkan Akun]</a></li>
-            <li>Portofolio: <a href="#">[Tambahkan Link]</a></li>
-          </ul>
+          <!-- Kontak menggunakan tabel dan icon agar lebih rapi -->
+          <table>
+            <tr>
+              <td>📸 Instagram</td>
+              <td><a href="#">[Tambahkan Akun]</a></td>
+            </tr>
+            <tr>
+              <td>💼 LinkedIn</td>
+              <td><a href="#">[Tambahkan Akun]</a></td>
+            </tr>
+            <tr>
+              <td>🌐 Portofolio</td>
+              <td><a href="#">[Tambahkan Link]</a></td>
+            </tr>
+          </table>
         </li>
       </ul>
     </td>
@@ -79,11 +109,21 @@ Penyakit kardiovaskular merupakan penyebab utama kematian di dunia dan sering ti
           🆔 FC492D5Y2169<br>
           <small>💡 Keahlian: Desain Frontend, Integrasi Backend</small><br>
           <b>Kontak:</b>
-          <ul>
-            <li>Instagram: <a href="#">[Tambahkan Akun]</a></li>
-            <li>LinkedIn: <a href="#">[Tambahkan Akun]</a></li>
-            <li>Portofolio: <a href="#">[Tambahkan Link]</a></li>
-          </ul>
+          <!-- Kontak menggunakan tabel dan icon agar lebih rapi -->
+          <table>
+            <tr>
+              <td>📸 Instagram</td>
+              <td><a href="#">[Tambahkan Akun]</a></td>
+            </tr>
+            <tr>
+              <td>💼 LinkedIn</td>
+              <td><a href="#">[Tambahkan Akun]</a></td>
+            </tr>
+            <tr>
+              <td>🌐 Portofolio</td>
+              <td><a href="#">[Tambahkan Link]</a></td>
+            </tr>
+          </table>
         </li>
         <li>
           <strong>Muh Diaz Nazarudin Rahman</strong><br>
@@ -92,11 +132,21 @@ Penyakit kardiovaskular merupakan penyebab utama kematian di dunia dan sering ti
           🆔 FC179D5Y0593<br>
           <small>💡 Keahlian: Pengembangan API, Manajemen Basis Data</small><br>
           <b>Kontak:</b>
-          <ul>
-            <li>Instagram: <a href="#">[Tambahkan Akun]</a></li>
-            <li>LinkedIn: <a href="#">[Tambahkan Akun]</a></li>
-            <li>Portofolio: <a href="#">[Tambahkan Link]</a></li>
-          </ul>
+          <!-- Kontak menggunakan tabel dan icon agar lebih rapi -->
+          <table>
+            <tr>
+              <td>📸 Instagram</td>
+              <td><a href="#">[Tambahkan Akun]</a></td>
+            </tr>
+            <tr>
+              <td>💼 LinkedIn</td>
+              <td><a href="#">[Tambahkan Akun]</a></td>
+            </tr>
+            <tr>
+              <td>🌐 Portofolio</td>
+              <td><a href="#">[Tambahkan Link]</a></td>
+            </tr>
+          </table>
         </li>
         <li>
           <strong>Aditya Navra Erlangga</strong><br>
@@ -105,11 +155,21 @@ Penyakit kardiovaskular merupakan penyebab utama kematian di dunia dan sering ti
           🆔 FC179D5Y1055<br>
           <small>💡 Keahlian: Desain UI/UX, Pengembangan Web Responsif</small><br>
           <b>Kontak:</b>
-          <ul>
-            <li>Instagram: <a href="#">[Tambahkan Akun]</a></li>
-            <li>LinkedIn: <a href="#">[Tambahkan Akun]</a></li>
-            <li>Portofolio: <a href="#">[Tambahkan Link]</a></li>
-          </ul>
+          <!-- Kontak menggunakan tabel dan icon agar lebih rapi -->
+          <table>
+            <tr>
+              <td>📸 Instagram</td>
+              <td><a href="#">[Tambahkan Akun]</a></td>
+            </tr>
+            <tr>
+              <td>💼 LinkedIn</td>
+              <td><a href="#">[Tambahkan Akun]</a></td>
+            </tr>
+            <tr>
+              <td>🌐 Portofolio</td>
+              <td><a href="#">[Tambahkan Link]</a></td>
+            </tr>
+          </table>
         </li>
       </ul>
     </td>
