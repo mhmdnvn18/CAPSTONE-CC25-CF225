@@ -1,0 +1,7 @@
+{
+  "buildCommand": "cd FRONTEDN-BACKEND && npm install && npm run build",
+  "outputDirectory": "FRONTEDN-BACKEND/dist",
+  "rewrites": [
+    { "source": "/model/:match*", "destination": "/FRONTEDN-BACKEND/public/model/:match*" }
+  ]
+}
