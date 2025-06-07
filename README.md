@@ -39,15 +39,15 @@ Penyakit kardiovaskular merupakan penyebab utama kematian di dunia dan sering ti
           <!-- Kontak menggunakan tabel dan icon agar lebih rapi -->
           <table>
             <tr>
-              <td>📸 Instagram</td>
+              <td><a href="#" title="Instagram">📸</a></td>
               <td><a href="#">[Tambahkan Akun]</a></td>
             </tr>
             <tr>
-              <td>💼 LinkedIn</td>
+              <td><a href="#" title="LinkedIn">💼</a></td>
               <td><a href="#">[Tambahkan Akun]</a></td>
             </tr>
             <tr>
-              <td>🌐 Portofolio</td>
+              <td><a href="#" title="Portofolio">🌐</a></td>
               <td><a href="#">[Tambahkan Link]</a></td>
             </tr>
           </table>
@@ -62,15 +62,15 @@ Penyakit kardiovaskular merupakan penyebab utama kematian di dunia dan sering ti
           <!-- Kontak menggunakan tabel dan icon agar lebih rapi -->
           <table>
             <tr>
-              <td>📸 Instagram</td>
+              <td><a href="#" title="Instagram">📸</a></td>
               <td><a href="#">[Tambahkan Akun]</a></td>
             </tr>
             <tr>
-              <td>💼 LinkedIn</td>
+              <td><a href="#" title="LinkedIn">💼</a></td>
               <td><a href="#">[Tambahkan Akun]</a></td>
             </tr>
             <tr>
-              <td>🌐 Portofolio</td>
+              <td><a href="#" title="Portofolio">🌐</a></td>
               <td><a href="#">[Tambahkan Link]</a></td>
             </tr>
           </table>
@@ -85,15 +85,15 @@ Penyakit kardiovaskular merupakan penyebab utama kematian di dunia dan sering ti
           <!-- Kontak menggunakan tabel dan icon agar lebih rapi -->
           <table>
             <tr>
-              <td>📸 Instagram</td>
+              <td><a href="#" title="Instagram">📸</a></td>
               <td><a href="#">[Tambahkan Akun]</a></td>
             </tr>
             <tr>
-              <td>💼 LinkedIn</td>
+              <td><a href="#" title="LinkedIn">💼</a></td>
               <td><a href="#">[Tambahkan Akun]</a></td>
             </tr>
             <tr>
-              <td>🌐 Portofolio</td>
+              <td><a href="#" title="Portofolio">🌐</a></td>
               <td><a href="#">[Tambahkan Link]</a></td>
             </tr>
           </table>
@@ -112,15 +112,15 @@ Penyakit kardiovaskular merupakan penyebab utama kematian di dunia dan sering ti
           <!-- Kontak menggunakan tabel dan icon agar lebih rapi -->
           <table>
             <tr>
-              <td>📸 Instagram</td>
+              <td><a href="#" title="Instagram">📸</a></td>
               <td><a href="#">[Tambahkan Akun]</a></td>
             </tr>
             <tr>
-              <td>💼 LinkedIn</td>
+              <td><a href="#" title="LinkedIn">💼</a></td>
               <td><a href="#">[Tambahkan Akun]</a></td>
             </tr>
             <tr>
-              <td>🌐 Portofolio</td>
+              <td><a href="#" title="Portofolio">🌐</a></td>
               <td><a href="#">[Tambahkan Link]</a></td>
             </tr>
           </table>
@@ -135,15 +135,15 @@ Penyakit kardiovaskular merupakan penyebab utama kematian di dunia dan sering ti
           <!-- Kontak menggunakan tabel dan icon agar lebih rapi -->
           <table>
             <tr>
-              <td>📸 Instagram</td>
+              <td><a href="#" title="Instagram">📸</a></td>
               <td><a href="#">[Tambahkan Akun]</a></td>
             </tr>
             <tr>
-              <td>💼 LinkedIn</td>
+              <td><a href="#" title="LinkedIn">💼</a></td>
               <td><a href="#">[Tambahkan Akun]</a></td>
             </tr>
             <tr>
-              <td>🌐 Portofolio</td>
+              <td><a href="#" title="Portofolio">🌐</a></td>
               <td><a href="#">[Tambahkan Link]</a></td>
             </tr>
           </table>
@@ -158,15 +158,15 @@ Penyakit kardiovaskular merupakan penyebab utama kematian di dunia dan sering ti
           <!-- Kontak menggunakan tabel dan icon agar lebih rapi -->
           <table>
             <tr>
-              <td>📸 Instagram</td>
+              <td><a href="#" title="Instagram">📸</a></td>
               <td><a href="#">[Tambahkan Akun]</a></td>
             </tr>
             <tr>
-              <td>💼 LinkedIn</td>
+              <td><a href="#" title="LinkedIn">💼</a></td>
               <td><a href="#">[Tambahkan Akun]</a></td>
             </tr>
             <tr>
-              <td>🌐 Portofolio</td>
+              <td><a href="#" title="Portofolio">🌐</a></td>
               <td><a href="#">[Tambahkan Link]</a></td>
             </tr>
           </table>
@@ -279,5 +279,7 @@ Proyek ini dilisensikan di bawah MIT License – lihat file LICENSE untuk detail
 ---
 
 <p align="center">
-  <img src="Images/CODING-CAMP.png" alt="Coding Camp Logo" width="800"/>
+  <a href="https://codingcamp.id/" target="_blank">
+    <img src="Images/CODING-CAMP.png" alt="Coding Camp Logo" width="800"/>
+  </a>
 </p>
