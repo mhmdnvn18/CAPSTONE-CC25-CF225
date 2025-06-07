@@ -36,11 +36,11 @@ Penyakit kardiovaskular merupakan penyebab utama kematian di dunia dan sering ti
           🆔 MC008D5X2348<br>
           <small>💡 Keahlian: Analisis Data, Feature Engineering, Pengembangan Model</small><br>
           <b>Kontak:</b>
-          <table>
+          <table border="0" cellspacing="0" cellpadding="0" style="border:none;background:none;">
             <tr>
-              <td><a href="#" title="Instagram">📸</a></td>
-              <td><a href="#" title="LinkedIn">💼</a></td>
-              <td><a href="#" title="Portofolio">🌐</a></td>
+              <td style="border:none;background:none;"><a href="#" title="Instagram">📸</a></td>
+              <td style="border:none;background:none;"><a href="#" title="LinkedIn">💼</a></td>
+              <td style="border:none;background:none;"><a href="#" title="Portofolio">🌐</a></td>
             </tr>
           </table>
         </li>
@@ -51,11 +51,11 @@ Penyakit kardiovaskular merupakan penyebab utama kematian di dunia dan sering ti
           🆔 MC008D5X2087<br>
           <small>💡 Keahlian: Pelatihan Model, Optimasi Hyperparameter</small><br>
           <b>Kontak:</b>
-          <table>
+          <table border="0" cellspacing="0" cellpadding="0" style="border:none;background:none;">
             <tr>
-              <td><a href="#" title="Instagram">📸</a></td>
-              <td><a href="#" title="LinkedIn">💼</a></td>
-              <td><a href="#" title="Portofolio">🌐</a></td>
+              <td style="border:none;background:none;"><a href="#" title="Instagram">📸</a></td>
+              <td style="border:none;background:none;"><a href="#" title="LinkedIn">💼</a></td>
+              <td style="border:none;background:none;"><a href="#" title="Portofolio">🌐</a></td>
             </tr>
           </table>
         </li>
@@ -66,11 +66,11 @@ Penyakit kardiovaskular merupakan penyebab utama kematian di dunia dan sering ti
           🆔 MC008D5X2388<br>
           <small>💡 Keahlian: Pra-pemrosesan Data, Evaluasi Model</small><br>
           <b>Kontak:</b>
-          <table>
+          <table border="0" cellspacing="0" cellpadding="0" style="border:none;background:none;">
             <tr>
-              <td><a href="#" title="Instagram">📸</a></td>
-              <td><a href="#" title="LinkedIn">💼</a></td>
-              <td><a href="#" title="Portofolio">🌐</a></td>
+              <td style="border:none;background:none;"><a href="#" title="Instagram">📸</a></td>
+              <td style="border:none;background:none;"><a href="#" title="LinkedIn">💼</a></td>
+              <td style="border:none;background:none;"><a href="#" title="Portofolio">🌐</a></td>
             </tr>
           </table>
         </li>
@@ -85,11 +85,11 @@ Penyakit kardiovaskular merupakan penyebab utama kematian di dunia dan sering ti
           🆔 FC492D5Y2169<br>
           <small>💡 Keahlian: Desain Frontend, Integrasi Backend</small><br>
           <b>Kontak:</b>
-          <table>
+          <table border="0" cellspacing="0" cellpadding="0" style="border:none;background:none;">
             <tr>
-              <td><a href="#" title="Instagram">📸</a></td>
-              <td><a href="#" title="LinkedIn">💼</a></td>
-              <td><a href="#" title="Portofolio">🌐</a></td>
+              <td style="border:none;background:none;"><a href="#" title="Instagram">📸</a></td>
+              <td style="border:none;background:none;"><a href="#" title="LinkedIn">💼</a></td>
+              <td style="border:none;background:none;"><a href="#" title="Portofolio">🌐</a></td>
             </tr>
           </table>
         </li>
@@ -100,11 +100,11 @@ Penyakit kardiovaskular merupakan penyebab utama kematian di dunia dan sering ti
           🆔 FC179D5Y0593<br>
           <small>💡 Keahlian: Pengembangan API, Manajemen Basis Data</small><br>
           <b>Kontak:</b>
-          <table>
+          <table border="0" cellspacing="0" cellpadding="0" style="border:none;background:none;">
             <tr>
-              <td><a href="#" title="Instagram">📸</a></td>
-              <td><a href="#" title="LinkedIn">💼</a></td>
-              <td><a href="#" title="Portofolio">🌐</a></td>
+              <td style="border:none;background:none;"><a href="#" title="Instagram">📸</a></td>
+              <td style="border:none;background:none;"><a href="#" title="LinkedIn">💼</a></td>
+              <td style="border:none;background:none;"><a href="#" title="Portofolio">🌐</a></td>
             </tr>
           </table>
         </li>
@@ -115,11 +115,11 @@ Penyakit kardiovaskular merupakan penyebab utama kematian di dunia dan sering ti
           🆔 FC179D5Y1055<br>
           <small>💡 Keahlian: Desain UI/UX, Pengembangan Web Responsif</small><br>
           <b>Kontak:</b>
-          <table>
+          <table border="0" cellspacing="0" cellpadding="0" style="border:none;background:none;">
             <tr>
-              <td><a href="#" title="Instagram">📸</a></td>
-              <td><a href="#" title="LinkedIn">💼</a></td>
-              <td><a href="#" title="Portofolio">🌐</a></td>
+              <td style="border:none;background:none;"><a href="#" title="Instagram">📸</a></td>
+              <td style="border:none;background:none;"><a href="#" title="LinkedIn">💼</a></td>
+              <td style="border:none;background:none;"><a href="#" title="Portofolio">🌐</a></td>
             </tr>
           </table>
         </li>
