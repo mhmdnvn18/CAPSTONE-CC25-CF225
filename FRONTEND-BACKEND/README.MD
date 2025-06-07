@@ -105,12 +105,6 @@ Aplikasi dapat di-deploy ke berbagai layanan hosting:
 - Model machine learning dikembangkan menggunakan TensorFlow dan Keras, dilatih pada dataset penyakit kardiovaskular.
 - Model dikonversi ke format TensorFlow.js dan dimuat langsung di browser.
 
-## Kontributor
-
-- Anggota Tim 1
-- Anggota Tim 2
-- Anggota Tim 3
-
 ## Lisensi
 
 Proyek ini dilisensikan di bawah Lisensi MIT - lihat file LICENSE untuk detailnya.

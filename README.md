@@ -208,7 +208,7 @@ edukasi.
 
 This repository is organized into the following main directories:
 
-### MACHINE-LEARNING
+### machine-learning
 Contains all machine learning related files for the cardiovascular disease detection model:
 
 - **IllDetect_Capstone_Project.ipynb**  
@@ -223,19 +223,25 @@ Contains all machine learning related files for the cardiovascular disease detec
 - **Dataset Information**  
   The project uses the Cardiovascular Disease dataset from Kaggle. Detailed variable descriptions and data preprocessing steps are documented in the notebook.
 
-### CLOUD-COMPUTING
-Contains all cloud infrastructure and backend components:
+### frontend-backend
+Contains all web application and backend components:
 
-- **API Documentation**
+- **frontend/**  
+  Source code for the web application's user interface (React.js or other frontend frameworks).
+
+- **backend/**  
+  Source code for the backend server (Flask, Express.js, or other backend frameworks), including API endpoints and model serving logic.
+
+- **API Documentation**  
   Detailed endpoints and usage instructions for the IllDetect API.
 
-- **Deployment Files**
+- **Deployment Files**  
   Configuration files for deploying the application on cloud platforms.
 
-- **Database Schema**
+- **Database Schema**  
   Database structure and relationships used in the application.
 
-- **Server Scripts**
+- **Server Scripts**  
   Backend code for handling requests and serving the machine learning model.
 
 ## Getting Started
