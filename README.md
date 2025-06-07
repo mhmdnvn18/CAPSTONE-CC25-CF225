@@ -21,7 +21,7 @@
 # IllDetect: Sistem Deteksi Risiko Penyakit Kardiovaskular
 
 <p align="center">
-  <img src="Images/Banner.png" alt="Coding Camp Logo" width="900"/>
+  <img src="Images/Banner.png" alt="Banner IllDetect" width="900"/>
 </p>
 
 ## Ringkasan
@@ -253,12 +253,6 @@ Gunakan folder `tfjs_model/` (berisi `model.json` dan bobot) dan load model di a
 2. Klik ikon instalasi di bilah alamat/menu.
 3. Ikuti instruksi untuk menambah ke layar utama/desktop.
 
-## Lisensi
-
-Proyek ini dilisensikan di bawah MIT License – lihat file LICENSE untuk detail lebih lanjut.
-
----
-
 ## FAQ
 
 **Q: Apakah aplikasi ini gratis digunakan?**  
@@ -278,19 +272,6 @@ A: Dataset diambil dari Kaggle, lihat bagian Referensi di bawah.
 
 ---
 
-## Referensi
-
-- [Cardiovascular Disease Dataset - Kaggle](https://www.kaggle.com/datasets/sulianova/cardiovascular-disease-dataset)
-- Dokumentasi dan sumber lain tercantum di dalam notebook dan kode sumber proyek.
-
----
-
-<p align="center">
-  <a href="https://codingcamp.id/" target="_blank">
-    <img src="Images/CODING-CAMP.png" alt="Coding Camp Logo" width="800"/>
-  </a>
-</p>
-
 ## Tangkapan Layar Aplikasi
 
 <p align="center">
@@ -303,6 +284,21 @@ A: Dataset diambil dari Kaggle, lihat bagian Referensi di bawah.
   <img src="Images/WEB-Prediksi.png" alt="Tampilan Halaman Prediksi IllDetect" width="600"/>
   <br>
   <i>Tampilan Halaman Prediksi IllDetect</i>
+</p>
+
+---
+
+## Referensi
+
+- [Cardiovascular Disease Dataset - Kaggle](https://www.kaggle.com/datasets/sulianova/cardiovascular-disease-dataset)
+- Dokumentasi dan sumber lain tercantum di dalam notebook dan kode sumber proyek.
+
+---
+
+<p align="center">
+  <a href="https://codingcamp.id/" target="_blank">
+    <img src="Images/CODING-CAMP.png" alt="Coding Camp Logo" width="800"/>
+  </a>
 </p>
 
 
