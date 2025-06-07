@@ -8,8 +8,8 @@ export default defineConfig({
       '@': new URL('./src', import.meta.url).pathname
     }
   },
-  base: '', // ensure relative paths for assets
-  publicDir: 'public', // ensure public assets are served
+  base: '', // tetap
+  publicDir: 'public', // tetap, karena sudah di dalam WEBSITE
   server: {
     port: 3000
   }
