@@ -35,21 +35,39 @@ Penyakit kardiovaskular adalah salah satu penyebab utama kematian di dunia dan s
           <em>ML Lead & Data Scientist</em><br>
           🏫 Universitas Gadjah Mada<br>
           🆔 MC008D5X2348<br>
-          <small>💡 Keahlian: Analisis Data, Feature Engineering, Pengembangan Model</small>
+          <small>💡 Keahlian: Analisis Data, Feature Engineering, Pengembangan Model</small><br>
+          <b>Kontak:</b>
+          <ul>
+            <li>Instagram: <a href="#">[Tambahkan Akun]</a></li>
+            <li>LinkedIn: <a href="#">[Tambahkan Akun]</a></li>
+            <li>Portofolio: <a href="#">[Tambahkan Link]</a></li>
+          </ul>
         </li>
         <li>
           <strong>Syifa Azzahra Susilo</strong><br>
           <em>ML Engineer</em><br>
           🏫 Universitas Gadjah Mada<br>
           🆔 MC008D5X2087<br>
-          <small>💡 Keahlian: Pelatihan Model, Optimasi Hyperparameter</small>
+          <small>💡 Keahlian: Pelatihan Model, Optimasi Hyperparameter</small><br>
+          <b>Kontak:</b>
+          <ul>
+            <li>Instagram: <a href="#">[Tambahkan Akun]</a></li>
+            <li>LinkedIn: <a href="#">[Tambahkan Akun]</a></li>
+            <li>Portofolio: <a href="#">[Tambahkan Link]</a></li>
+          </ul>
         </li>
         <li>
           <strong>Indara Nurwulandari</strong><br>
           <em>Data Engineer</em><br>
           🏫 Universitas Gadjah Mada<br>
           🆔 MC008D5X2388<br>
-          <small>💡 Keahlian: Pra-pemrosesan Data, Evaluasi Model</small>
+          <small>💡 Keahlian: Pra-pemrosesan Data, Evaluasi Model</small><br>
+          <b>Kontak:</b>
+          <ul>
+            <li>Instagram: <a href="#">[Tambahkan Akun]</a></li>
+            <li>LinkedIn: <a href="#">[Tambahkan Akun]</a></li>
+            <li>Portofolio: <a href="#">[Tambahkan Link]</a></li>
+          </ul>
         </li>
       </ul>
     </td>
@@ -60,21 +78,39 @@ Penyakit kardiovaskular adalah salah satu penyebab utama kematian di dunia dan s
           <em>Full-Stack Lead</em><br>
           🏫 Universitas Muhammadiyah Yogyakarta<br>
           🆔 FC492D5Y2169<br>
-          <small>💡 Keahlian: Desain Frontend, Integrasi Backend</small>
+          <small>💡 Keahlian: Desain Frontend, Integrasi Backend</small><br>
+          <b>Kontak:</b>
+          <ul>
+            <li>Instagram: <a href="#">[Tambahkan Akun]</a></li>
+            <li>LinkedIn: <a href="#">[Tambahkan Akun]</a></li>
+            <li>Portofolio: <a href="#">[Tambahkan Link]</a></li>
+          </ul>
         </li>
         <li>
           <strong>Muh Diaz Nazarudin Rahman</strong><br>
           <em>Backend Developer</em><br>
           🏫 Universitas Ahmad Dahlan<br>
           🆔 FC179D5Y0593<br>
-          <small>💡 Keahlian: Pengembangan API, Manajemen Basis Data</small>
+          <small>💡 Keahlian: Pengembangan API, Manajemen Basis Data</small><br>
+          <b>Kontak:</b>
+          <ul>
+            <li>Instagram: <a href="#">[Tambahkan Akun]</a></li>
+            <li>LinkedIn: <a href="#">[Tambahkan Akun]</a></li>
+            <li>Portofolio: <a href="#">[Tambahkan Link]</a></li>
+          </ul>
         </li>
         <li>
           <strong>Aditya Navra Erlangga</strong><br>
           <em>Frontend Developer</em><br>
           🏫 Universitas Ahmad Dahlan<br>
           🆔 FC179D5Y1055<br>
-          <small>💡 Keahlian: Desain UI/UX, Pengembangan Web Responsif</small>
+          <small>💡 Keahlian: Desain UI/UX, Pengembangan Web Responsif</small><br>
+          <b>Kontak:</b>
+          <ul>
+            <li>Instagram: <a href="#">[Tambahkan Akun]</a></li>
+            <li>LinkedIn: <a href="#">[Tambahkan Akun]</a></li>
+            <li>Portofolio: <a href="#">[Tambahkan Link]</a></li>
+          </ul>
         </li>
       </ul>
     </td>
