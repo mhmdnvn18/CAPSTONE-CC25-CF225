@@ -279,5 +279,5 @@ Proyek ini dilisensikan di bawah MIT License – lihat file LICENSE untuk detail
 ---
 
 <p align="center">
-  <img src="Images/CODING-CAMP.png" alt="Coding Camp Logo" width="600"/>
+  <img src="Images/CODING-CAMP.png" alt="Coding Camp Logo" width="800"/>
 </p>
