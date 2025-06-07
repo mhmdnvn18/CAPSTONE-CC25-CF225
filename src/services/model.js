@@ -5,74 +5,12 @@ let model = null;
 export async function loadModel() {
   if (!model) {
     try {
-      // Create sequential model
-      model = tf.sequential();
-      
-      // Add layers with explicit input shape
-      model.add(tf.layers.dense({
-        inputShape: [11], // Must match number of features
-        units: 64,
-        activation: 'relu',
-        kernelInitializer: 'glorotUniform',
-        name: 'dense_1'
-      }));
-
-      model.add(tf.layers.dense({
-        units: 32,
-        activation: 'relu',
-        kernelInitializer: 'glorotUniform',
-        name: 'dense_2'
-      }));
-
-      model.add(tf.layers.dense({
-        units: 1,
-        activation: 'sigmoid',
-        kernelInitializer: 'glorotUniform',
-        name: 'dense_3'
-      }));
-
-      // Compile model
-      model.compile({
-        optimizer: tf.train.adam(0.001),
-        loss: 'binaryCrossentropy',
-        metrics: ['accuracy']
-      });
-
-      // Load pre-trained weights
-      try {
-        const weightsResponse = await fetch('/model/group1-shard1of1.bin');
-        if (!weightsResponse.ok) {
-          throw new Error('Failed to fetch model weights');
-        }
-        const weightsData = await weightsResponse.arrayBuffer();
-        const weights = new Float32Array(weightsData);
-
-        // Set weights manually
-        let offset = 0;
-        for (const layer of model.layers) {
-          const weightShapes = layer.getWeights().map(w => w.shape);
-          const weightSizes = weightShapes.map(shape => 
-            shape.reduce((a, b) => a * b)
-          );
-          
-          for (let i = 0; i < weightShapes.length; i++) {
-            const size = weightSizes[i];
-            const values = weights.slice(offset, offset + size);
-            const tensor = tf.tensor(values, weightShapes[i]);
-            layer.weights[i].val.assign(tensor);
-            offset += size;
-          }
-        }
-
-        console.log('Model loaded successfully');
-        return model;
-      } catch (weightError) {
-        console.error('Weight loading error:', weightError);
-        throw new Error('Failed to load model weights');
-      }
+      // Load model using tfjs standard loader for browser
+      model = await tf.loadLayersModel('/model/model.json');
+      console.log('Model loaded successfully');
     } catch (error) {
-      console.error('Model creation error:', error);
-      throw new Error('Failed to create model');
+      console.error('Model loading error:', error);
+      throw new Error('Failed to load model');
     }
   }
   return model;

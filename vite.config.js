@@ -9,6 +9,8 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src')
     }
   },
+  base: '', // ensure relative paths for assets
+  publicDir: 'public', // ensure public assets are served
   server: {
     port: 3000
   }
