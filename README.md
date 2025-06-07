@@ -259,7 +259,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
+---
+
 <!-- Tambahkan logo Coding Camp di bagian paling bawah -->
 <p align="center">
-  <img src="Images/CODING-CAMP.png" alt="Coding Camp Logo" width="250"/>
+  <img src="Images/CODING-CAMP.png" alt="Coding Camp Logo" width="400"/>
 </p>
