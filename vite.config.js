@@ -9,7 +9,6 @@ export default defineConfig({
     }
   },
   base: '', // ensure relative paths for assets
-  publicDir: 'public', // ensure public assets are served
   server: {
     port: 3000
   }
