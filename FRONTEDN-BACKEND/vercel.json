@@ -7,10 +7,7 @@
       "config": { "distDir": "dist" }
     }
   ],
-  "routes": [
-    { "src": "/(.*)", "dest": "/" }
-  ],
   "rewrites": [
-    { "source": "/(.*)", "destination": "/" }
+    { "source": "/api/(.*)", "destination": "/api/index.js" }
   ]
 }
