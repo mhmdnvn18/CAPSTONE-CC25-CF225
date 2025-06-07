@@ -20,4 +20,4 @@ tailwind.config = {
             }
         }
     }
-} 
+}
