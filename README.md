@@ -114,9 +114,15 @@ Penyakit kardiovaskular merupakan penyebab utama kematian di dunia dan sering ti
             <span><b>Kontak:</b></span>
             <table border="0" cellspacing="0" cellpadding="0" style="border:none;background:none;margin-left:8px;">
               <tr>
-                <td style="border:none;background:none;"><a href="#" title="Instagram">📸</a></td>
-                <td style="border:none;background:none;"><a href="#" title="LinkedIn">💼</a></td>
-                <td style="border:none;background:none;"><a href="#" title="Portofolio">🌐</a></td>
+                <td style="border:none;background:none;">
+                  <a href="https://www.instagram.com/mhmdnvn18/" title="Instagram" target="_blank">📸</a>
+                </td>
+                <td style="border:none;background:none;">
+                  <a href="https://www.linkedin.com/in/mhmdnvn18/" title="LinkedIn" target="_blank">💼</a>
+                </td>
+                <td style="border:none;background:none;">
+                  <a href="https://github.com/mhmdnvn18" title="Portofolio">🌐</a>
+                </td>
               </tr>
             </table>
           </div>
