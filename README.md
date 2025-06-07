@@ -297,7 +297,7 @@ A: Dataset diambil dari Kaggle, lihat bagian Referensi di bawah.
 
 <p align="center">
   <a href="https://codingcamp.id/" target="_blank">
-    <img src="Images/CODING-CAMP.png" alt="Coding Camp Logo" width="800"/>
+    <img src="Images/CODING-CAMP.png" alt="Coding Camp Logo" width="1000"/>
   </a>
 </p>
 
