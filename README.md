@@ -3,7 +3,7 @@
   <a href="https://github.com/cc25-cf225/illdetect/actions">
     <img src="https://img.shields.io/github/actions/workflow/status/cc25-cf225/illdetect/ci.yml?branch=main&label=Build&logo=github" alt="Build Status"/>
   </a>
-  <a href="https://github.com/cc25-cf225/illdetect/blob/main/LICENSE">
+  <a href="LICENSE">
     <img src="https://img.shields.io/github/license/cc25-cf225/illdetect?color=blue" alt="License"/>
   </a>
   <a href="https://codecov.io/gh/cc25-cf225/illdetect">
