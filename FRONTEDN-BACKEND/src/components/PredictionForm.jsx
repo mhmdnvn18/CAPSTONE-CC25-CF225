@@ -26,7 +26,7 @@ function PredictionForm({ onResult }) {
   const handleChange = e => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
-
+ 
   const handleSubmit = async e => {
     e.preventDefault();
     setError('');
