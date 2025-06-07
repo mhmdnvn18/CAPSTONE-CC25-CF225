@@ -1,5 +1,10 @@
 # IllDetect: Sistem Deteksi Risiko Penyakit Kardiovaskular
 
+<!-- Tambahkan logo Coding Camp di bagian atas -->
+<p align="center">
+  <img src="Images/CODING-CAMP.png" alt="Coding Camp Logo" width="250"/>
+</p>
+
 ## Ringkasan
 IllDetect merupakan proyek komprehensif yang bertujuan mengembangkan sistem deteksi risiko penyakit kardiovaskular. Repositori ini mencakup seluruh komponen proyek, mulai dari model machine learning, infrastruktur cloud, hingga konfigurasi deployment aplikasi.
 
@@ -26,21 +31,21 @@ Penyakit kardiovaskular adalah salah satu penyebab utama kematian di dunia dan s
     <td valign="top">
       <ul>
         <li>
-          <strong>👩‍🔬 Marsha Rasyida Al-Farabi</strong><br>
+          <strong>Marsha Rasyida Al-Farabi</strong><br>
           <em>ML Lead & Data Scientist</em><br>
           🏫 Universitas Gadjah Mada<br>
           🆔 MC008D5X2348<br>
           <small>💡 Keahlian: Analisis Data, Feature Engineering, Pengembangan Model</small>
         </li>
         <li>
-          <strong>🧠 Syifa Azzahra Susilo</strong><br>
+          <strong>Syifa Azzahra Susilo</strong><br>
           <em>ML Engineer</em><br>
           🏫 Universitas Gadjah Mada<br>
           🆔 MC008D5X2087<br>
           <small>💡 Keahlian: Pelatihan Model, Optimasi Hyperparameter</small>
         </li>
         <li>
-          <strong>📊 Indara Nurwulandari</strong><br>
+          <strong>Indara Nurwulandari</strong><br>
           <em>Data Engineer</em><br>
           🏫 Universitas Gadjah Mada<br>
           🆔 MC008D5X2388<br>
@@ -51,21 +56,21 @@ Penyakit kardiovaskular adalah salah satu penyebab utama kematian di dunia dan s
     <td valign="top">
       <ul>
         <li>
-          <strong>👨‍💻 Muhammad Novian</strong><br>
+          <strong>Muhammad Novian</strong><br>
           <em>Full-Stack Lead</em><br>
           🏫 Universitas Muhammadiyah Yogyakarta<br>
           🆔 FC492D5Y2169<br>
           <small>💡 Keahlian: Desain Frontend, Integrasi Backend</small>
         </li>
         <li>
-          <strong>🖥️ Muh Diaz Nazarudin Rahman</strong><br>
+          <strong>Muh Diaz Nazarudin Rahman</strong><br>
           <em>Backend Developer</em><br>
           🏫 Universitas Ahmad Dahlan<br>
           🆔 FC179D5Y0593<br>
           <small>💡 Keahlian: Pengembangan API, Manajemen Basis Data</small>
         </li>
         <li>
-          <strong>🎨 Aditya Navra Erlangga</strong><br>
+          <strong>Aditya Navra Erlangga</strong><br>
           <em>Frontend Developer</em><br>
           🏫 Universitas Ahmad Dahlan<br>
           🆔 FC179D5Y1055<br>
