@@ -39,11 +39,7 @@ Penyakit kardiovaskular merupakan penyebab utama kematian di dunia dan sering ti
           <table>
             <tr>
               <td><a href="#" title="Instagram">📸</a></td>
-            </tr>
-            <tr>
               <td><a href="#" title="LinkedIn">💼</a></td>
-            </tr>
-            <tr>
               <td><a href="#" title="Portofolio">🌐</a></td>
             </tr>
           </table>
@@ -58,11 +54,7 @@ Penyakit kardiovaskular merupakan penyebab utama kematian di dunia dan sering ti
           <table>
             <tr>
               <td><a href="#" title="Instagram">📸</a></td>
-            </tr>
-            <tr>
               <td><a href="#" title="LinkedIn">💼</a></td>
-            </tr>
-            <tr>
               <td><a href="#" title="Portofolio">🌐</a></td>
             </tr>
           </table>
@@ -77,11 +69,7 @@ Penyakit kardiovaskular merupakan penyebab utama kematian di dunia dan sering ti
           <table>
             <tr>
               <td><a href="#" title="Instagram">📸</a></td>
-            </tr>
-            <tr>
               <td><a href="#" title="LinkedIn">💼</a></td>
-            </tr>
-            <tr>
               <td><a href="#" title="Portofolio">🌐</a></td>
             </tr>
           </table>
@@ -100,11 +88,7 @@ Penyakit kardiovaskular merupakan penyebab utama kematian di dunia dan sering ti
           <table>
             <tr>
               <td><a href="#" title="Instagram">📸</a></td>
-            </tr>
-            <tr>
               <td><a href="#" title="LinkedIn">💼</a></td>
-            </tr>
-            <tr>
               <td><a href="#" title="Portofolio">🌐</a></td>
             </tr>
           </table>
@@ -119,11 +103,7 @@ Penyakit kardiovaskular merupakan penyebab utama kematian di dunia dan sering ti
           <table>
             <tr>
               <td><a href="#" title="Instagram">📸</a></td>
-            </tr>
-            <tr>
               <td><a href="#" title="LinkedIn">💼</a></td>
-            </tr>
-            <tr>
               <td><a href="#" title="Portofolio">🌐</a></td>
             </tr>
           </table>
@@ -138,11 +118,7 @@ Penyakit kardiovaskular merupakan penyebab utama kematian di dunia dan sering ti
           <table>
             <tr>
               <td><a href="#" title="Instagram">📸</a></td>
-            </tr>
-            <tr>
               <td><a href="#" title="LinkedIn">💼</a></td>
-            </tr>
-            <tr>
               <td><a href="#" title="Portofolio">🌐</a></td>
             </tr>
           </table>
