@@ -1,7 +1,7 @@
 import { createClient } from '@supabase/supabase-js';
 
-// API Configuration - Updated for separate backend
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+// API Configuration - Updated for port 5001
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001';
 
 // Supabase Configuration (kept for direct access if needed)
 const SUPABASE_URL = 'https://gczyorsjoxzunuqlebdd.supabase.co';

@@ -99,7 +99,7 @@ function ApiStatusMonitor() {
       
       {status === 'disconnected' && (
         <div className="mt-2 text-sm text-red-700">
-          <p>⚠️ Menggunakan prediksi lokal. Pastikan backend server berjalan di port 5000.</p>
+          <p>⚠️ Menggunakan prediksi lokal. Pastikan backend server berjalan di port 5001.</p>
         </div>
       )}
     </div>
