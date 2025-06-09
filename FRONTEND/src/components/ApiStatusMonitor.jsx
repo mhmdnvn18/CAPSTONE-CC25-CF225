@@ -1,109 +1,116 @@
 import React, { useState, useEffect } from 'react';
-import CardiovascularAPI from '../services/api';
+import { motion, AnimatePresence } from 'framer-motion';
+import cardiovascularAPI from '../services/api';
 
-function ApiStatusMonitor() {
-  const [status, setStatus] = useState('checking');
-  const [connectionInfo, setConnectionInfo] = useState(null);
-  const [lastCheck, setLastCheck] = useState(null);
+const ApiStatusMonitor = () => {
+  const [status, setStatus] = useState({
+    connected: false,
+    message: 'Checking connection...',
+    lastChecked: null,
+    responseTime: null
+  });
+  const [showDetails, setShowDetails] = useState(false);
 
   useEffect(() => {
-    checkApiStatus();
-    const interval = setInterval(checkApiStatus, 30000); // Check every 30 seconds
+    const checkStatus = async () => {
+      const startTime = Date.now();
+      const result = await cardiovascularAPI.checkHealth();
+      const endTime = Date.now();
+      
+      setStatus({
+        connected: result.success,
+        message: result.message || (result.success ? 'Backend connected' : 'Backend unavailable'),
+        lastChecked: new Date(),
+        responseTime: endTime - startTime
+      });
+    };
+
+    // Initial check
+    checkStatus();
+
+    // Set up periodic checks
+    const interval = setInterval(checkStatus, 30000); // Check every 30 seconds
+
     return () => clearInterval(interval);
   }, []);
 
-  const checkApiStatus = async () => {
-    try {
-      setStatus('checking');
-      const health = await CardiovascularAPI.checkHealth();
-      setStatus('connected');
-      setConnectionInfo(health);
-      setLastCheck(new Date());
-    } catch (error) {
-      setStatus('disconnected');
-      setConnectionInfo({ error: error.message });
-      setLastCheck(new Date());
-    }
-  };
-
   const getStatusColor = () => {
-    switch (status) {
-      case 'connected': return 'green';
-      case 'disconnected': return 'red';
-      case 'checking': return 'yellow';
-      default: return 'gray';
-    }
+    if (status.connected) return 'green';
+    return 'red';
   };
 
   const getStatusIcon = () => {
-    switch (status) {
-      case 'connected': return 'fas fa-check-circle';
-      case 'disconnected': return 'fas fa-times-circle';
-      case 'checking': return 'fas fa-spinner fa-spin';
-      default: return 'fas fa-question-circle';
-    }
-  };
-
-  const getStatusText = () => {
-    switch (status) {
-      case 'connected': return 'Backend Terhubung';
-      case 'disconnected': return 'Backend Terputus';
-      case 'checking': return 'Memeriksa Koneksi...';
-      default: return 'Status Tidak Diketahui';
-    }
+    if (status.connected) return 'fa-check-circle';
+    return 'fa-exclamation-triangle';
   };
 
   return (
-    <div className={`p-3 rounded-lg border-l-4 ${
-      status === 'connected' ? 'bg-green-50 border-green-500' :
-      status === 'disconnected' ? 'bg-red-50 border-red-500' :
-      'bg-yellow-50 border-yellow-500'
-    }`}>
+    <motion.div 
+      className="bg-white rounded-lg shadow-sm border p-3 mb-4"
+      initial={{ opacity: 0, y: -10 }}
+      animate={{ opacity: 1, y: 0 }}
+    >
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-3">
-          <i className={`${getStatusIcon()} text-${getStatusColor()}-600`}></i>
+          <motion.div
+            animate={{ 
+              scale: status.connected ? [1, 1.2, 1] : 1,
+              opacity: status.connected ? [1, 0.7, 1] : 1
+            }}
+            transition={{ 
+              duration: status.connected ? 2 : 0,
+              repeat: status.connected ? Infinity : 0
+            }}
+          >
+            <i className={`fas ${getStatusIcon()} text-${getStatusColor()}-600`}></i>
+          </motion.div>
+          
           <div>
-            <h4 className={`font-medium text-${getStatusColor()}-800`}>
-              {getStatusText()}
-            </h4>
-            {connectionInfo && (
-              <p className={`text-sm text-${getStatusColor()}-700`}>
-                {status === 'connected' ? (
-                  <>
-                    Database: {connectionInfo.supabase} | 
-                    Uptime: {Math.floor(connectionInfo.uptime)}s
-                  </>
-                ) : (
-                  `Error: ${connectionInfo.error}`
-                )}
-              </p>
+            <span className={`text-sm font-medium text-${getStatusColor()}-700`}>
+              {status.connected ? 'Backend Connected' : 'Offline Mode'}
+            </span>
+            {status.responseTime && (
+              <span className="text-xs text-gray-500 ml-2">
+                ({status.responseTime}ms)
+              </span>
             )}
           </div>
         </div>
         
-        <div className="flex items-center space-x-2">
-          {lastCheck && (
-            <span className={`text-xs text-${getStatusColor()}-600`}>
-              {lastCheck.toLocaleTimeString()}
-            </span>
-          )}
-          <button
-            onClick={checkApiStatus}
-            className={`p-1 rounded hover:bg-${getStatusColor()}-100 transition`}
-            title="Refresh status"
-          >
-            <i className="fas fa-refresh text-sm"></i>
-          </button>
-        </div>
+        <button
+          onClick={() => setShowDetails(!showDetails)}
+          className="text-xs text-gray-500 hover:text-gray-700"
+        >
+          <i className={`fas fa-chevron-${showDetails ? 'up' : 'down'}`}></i>
+        </button>
       </div>
       
-      {status === 'disconnected' && (
-        <div className="mt-2 text-sm text-red-700">
-          <p>⚠️ Menggunakan prediksi lokal. Pastikan backend server berjalan di port 5001.</p>
-        </div>
-      )}
-    </div>
+      <AnimatePresence>
+        {showDetails && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            className="mt-3 pt-3 border-t border-gray-100 text-xs text-gray-600"
+          >
+            <div className="space-y-1">
+              <p>Status: {status.message}</p>
+              {status.lastChecked && (
+                <p>Last checked: {status.lastChecked.toLocaleTimeString()}</p>
+              )}
+              <p className="text-blue-600">
+                <i className="fas fa-info-circle mr-1"></i>
+                {status.connected 
+                  ? 'Using backend AI for predictions' 
+                  : 'Using local prediction algorithms'
+                }
+              </p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
   );
-}
+};
 
 export default ApiStatusMonitor;

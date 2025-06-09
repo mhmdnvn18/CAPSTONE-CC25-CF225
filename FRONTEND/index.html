@@ -25,9 +25,60 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="IllDetect">
     <link rel="apple-touch-icon" href="/icon/apple-touch-icon.png">
+    
+    <!-- Custom CSS for scroll behavior -->
+    <style>
+      html {
+        scroll-behavior: auto !important;
+      }
+      
+      body {
+        scroll-behavior: auto !important;
+      }
+      
+      /* Prevent scroll restoration */
+      html, body {
+        scroll-behavior: auto;
+        overflow-x: hidden;
+      }
+      
+      /* Ensure pages start at top */
+      #root {
+        min-height: 100vh;
+      }
+      
+      /* Smooth transitions for page changes */
+      .page-transition {
+        transition: all 0.3s ease-in-out;
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
+    <script type="module" src="src/main.jsx"></script>
+    
+    <!-- Script to handle scroll restoration -->
+    <script>
+      // Disable scroll restoration immediately
+      if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+      }
+      
+      // Reset scroll position on page load
+      window.addEventListener('load', function() {
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          document.documentElement.scrollTop = 0;
+          document.body.scrollTop = 0;
+        }, 0);
+      });
+      
+      // Handle browser back/forward navigation
+      window.addEventListener('popstate', function() {
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+        }, 0);
+      });
+    </script>
   </body>
 </html>

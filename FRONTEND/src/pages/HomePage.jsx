@@ -1,174 +1,668 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
+
+// Animated count component
+const AnimatedCounter = ({ target, duration = 2000, className = "" }) => {
+  const [count, setCount] = useState(0);
+  
+  useEffect(() => {
+    let startTime;
+    let animationFrame;
+    
+    const updateCount = (timestamp) => {
+      if (!startTime) startTime = timestamp;
+      const progress = timestamp - startTime;
+      const percentage = Math.min(progress / duration, 1);
+      
+      setCount(Math.floor(percentage * target));
+      
+      if (progress < duration) {
+        animationFrame = requestAnimationFrame(updateCount);
+      }
+    };
+    
+    animationFrame = requestAnimationFrame(updateCount);
+    
+    return () => cancelAnimationFrame(animationFrame);
+  }, [target, duration]);
+  
+  return <span className={className}>{count}%</span>;
+};
+
+// FAQ item component
+const FAQItem = ({ question, answer }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  
+  return (
+    <motion.div 
+      className="border-b border-gray-200 py-4"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
+    >
+      <button 
+        className="flex justify-between items-center w-full text-left font-medium text-gray-800 hover:text-red-600 transition-colors"
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        <span>{question}</span>
+        <motion.span
+          animate={{ rotate: isOpen ? 180 : 0 }}
+          transition={{ duration: 0.3 }}
+          className="text-red-600"
+        >
+          <i className="fas fa-chevron-down"></i>
+        </motion.span>
+      </button>
+      
+      <motion.div
+        initial={{ height: 0, opacity: 0 }}
+        animate={{ 
+          height: isOpen ? 'auto' : 0,
+          opacity: isOpen ? 1 : 0,
+          marginTop: isOpen ? '1rem' : 0
+        }}
+        transition={{ duration: 0.3 }}
+        className="overflow-hidden text-gray-600"
+      >
+        <p>{answer}</p>
+      </motion.div>
+    </motion.div>
+  );
+};
+
+// Interactive card component
+const FeatureCard = ({ icon, title, description, index }) => {
+  return (
+    <motion.div 
+      className="text-center p-6 rounded-xl border border-gray-100 bg-white hover:shadow-xl transition-all duration-300 relative overflow-hidden group"
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
+      whileHover={{ y: -5 }}
+    >
+      {/* Background pattern */}
+      <div className="absolute inset-0 bg-gradient-to-br from-transparent to-gray-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+      
+      {/* Glow effect */}
+      <div className="absolute -inset-px bg-gradient-to-r from-red-500 via-red-600 to-red-700 opacity-0 group-hover:opacity-100 blur-lg transition-opacity duration-300 -z-10"></div>
+      
+      <motion.div 
+        className={`w-16 h-16 rounded-xl flex items-center justify-center mx-auto mb-4 bg-gradient-to-br from-${icon.color}-100 to-${icon.color}-200`}
+        whileHover={{ rotate: [0, -10, 10, -10, 0], scale: 1.1 }}
+        transition={{ duration: 0.5 }}
+      >
+        <i className={`fas ${icon.name} text-${icon.color}-600 text-2xl`}></i>
+      </motion.div>
+      
+      <h3 className="text-xl font-semibold text-gray-800 mb-3 group-hover:text-red-600 transition-colors">{title}</h3>
+      <p className="text-gray-600 relative z-10">
+        {description}
+      </p>
+    </motion.div>
+  );
+};
 
 function HomePage() {
+  const [activeTestimonial, setActiveTestimonial] = useState(0);
+  const testimonials = [
+    {
+      name: "Budi Santoso",
+      role: "Pasien",
+      image: "https://randomuser.me/api/portraits/men/32.jpg",
+      text: "IllDetect membantu saya mengetahui risiko kardiovaskular yang selama ini tidak saya sadari. Berkat deteksi dini, saya bisa berkonsultasi dengan dokter tepat waktu."
+    },
+    {
+      name: "Siti Rahma",
+      role: "Dokter Umum",
+      image: "https://randomuser.me/api/portraits/women/44.jpg",
+      text: "Sebagai dokter, saya merekomendasikan IllDetect untuk pasien saya. Tool ini membantu mereka memahami faktor risiko dan meningkatkan kesadaran tentang kesehatan kardiovaskular."
+    },
+    {
+      name: "Agus Widodo",
+      role: "Pengguna Rutin",
+      image: "https://randomuser.me/api/portraits/men/67.jpg",
+      text: "Saya menggunakan IllDetect secara berkala untuk memantau kondisi jantung saya. Interface-nya mudah digunakan dan hasil prediksinya akurat."
+    }
+  ];
+  
+  const stats = [
+    { value: 85, label: "Akurasi Prediksi", icon: "fa-chart-line" },
+    { value: 95, label: "Kepuasan Pengguna", icon: "fa-heart" },
+    { value: 99, label: "Ketersediaan Sistem", icon: "fa-server" },
+  ];
+  
+  const features = [
+    { 
+      icon: { name: "fa-bolt", color: "blue" }, 
+      title: "Prediksi Cepat", 
+      description: "Hasil prediksi dalam hitungan detik dengan akurasi tinggi menggunakan algoritma AI terdepan" 
+    },
+    { 
+      icon: { name: "fa-user-md", color: "green" }, 
+      title: "Akurat & Terpercaya", 
+      description: "Dikembangkan berdasarkan data medis terpercaya dengan tingkat akurasi prediksi hingga 85%" 
+    },
+    { 
+      icon: { name: "fa-mobile-alt", color: "purple" }, 
+      title: "Mudah Digunakan", 
+      description: "Interface yang intuitif dan dapat diakses dari perangkat apa pun, kapan pun Anda butuhkan" 
+    },
+    { 
+      icon: { name: "fa-shield-alt", color: "red" }, 
+      title: "Keamanan Data", 
+      description: "Data Anda dilindungi dengan enkripsi end-to-end dan tidak pernah dibagikan ke pihak ketiga" 
+    },
+    { 
+      icon: { name: "fa-chart-pie", color: "indigo" }, 
+      title: "Visualisasi Hasil", 
+      description: "Hasil prediksi disajikan dalam format visual yang mudah dipahami beserta rekomendasi" 
+    },
+    { 
+      icon: { name: "fa-wifi", color: "yellow" }, 
+      title: "Mode Offline", 
+      description: "Tetap bisa melakukan prediksi meskipun Anda sedang tidak terhubung dengan internet" 
+    }
+  ];
+  
+  const faqs = [
+    {
+      question: "Bagaimana cara kerja prediksi IllDetect?",
+      answer: "IllDetect menggunakan algoritma machine learning yang dilatih dengan data kardiovaskular yang luas. Sistem menganalisis faktor risiko Anda seperti tekanan darah, kolesterol, dan gaya hidup untuk menghasilkan prediksi risiko kardiovaskular yang akurat."
+    },
+    {
+      question: "Apakah data saya aman?",
+      answer: "Ya, keamanan data adalah prioritas utama kami. Semua data yang Anda masukkan dienkripsi dan tidak pernah dibagikan kepada pihak ketiga. Data hanya digunakan untuk menghasilkan prediksi dan tidak disimpan secara permanen."
+    },
+    {
+      question: "Seberapa akurat prediksi yang dihasilkan?",
+      answer: "Model prediksi kami memiliki tingkat akurasi sekitar 85%, berdasarkan validasi dengan dataset medis yang komprehensif. Namun, hasil prediksi tidak menggantikan diagnosis medis profesional."
+    },
+    {
+      question: "Apakah saya perlu membuat akun untuk menggunakan IllDetect?",
+      answer: "Tidak, Anda bisa langsung menggunakan IllDetect tanpa perlu membuat akun atau login. Cukup masukkan data kesehatan Anda dan dapatkan hasil prediksi instan."
+    },
+    {
+      question: "Bagaimana jika saya tidak memiliki semua data yang diminta?",
+      answer: "Untuk hasil yang paling akurat, sebaiknya lengkapi semua data yang diminta. Namun, IllDetect masih bisa memberikan estimasi risiko berdasarkan data yang tersedia, meskipun akurasinya mungkin berkurang."
+    }
+  ];
+  
+  // Scroll animations
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 60 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut"
+      }
+    }
+  };
+
   return (
     <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="bg-gradient-to-br from-red-50 via-white to-blue-50 py-20">
-        <div className="container mx-auto px-4 text-center">
+      {/* Hero Section with Parallax Effect */}
+      <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-red-50 via-white to-blue-50 py-20">
+        {/* Animated Background Elements */}
+        <div className="absolute inset-0 overflow-hidden">
+          <motion.div 
+            className="absolute top-20 left-10 w-64 h-64 rounded-full bg-red-200 blur-3xl opacity-30"
+            animate={{ 
+              x: [0, 30, 0], 
+              y: [0, 30, 0],
+              scale: [1, 1.1, 1]
+            }}
+            transition={{ duration: 8, repeat: Infinity }}
+          />
+          <motion.div 
+            className="absolute bottom-20 right-10 w-80 h-80 rounded-full bg-blue-200 blur-3xl opacity-30"
+            animate={{ 
+              x: [0, -30, 0], 
+              y: [0, -20, 0],
+              scale: [1, 1.2, 1]
+            }}
+            transition={{ duration: 10, repeat: Infinity }}
+          />
+        </div>
+
+        <div className="container mx-auto px-4 text-center relative z-10">
           <div className="max-w-4xl mx-auto">
-            <div className="mb-8">
-              <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <i className="fas fa-heart-pulse text-red-600 text-4xl animate-pulse"></i>
+            <motion.div 
+              className="mb-8"
+              initial={{ opacity: 0, scale: 0.5 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8 }}
+            >
+              <div className="w-24 h-24 bg-gradient-to-br from-red-500 to-red-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+                <motion.i 
+                  className="fas fa-heartbeat text-white text-4xl"
+                  animate={{ 
+                    scale: [1, 1.2, 1],
+                  }}
+                  transition={{ duration: 1.5, repeat: Infinity }}
+                ></motion.i>
               </div>
-            </div>
+            </motion.div>
             
-            <h1 className="text-4xl md:text-6xl font-bold text-gray-800 mb-6">
-              Deteksi Dini <span className="text-red-600">Penyakit Kardiovaskular</span>
-            </h1>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8 leading-relaxed">
+            <motion.h1 
+              className="text-5xl md:text-7xl font-bold text-gray-800 mb-6 leading-tight"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+            >
+              Deteksi Dini <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-red-700">Penyakit Kardiovaskular</span>
+            </motion.h1>
+
+            <motion.p 
+              className="text-xl text-gray-600 max-w-3xl mx-auto mb-10 leading-relaxed"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.5 }}
+            >
               Prediksi risiko penyakit kardiovaskular Anda secara cepat dan mudah menggunakan teknologi AI terbaru. 
               Data Anda aman dan hanya digunakan untuk analisis prediksi yang akurat.
-            </p>
+            </motion.p>
             
-            {/* CTA Button */}
-            <Link
-              to="/prediction"
-              className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-red-600 to-red-700 text-white font-bold text-lg rounded-full transform transition hover:scale-105 hover:shadow-xl animate-pulse"
+            {/* Animated CTA Button */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.7 }}
             >
-              <i className="fas fa-heart-pulse mr-3 text-xl animate-pulse"></i>
-              MULAI PREDIKSI SEKARANG
-              <i className="fas fa-arrow-right ml-3"></i>
-            </Link>
+              <Link
+                to="/prediction"
+                className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-red-600 to-red-700 text-white font-bold text-lg rounded-full shadow-lg hover:shadow-xl transition-all duration-300 group relative overflow-hidden"
+              >
+                <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-red-700 to-red-800 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                <span className="relative flex items-center">
+                  <motion.i 
+                    className="fas fa-heartbeat mr-3 text-xl"
+                    animate={{ scale: [1, 1.2, 1] }}
+                    transition={{ duration: 1.5, repeat: Infinity }}
+                  ></motion.i>
+                  MULAI PREDIKSI SEKARANG
+                  <i className="fas fa-arrow-right ml-3 group-hover:translate-x-1 transition-transform duration-300"></i>
+                </span>
+              </Link>
+            </motion.div>
 
-            {/* Trust Indicators */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16">
-              <div className="flex items-center justify-center space-x-2 text-gray-600">
+            {/* Trust Indicators with hover effects */}
+            <motion.div 
+              className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16"
+              variants={fadeInUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+            >
+              <motion.div 
+                className="flex items-center justify-center space-x-2 text-gray-600 bg-white p-3 rounded-lg shadow-sm hover:shadow-md transition-all"
+                whileHover={{ y: -5, scale: 1.03 }}
+              >
                 <i className="fas fa-shield-alt text-green-600"></i>
                 <span className="font-medium">Data Aman</span>
-              </div>
-              <div className="flex items-center justify-center space-x-2 text-gray-600">
+              </motion.div>
+              <motion.div 
+                className="flex items-center justify-center space-x-2 text-gray-600 bg-white p-3 rounded-lg shadow-sm hover:shadow-md transition-all"
+                whileHover={{ y: -5, scale: 1.03 }}
+              >
                 <i className="fas fa-brain text-blue-600"></i>
                 <span className="font-medium">AI Technology</span>
-              </div>
-              <div className="flex items-center justify-center space-x-2 text-gray-600">
+              </motion.div>
+              <motion.div 
+                className="flex items-center justify-center space-x-2 text-gray-600 bg-white p-3 rounded-lg shadow-sm hover:shadow-md transition-all"
+                whileHover={{ y: -5, scale: 1.03 }}
+              >
                 <i className="fas fa-clock text-purple-600"></i>
                 <span className="font-medium">Hasil Cepat</span>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
+            
+            {/* Scroll Down Indicator */}
+            <motion.div 
+              className="absolute bottom-10 left-0 right-0 flex justify-center"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.5, duration: 0.5 }}
+            >
+              <motion.div 
+                className="text-gray-500 cursor-pointer"
+                animate={{ y: [0, 10, 0] }}
+                transition={{ duration: 1.5, repeat: Infinity }}
+                onClick={() => window.scrollTo({
+                  top: window.innerHeight,
+                  behavior: 'smooth'
+                })}
+              >
+              </motion.div>
+            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="py-16 bg-white">
+      {/* Statistics Section */}
+      <section className="py-16 bg-white border-b border-gray-100">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {stats.map((stat, index) => (
+              <motion.div 
+                key={index}
+                className="text-center"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1, duration: 0.5 }}
+              >
+                <div className="inline-flex items-center justify-center mb-4">
+                  <i className={`fas ${stat.icon} text-red-600 text-xl mr-3`}></i>
+                  <span className="text-4xl font-bold text-gray-800">
+                    <AnimatedCounter target={stat.value} />
+                  </span>
+                </div>
+                <p className="text-gray-600 font-medium">{stat.label}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Enhanced Features Section with Interactive Cards */}
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <motion.div 
+            className="text-center mb-16"
+            variants={fadeInUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+          >
             <h2 className="text-3xl font-bold text-gray-800 mb-4">
               Mengapa Memilih IllDetect?
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
               Platform terdepan untuk deteksi dini risiko kardiovaskular dengan teknologi machine learning
             </p>
-          </div>
+          </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="text-center p-6 rounded-xl border border-gray-100 hover:shadow-lg transition">
-              <div className="w-16 h-16 bg-blue-100 rounded-xl flex items-center justify-center mx-auto mb-4">
-                <i className="fas fa-lightning-bolt text-blue-600 text-2xl"></i>
-              </div>
-              <h3 className="text-xl font-semibold text-gray-800 mb-3">Prediksi Cepat</h3>
-              <p className="text-gray-600">
-                Hasil prediksi dalam hitungan detik dengan akurasi tinggi menggunakan algoritma AI terdepan
-              </p>
-            </div>
-
-            <div className="text-center p-6 rounded-xl border border-gray-100 hover:shadow-lg transition">
-              <div className="w-16 h-16 bg-green-100 rounded-xl flex items-center justify-center mx-auto mb-4">
-                <i className="fas fa-user-md text-green-600 text-2xl"></i>
-              </div>
-              <h3 className="text-xl font-semibold text-gray-800 mb-3">Akurat & Terpercaya</h3>
-              <p className="text-gray-600">
-                Dikembangkan berdasarkan data medis terpercaya dengan tingkat akurasi prediksi hingga 85%
-              </p>
-            </div>
-
-            <div className="text-center p-6 rounded-xl border border-gray-100 hover:shadow-lg transition">
-              <div className="w-16 h-16 bg-purple-100 rounded-xl flex items-center justify-center mx-auto mb-4">
-                <i className="fas fa-mobile-alt text-purple-600 text-2xl"></i>
-              </div>
-              <h3 className="text-xl font-semibold text-gray-800 mb-3">Mudah Digunakan</h3>
-              <p className="text-gray-600">
-                Interface yang intuitif dan dapat diakses dari perangkat apa pun, kapan pun Anda butuhkan
-              </p>
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {features.map((feature, index) => (
+              <FeatureCard
+                key={index}
+                icon={feature.icon}
+                title={feature.title}
+                description={feature.description}
+                index={index}
+              />
+            ))}
           </div>
         </div>
       </section>
 
-      {/* How It Works */}
-      <section className="py-16 bg-gray-50">
+      {/* How It Works - Interactive Version */}
+      <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
+          <motion.div 
+            className="text-center mb-16"
+            variants={fadeInUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+          >
             <h2 className="text-3xl font-bold text-gray-800 mb-4">
               Cara Kerja IllDetect
             </h2>
             <p className="text-gray-600">
               Proses sederhana dalam 3 langkah untuk mendapatkan prediksi risiko kardiovaskular
             </p>
+          </motion.div>
+
+          <div className="flex flex-col md:flex-row justify-between relative">
+            {/* Progress Line (desktop only) */}
+            <div className="hidden md:block absolute top-1/2 left-0 right-0 h-1 bg-gray-200 -translate-y-1/2 z-0">
+              <motion.div 
+                className="h-full bg-red-600" 
+                initial={{ width: "0%" }}
+                whileInView={{ width: "100%" }}
+                viewport={{ once: true }}
+                transition={{ duration: 1.5, ease: "easeInOut" }}
+              ></motion.div>
+            </div>
+
+            {[
+              {
+                step: 1,
+                title: "Input Data",
+                description: "Masukkan data kesehatan seperti usia, tekanan darah, kolesterol, dan gaya hidup",
+                icon: "fa-edit",
+                color: "red"
+              },
+              {
+                step: 2,
+                title: "Analisis AI",
+                description: "Sistem AI menganalisis data Anda menggunakan algoritma machine learning yang canggih",
+                icon: "fa-cog",
+                color: "blue"
+              },
+              {
+                step: 3,
+                title: "Hasil Prediksi",
+                description: "Dapatkan hasil prediksi risiko lengkap dengan rekomendasi kesehatan yang personal",
+                icon: "fa-chart-line",
+                color: "green"
+              }
+            ].map((item, idx) => (
+              <motion.div 
+                key={idx}
+                className="flex-1 text-center mb-8 md:mb-0 relative z-10"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.2, duration: 0.5 }}
+              >
+                <motion.div 
+                  className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 relative shadow-md"
+                  style={{ backgroundColor: item.color === 'red' ? '#fee2e2' : item.color === 'blue' ? '#dbeafe' : '#dcfce7' }}
+                  whileHover={{ scale: 1.1, rotate: 5 }}
+                >
+                  <motion.div 
+                    className="w-full h-full bg-white rounded-full flex items-center justify-center border-4"
+                    style={{ borderColor: item.color === 'red' ? '#ef4444' : item.color === 'blue' ? '#3b82f6' : '#22c55e' }}
+                    animate={{ scale: [1, 1.1, 1] }}
+                    transition={{ duration: 3, repeat: Infinity, delay: idx * 0.5 }}
+                  >
+                    <span className="text-2xl font-bold text-gray-800">{item.step}</span>
+                  </motion.div>
+                  <div 
+                    className="absolute -top-2 -right-2 w-8 h-8 rounded-full flex items-center justify-center shadow-md"
+                    style={{ backgroundColor: item.color === 'red' ? '#dc2626' : item.color === 'blue' ? '#2563eb' : '#16a34a' }}
+                  >
+                    <i className={`fas ${item.icon} text-white text-sm`}></i>
+                  </div>
+                </motion.div>
+                <h3 className="text-xl font-semibold text-gray-800 mb-3">{item.title}</h3>
+                <p className="text-gray-600 max-w-xs mx-auto">
+                  {item.description}
+                </p>
+              </motion.div>
+            ))}
           </div>
+        </div>
+      </section>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4 relative">
-                <span className="text-2xl font-bold text-red-600">1</span>
-                <div className="absolute -top-2 -right-2 w-6 h-6 bg-red-600 rounded-full flex items-center justify-center">
-                  <i className="fas fa-edit text-white text-xs"></i>
-                </div>
+      {/* Testimonials Section */}
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <motion.div 
+            className="text-center mb-12"
+            variants={fadeInUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+          >
+            <h2 className="text-3xl font-bold text-gray-800 mb-4">
+              Apa Kata Pengguna
+            </h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Pengalaman nyata dari pengguna yang telah merasakan manfaat IllDetect
+            </p>
+          </motion.div>
+
+          <div className="max-w-4xl mx-auto relative">
+            <div className="relative overflow-hidden rounded-2xl bg-white shadow-lg p-8">
+              {/* Decorative quotes */}
+              <div className="absolute top-0 left-0 text-6xl text-red-100 -translate-x-1/4 -translate-y-1/4">
+                <i className="fas fa-quote-left"></i>
               </div>
-              <h3 className="text-xl font-semibold text-gray-800 mb-3">Input Data</h3>
-              <p className="text-gray-600">
-                Masukkan data kesehatan seperti usia, tekanan darah, kolesterol, dan gaya hidup
-              </p>
+              <div className="absolute bottom-0 right-0 text-6xl text-red-100 translate-x-1/4 translate-y-1/4">
+                <i className="fas fa-quote-right"></i>
+              </div>
+              
+              <div className="relative z-10">
+                <AnimatePresence mode="wait">
+                  <motion.div 
+                    key={activeTestimonial}
+                    initial={{ opacity: 0, x: 100 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -100 }}
+                    transition={{ duration: 0.5 }}
+                    className="text-center"
+                  >
+                    <div className="w-20 h-20 mx-auto mb-4 rounded-full overflow-hidden border-4 border-red-100">
+                      <img 
+                        src={testimonials[activeTestimonial].image} 
+                        alt={testimonials[activeTestimonial].name}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <p className="text-gray-600 italic text-lg mb-6">"{testimonials[activeTestimonial].text}"</p>
+                    <h4 className="font-bold text-gray-800">{testimonials[activeTestimonial].name}</h4>
+                    <p className="text-red-600 text-sm">{testimonials[activeTestimonial].role}</p>
+                  </motion.div>
+                </AnimatePresence>
+              </div>
             </div>
-
-            <div className="text-center">
-              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 relative">
-                <span className="text-2xl font-bold text-blue-600">2</span>
-                <div className="absolute -top-2 -right-2 w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center">
-                  <i className="fas fa-cog text-white text-xs"></i>
-                </div>
-              </div>
-              <h3 className="text-xl font-semibold text-gray-800 mb-3">Analisis AI</h3>
-              <p className="text-gray-600">
-                Sistem AI menganalisis data Anda menggunakan algoritma machine learning yang canggih
-              </p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4 relative">
-                <span className="text-2xl font-bold text-green-600">3</span>
-                <div className="absolute -top-2 -right-2 w-6 h-6 bg-green-600 rounded-full flex items-center justify-center">
-                  <i className="fas fa-chart-line text-white text-xs"></i>
-                </div>
-              </div>
-              <h3 className="text-xl font-semibold text-gray-800 mb-3">Hasil Prediksi</h3>
-              <p className="text-gray-600">
-                Dapatkan hasil prediksi risiko lengkap dengan rekomendasi kesehatan yang personal
-              </p>
+            
+            {/* Navigation Buttons */}
+            <div className="flex justify-center mt-8">
+              <button 
+                className="w-10 h-10 rounded-full bg-white shadow flex items-center justify-center text-gray-600 hover:bg-red-600 hover:text-white transition-colors mr-4"
+                onClick={() => setActiveTestimonial((prev) => (prev === 0 ? testimonials.length - 1 : prev - 1))}
+              >
+                <i className="fas fa-chevron-left"></i>
+              </button>
+              
+              {testimonials.map((_, index) => (
+                <button 
+                  key={index}
+                  className={`w-3 h-3 rounded-full mx-1 ${activeTestimonial === index ? 'bg-red-600' : 'bg-gray-300'}`}
+                  onClick={() => setActiveTestimonial(index)}
+                ></button>
+              ))}
+              
+              <button 
+                className="w-10 h-10 rounded-full bg-white shadow flex items-center justify-center text-gray-600 hover:bg-red-600 hover:text-white transition-colors ml-4"
+                onClick={() => setActiveTestimonial((prev) => (prev === testimonials.length - 1 ? 0 : prev + 1))}
+              >
+                <i className="fas fa-chevron-right"></i>
+              </button>
             </div>
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-16 bg-gradient-to-r from-red-600 to-red-700">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold text-white mb-4">
-            Mulai Deteksi Dini Sekarang
-          </h2>
-          <p className="text-red-100 max-w-2xl mx-auto mb-8">
-            Jangan tunggu sampai terlambat. Lakukan prediksi risiko kardiovaskular sekarang dan jaga kesehatan jantung Anda
-          </p>
-          <Link
-            to="/prediction"
-            className="inline-flex items-center px-8 py-4 bg-white text-red-600 font-bold text-lg rounded-full hover:bg-gray-100 transition transform hover:scale-105"
+      {/* FAQ Section */}
+      <section id="faq" className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <motion.div 
+            className="text-center mb-12"
+            variants={fadeInUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
           >
-            <i className="fas fa-heart-pulse mr-3"></i>
-            Mulai Prediksi Gratis
-            <i className="fas fa-arrow-right ml-3"></i>
-          </Link>
+            <h2 className="text-3xl font-bold text-gray-800 mb-4">
+              Pertanyaan yang Sering Diajukan
+            </h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Temukan jawaban untuk pertanyaan umum tentang IllDetect
+            </p>
+          </motion.div>
+
+          <div className="max-w-3xl mx-auto">
+            {faqs.map((faq, index) => (
+              <FAQItem 
+                key={index} 
+                question={faq.question} 
+                answer={faq.answer} 
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Enhanced CTA Section */}
+      <section className="py-20 bg-gradient-to-br from-red-600 via-red-700 to-red-800 relative overflow-hidden">
+        {/* Decorative Elements */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 left-0 w-64 h-64 rounded-full bg-white blur-3xl"></div>
+          <div className="absolute bottom-0 right-0 w-64 h-64 rounded-full bg-white blur-3xl"></div>
+        </div>
+        
+        <div className="container mx-auto px-4 text-center relative z-10">
+          <motion.h2 
+            className="text-4xl font-bold text-white mb-6"
+            variants={fadeInUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+          >
+            Mulai Deteksi Dini Sekarang
+          </motion.h2>
+          
+          <motion.p 
+            className="text-red-100 max-w-2xl mx-auto mb-10 text-lg"
+            variants={fadeInUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+          >
+Bersama, kita membangun masa depan skrining kesehatan kardiovaskular          </motion.p>
+          
+          <motion.div
+            variants={fadeInUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+          >
+            <Link
+              to="/prediction"
+              className="inline-flex items-center px-8 py-4 bg-white text-red-600 font-bold text-lg rounded-full hover:bg-gray-100 transition transform hover:scale-105 shadow-lg group"
+            >
+              <motion.i 
+                className="fas fa-heartbeat mr-3"
+                animate={{ scale: [1, 1.2, 1] }}
+                transition={{ duration: 1.5, repeat: Infinity }}
+              ></motion.i>
+              <span>Mulai Prediksi Gratis</span>
+              <i className="fas fa-arrow-right ml-3 group-hover:translate-x-1 transition-transform"></i>
+            </Link>
+          </motion.div>
+          
+          <motion.p 
+            className="text-red-200 mt-6 text-sm"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.4 }}
+          >
+            <i className="fas fa-lock mr-2"></i>
+            Tidak perlu registrasi. Gratis. Hasil instan.
+          </motion.p>
         </div>
       </section>
     </div>
