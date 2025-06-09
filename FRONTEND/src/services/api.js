@@ -1,7 +1,8 @@
 import { createClient } from '@supabase/supabase-js';
+import { API_URL, ENDPOINTS } from '../config/api.js';
 
-// API Configuration - Updated for port 5001
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001';
+// API Configuration - Updated to use deployed backend
+const API_BASE_URL = import.meta.env.VITE_API_URL || API_URL;
 
 // Supabase Configuration (kept for direct access if needed)
 const SUPABASE_URL = 'https://gczyorsjoxzunuqlebdd.supabase.co';
@@ -19,10 +20,10 @@ class CardiovascularAPI {
         this.maxRetries = 2;
         this.retryDelay = 1000;
         this.offlineMode = false;
-        this.offlineCheckInterval = 60000; // Diperpanjang menjadi 60 detik
+        this.offlineCheckInterval = 60000;
         this.lastOfflineCheck = null;
         this.connectionFailCount = 0;
-        this.maxFailBeforeStop = 3; // Berhenti mencoba setelah 3 kali gagal
+        this.maxFailBeforeStop = 3;
         console.log('🚀 CardiovascularAPI diinisialisasi dengan backend:', API_BASE_URL);
     }
 
@@ -112,7 +113,7 @@ class CardiovascularAPI {
         }
 
         try {
-            // Gunakan metode XHR untuk mengurangi error di konsol
+            // Use the deployed backend health endpoint
             const healthCheck = await this.checkConnectionWithXHR(`${API_BASE_URL}/api/health`);
             
             if (healthCheck.connected) {
@@ -176,7 +177,7 @@ class CardiovascularAPI {
                 return this.localPredict(inputData);
             }
             
-            console.log('📤 Sending prediction request to backend...');
+            console.log('📤 Sending prediction request to deployed backend...');
             
             const response = await this.fetchWithTimeout(`${API_BASE_URL}/api/predict`, {
                 method: 'POST',
