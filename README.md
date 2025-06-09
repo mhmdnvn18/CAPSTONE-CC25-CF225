@@ -1,44 +1,44 @@
-# Penjelasan File dan Struktur Direktori
+# 🗂️ Penjelasan File dan Struktur Direktori
 
 Berikut adalah penjelasan singkat mengenai file-file utama dalam folder `MACHINE-LEARNING`:
 
-- **IllDetect_Capstone_Project.ipynb**  
+- 📒 **IllDetect_Capstone_Project.ipynb**  
   Notebook utama yang berisi seluruh proses analisis data, eksplorasi, pemodelan machine learning, evaluasi, hingga penyimpanan model untuk deteksi risiko penyakit kardiovaskular. Notebook ini memuat penjelasan, kode Python, visualisasi, serta inferensi model.
 
-- **tfjs_model/**  
+- 🗂️ **tfjs_model/**  
   Folder ini berisi model hasil pelatihan yang telah dikonversi ke format TensorFlow.js (`model.json` dan file bobot terkait). Model ini dapat digunakan untuk deployment pada aplikasi berbasis web.
 
-- **model_best.h5**  
+- 🧩 **model_best.h5**  
   File model Keras hasil pelatihan terbaik (format HDF5), disimpan untuk keperluan deployment atau konversi ke format lain.
 
-- **Deskripsi Dataset**  
+- 📊 **Deskripsi Dataset**  
   Dataset yang digunakan diunduh dari Kaggle (Cardiovascular Disease Dataset) dan diproses dalam notebook. Penjelasan detail mengenai variabel dan proses pengambilan subset data dijelaskan di bagian awal notebook.
 
-> Untuk menjalankan ulang pipeline, pastikan seluruh dependensi (pandas, scikit-learn, tensorflow, pytorch-tabnet, seaborn, matplotlib, dsb) telah terinstal di lingkungan Python Anda.
+> ⚠️ Untuk menjalankan ulang pipeline, pastikan seluruh dependensi (pandas, scikit-learn, tensorflow, pytorch-tabnet, seaborn, matplotlib, dsb) telah terinstal di lingkungan Python Anda.
 
-## Teknologi yang Digunakan
+## 🚀 Teknologi yang Digunakan
 
 Proyek *IllDetect* mengimplementasikan berbagai teknologi machine learning modern:
 
-### Bahasa Pemrograman dan Libraries
-- **Python 3.8+** sebagai bahasa pemrograman utama
-- **Pandas & NumPy** untuk manipulasi dan analisis data
-- **Matplotlib & Seaborn** untuk visualisasi data
-- **Scikit-learn** untuk preprocessing dan evaluasi model
-- **TensorFlow/Keras** untuk implementasi model deep learning
-- **PyTorch TabNet** untuk implementasi model tabular neural network
-- **TensorFlow.js** untuk konversi model ke format web
+### 💻 Bahasa Pemrograman dan Libraries
+- 🐍 **Python 3.8+** sebagai bahasa pemrograman utama
+- 🐼 **Pandas & NumPy** untuk manipulasi dan analisis data
+- 📈 **Matplotlib & Seaborn** untuk visualisasi data
+- 🛠️ **Scikit-learn** untuk preprocessing dan evaluasi model
+- 🤖 **TensorFlow/Keras** untuk implementasi model deep learning
+- 🔥 **PyTorch TabNet** untuk implementasi model tabular neural network
+- 🌐 **TensorFlow.js** untuk konversi model ke format web
 
-### Algoritma Machine Learning
-- **Multi-Layer Perceptron (MLP)** - Model neural network yang dipilih sebagai model terbaik dengan akurasi 74.95%
-- **TabNet** - Model neural network untuk data tabular dengan pendekatan attention-based
+### 🧠 Algoritma Machine Learning
+- 🏆 **Multi-Layer Perceptron (MLP)** - Model neural network yang dipilih sebagai model terbaik dengan akurasi 74.95%
+- 🧩 **TabNet** - Model neural network untuk data tabular dengan pendekatan attention-based
 
-### Proses Machine Learning
-1. **Data Understanding & Exploratory Data Analysis**
-2. **Data Preparation & Feature Engineering**
-3. **Model Training & Hyperparameter Optimization** menggunakan GridSearchCV
-4. **Model Evaluation** menggunakan metrics seperti accuracy, precision, recall, dan F1-score
-5. **Model Export** ke format H5 dan TensorFlow.js untuk deployment
+### ⚙️ Proses Machine Learning
+1. 📊 **Data Understanding & Exploratory Data Analysis**
+2. 🧹 **Data Preparation & Feature Engineering**
+3. 🏋️ **Model Training & Hyperparameter Optimization** menggunakan GridSearchCV
+4. 📝 **Model Evaluation** menggunakan metrics seperti accuracy, precision, recall, dan F1-score
+5. 💾 **Model Export** ke format H5 dan TensorFlow.js untuk deployment
 
 ## Cara Penggunaan
 
@@ -117,6 +117,6 @@ Model menghasilkan prediksi biner:
 
 Hasil prediksi direpresentasikan sebagai probabilitas (0-1) yang kemudian dikonversi ke label biner dengan threshold 0.5.
 
-### [README.md](file:///c%3A/.Github_mhmdnvn18%40gmail.com/CAPSTONE-CC25-CF225/MACHINE-LEARNING/README.md)
+### [README.md](file:///c%3A/.Github_mhmdnvn18%40gmail.com/CAPSTONE-CC25-CF225/README.md)
 
 Menambahkan penjelasan lebih detail tentang file machine learning, teknologi yang digunakan, dan cara penggunaannya.
