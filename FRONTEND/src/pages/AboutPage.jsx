@@ -302,7 +302,7 @@ const AboutPage = () => {
                 IllDetect adalah aplikasi berbasis web yang memungkinkan pengguna untuk mendeteksi risiko penyakit kardiovaskular secara dini. Aplikasi ini menggunakan algoritma machine learning yang dikembangkan dan dilatih dengan dataset yang komprehensif.
               </p>
               <p className="text-gray-600 mb-4">
-                Proyek ini dikembangkan sebagai bagian dari Capstone Project untuk program DBS Foundation Coding Camp 2023 oleh tim kami yang terdiri dari mahasiswa berbagai universitas di Indonesia.
+                Proyek ini dikembangkan sebagai bagian dari Capstone Project untuk program DBS Foundation Coding Camp 2025 oleh tim kami yang terdiri dari mahasiswa berbagai universitas di Indonesia.
               </p>
               <div className="flex space-x-4 mt-2">
                 <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">

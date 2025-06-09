@@ -630,8 +630,7 @@ function HomePage() {
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
           >
-            Jangan tunggu sampai terlambat. Lakukan prediksi risiko kardiovaskular sekarang dan jaga kesehatan jantung Anda
-          </motion.p>
+Bersama, kita membangun masa depan skrining kesehatan kardiovaskular          </motion.p>
           
           <motion.div
             variants={fadeInUp}

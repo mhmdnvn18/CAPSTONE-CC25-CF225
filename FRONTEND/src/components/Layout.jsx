@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import NetworkStatus from './NetworkStatus';
 
 // Custom hook for network status
 function useNetworkStatus() {
@@ -21,95 +22,40 @@ function useNetworkStatus() {
   return isOnline;
 }
 
-// Custom hook for standalone mode detection
-function useStandaloneMode() {
-  const [isStandalone, setIsStandalone] = useState(false);
+// Custom hook for scroll to top
+function useScrollToTop() {
+  const location = useLocation();
 
   useEffect(() => {
-    const checkStandalone = () => {
-      const standalone = window.matchMedia('(display-mode: standalone)').matches || 
-                        window.navigator.standalone === true;
-      setIsStandalone(standalone);
-    };
-
-    checkStandalone();
-
-    // Listen for display mode changes
-    const mediaQuery = window.matchMedia('(display-mode: standalone)');
-    mediaQuery.addListener(checkStandalone);
-
-    return () => {
-      mediaQuery.removeListener(checkStandalone);
-    };
-  }, []);
-
-  return isStandalone;
-}
-
-// Custom hook for PWA installation
-function useInstallPWA() {
-  const [deferredPrompt, setDeferredPrompt] = useState(null);
-  const [showInstallButton, setShowInstallButton] = useState(false);
-  const isStandalone = useStandaloneMode();
-
-  useEffect(() => {
-    if (isStandalone) {
-      setShowInstallButton(false);
-      return;
-    }
-
-    // Listen for the beforeinstallprompt event
-    const handleBeforeInstallPrompt = (e) => {
-      // Prevent the mini-infobar from appearing on mobile
-      e.preventDefault();
-      // Stash the event so it can be triggered later
-      setDeferredPrompt(e);
-      // Show the install button
-      setShowInstallButton(true);
-    };
-
-    // Listen for the appinstalled event
-    const handleAppInstalled = () => {
-      console.log('IllDetect app was installed');
-      setShowInstallButton(false);
-      setDeferredPrompt(null);
-    };
-
-    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-    window.addEventListener('appinstalled', handleAppInstalled);
-
-    return () => {
-      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-      window.removeEventListener('appinstalled', handleAppInstalled);
-    };
-  }, [isStandalone]);
-
-  const handleInstallClick = async () => {
-    if (deferredPrompt) {
-      // Show the install prompt
-      deferredPrompt.prompt();
-      // Wait for the user to respond to the prompt
-      const { outcome } = await deferredPrompt.userChoice;
-      console.log(`User response to the install prompt: ${outcome}`);
-      // Clear the deferredPrompt variable
-      setDeferredPrompt(null);
-      // Hide the install button
-      setShowInstallButton(false);
-    }
-  };
-
-  return { showInstallButton, handleInstallClick, isStandalone };
+    // Scroll to top immediately when route changes
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'instant' // Use instant for immediate scroll
+    });
+    
+    // Also set document scroll position directly as fallback
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }, [location.pathname]);
 }
 
 function Layout({ children }) {
-  const { showInstallButton, handleInstallClick, isStandalone } = useInstallPWA();
   const isOnline = useNetworkStatus();
   const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  // Close mobile menu when navigating
+  // Use scroll to top hook
+  useScrollToTop();
+
+  // Close mobile menu when navigating and scroll to top
   useEffect(() => {
     setMobileMenuOpen(false);
+    
+    // Additional scroll reset with a small delay for better compatibility
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 0);
   }, [location.pathname]);
 
   // Define navigation items with improved icons
@@ -120,8 +66,18 @@ function Layout({ children }) {
     { path: '/contact', icon: 'fa-paper-plane', label: 'Kontak' }
   ];
 
+  // Handle navigation with scroll reset
+  const handleNavigation = (path) => {
+    // Immediately scroll to top before navigation
+    window.scrollTo(0, 0);
+    setMobileMenuOpen(false);
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
+      {/* Network Status Component */}
+      <NetworkStatus />
+      
       {/* Connection Status Banner */}
       <AnimatePresence>
         {!isOnline && (
@@ -141,7 +97,11 @@ function Layout({ children }) {
       <header className="bg-white shadow-md sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <Link to="/" className="flex items-center space-x-3 group">
+            <Link 
+              to="/" 
+              className="flex items-center space-x-3 group"
+              onClick={() => handleNavigation('/')}
+            >
               <motion.div 
                 whileHover={{ scale: 1.1, rotate: 5 }}
                 whileTap={{ scale: 0.95 }}
@@ -160,6 +120,7 @@ function Layout({ children }) {
                 <motion.div key={item.path} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                   <Link
                     to={item.path}
+                    onClick={() => handleNavigation(item.path)}
                     className={`px-4 py-2 rounded-lg transition-all duration-300 ${
                       location.pathname === item.path
                         ? 'bg-gradient-to-r from-red-600 to-red-700 text-white shadow-md'
@@ -203,6 +164,7 @@ function Layout({ children }) {
                     >
                       <Link
                         to={item.path}
+                        onClick={() => handleNavigation(item.path)}
                         className={`block py-2 px-4 rounded-lg ${
                           location.pathname === item.path
                             ? 'bg-gradient-to-r from-red-600 to-red-700 text-white shadow-sm'
@@ -226,7 +188,7 @@ function Layout({ children }) {
         {children}
       </main>
 
-      {/* Footer with improved icons */}
+      {/* Footer */}
       <footer className="bg-gray-800 text-white py-8">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -248,19 +210,49 @@ function Layout({ children }) {
             <div>
               <h3 className="font-semibold mb-4">Menu</h3>
               <ul className="space-y-2 text-sm">
-                <li><Link to="/" className="text-gray-400 hover:text-white transition flex items-center"><i className="fas fa-angle-right mr-2 text-xs"></i>Beranda</Link></li>
-                <li><Link to="/prediction" className="text-gray-400 hover:text-white transition flex items-center"><i className="fas fa-angle-right mr-2 text-xs"></i>Prediksi Risiko</Link></li>
-                <li><Link to="/about" className="text-gray-400 hover:text-white transition flex items-center"><i className="fas fa-angle-right mr-2 text-xs"></i>Tentang Kami</Link></li>
-                <li><Link to="/contact" className="text-gray-400 hover:text-white transition flex items-center"><i className="fas fa-angle-right mr-2 text-xs"></i>Kontak</Link></li>
+                <li>
+                  <Link 
+                    to="/" 
+                    onClick={() => handleNavigation('/')}
+                    className="text-gray-400 hover:text-white transition flex items-center"
+                  >
+                    <i className="fas fa-angle-right mr-2 text-xs"></i>Beranda
+                  </Link>
+                </li>
+                <li>
+                  <Link 
+                    to="/prediction" 
+                    onClick={() => handleNavigation('/prediction')}
+                    className="text-gray-400 hover:text-white transition flex items-center"
+                  >
+                    <i className="fas fa-angle-right mr-2 text-xs"></i>Prediksi Risiko
+                  </Link>
+                </li>
+                <li>
+                  <Link 
+                    to="/about" 
+                    onClick={() => handleNavigation('/about')}
+                    className="text-gray-400 hover:text-white transition flex items-center"
+                  >
+                    <i className="fas fa-angle-right mr-2 text-xs"></i>Tentang Kami
+                  </Link>
+                </li>
+                <li>
+                  <Link 
+                    to="/contact" 
+                    onClick={() => handleNavigation('/contact')}
+                    className="text-gray-400 hover:text-white transition flex items-center"
+                  >
+                    <i className="fas fa-angle-right mr-2 text-xs"></i>Kontak
+                  </Link>
+                </li>
               </ul>
             </div>
 
             <div>
               <h3 className="font-semibold mb-4">Hubungi Kami</h3>
               <div className="space-y-2 text-sm text-gray-400">
-                <p><i className="fas fa-envelope-open-text mr-2"></i> illdetect.team@gmail.com
-
-</p>
+                <p><i className="fas fa-envelope-open-text mr-2"></i> illdetect.team@gmail.com</p>
                 <p><i className="fas fa-headset mr-2"></i> +62 8123 4567 890</p>
                 <div className="flex space-x-4 mt-4">
                   <motion.a 

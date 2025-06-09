@@ -1,37 +1,47 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 
-const pageVariants = {
-  initial: {
-    opacity: 0,
-    y: 20,
-  },
-  in: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.4,
-      ease: [0.43, 0.13, 0.23, 0.96]
-    }
-  },
-  out: {
-    opacity: 0,
-    y: -20,
-    transition: {
-      duration: 0.3,
-      ease: [0.43, 0.13, 0.23, 0.96]
-    }
-  }
-};
-
 const PageTransition = ({ children }) => {
+  useEffect(() => {
+    // Force scroll to top when component mounts
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }, []);
+
+  const pageVariants = {
+    initial: {
+      opacity: 0,
+      y: 20
+    },
+    in: {
+      opacity: 1,
+      y: 0
+    },
+    out: {
+      opacity: 0,
+      y: -20
+    }
+  };
+
+  const pageTransition = {
+    type: 'tween',
+    ease: 'anticipate',
+    duration: 0.4
+  };
+
   return (
     <motion.div
       initial="initial"
       animate="in"
       exit="out"
       variants={pageVariants}
-      className="page-transition"
+      transition={pageTransition}
+      onAnimationStart={() => {
+        // Ensure scroll is at top when animation starts
+        window.scrollTo(0, 0);
+      }}
+      style={{ minHeight: '100vh' }}
     >
       {children}
     </motion.div>
