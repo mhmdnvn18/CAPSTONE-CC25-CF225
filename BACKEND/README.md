@@ -44,7 +44,7 @@ Create a `.env` file in the root directory:
 
 ```env
 # Server Configuration
-PORT=5000
+PORT=5001
 HOST=localhost
 NODE_ENV=development
 
@@ -151,6 +151,8 @@ Backend dikonfigurasi untuk menerima requests dari:
 - `http://localhost:5173` (Vite dev server)
 - `http://localhost:3000` (Alternative frontend)
 - Production frontend URLs
+
+Backend akan berjalan di port **5001** secara default.
 
 ### Database Schema
 Tabel `cardiovascular_predictions`:
