@@ -1,31 +1,53 @@
 {
-  "name": "IllDetect - Cardiovascular Diagnosis Detector",
+  "name": "IllDetect - Cardiovascular Risk Detector",
   "short_name": "IllDetect",
-  "description": "Deteksi dini risiko penyakit kardiovaskular menggunakan AI",
+  "description": "AI-powered cardiovascular risk prediction app with offline capabilities",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#dc2626",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "id",
+  "categories": ["health", "medical", "productivity"],
   "icons": [
     {
       "src": "/icon/hati.svg",
       "sizes": "any",
-      "type": "image/svg+xml"
-    },
-    {
-      "src": "/icon/icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "/icon/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
     }
   ],
-  "categories": ["health", "medical", "utilities"],
-  "lang": "id",
-  "orientation": "portrait",
-  "scope": "/",
-  "prefer_related_applications": false
+  "shortcuts": [
+    {
+      "name": "Prediksi Risiko",
+      "short_name": "Prediksi",
+      "description": "Langsung ke halaman prediksi risiko kardiovaskular",
+      "url": "/prediction",
+      "icons": [
+        {
+          "src": "/icon/hati.svg",
+          "sizes": "any",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "Riwayat Data",
+      "short_name": "Riwayat",
+      "description": "Lihat riwayat prediksi Anda",
+      "url": "/data",
+      "icons": [
+        {
+          "src": "/icon/hati.svg",
+          "sizes": "any",
+          "type": "image/svg+xml"
+        }
+      ]
+    }
+  ],
+  "prefer_related_applications": false,
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  }
 }

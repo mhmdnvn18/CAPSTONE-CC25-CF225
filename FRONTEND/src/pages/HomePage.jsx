@@ -107,23 +107,84 @@ const FeatureCard = ({ icon, title, description, index }) => {
 
 function HomePage() {
   const [activeTestimonial, setActiveTestimonial] = useState(0);
+  const [isOnline, setIsOnline] = useState(navigator.onLine);
+  const [isInstallable, setIsInstallable] = useState(false);
+  const [deferredPrompt, setDeferredPrompt] = useState(null);
+
+  // Network status detection
+  useEffect(() => {
+    const handleOnline = () => setIsOnline(true);
+    const handleOffline = () => setIsOnline(false);
+    
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+    
+    return () => {
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
+    };
+  }, []);
+
+  // PWA Install detection
+  useEffect(() => {
+    const handleBeforeInstallPrompt = (e) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+      setIsInstallable(true);
+    };
+
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    };
+  }, []);
+
+  // PWA Install handler
+  const handleInstallClick = async () => {
+    if (!deferredPrompt) return;
+    
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    
+    if (outcome === 'accepted') {
+      setDeferredPrompt(null);
+      setIsInstallable(false);
+    }
+  };
+
+  // Service worker message handler
+  useEffect(() => {
+    const handleServiceWorkerMessage = (event) => {
+      if (event.data && event.data.type === 'FORCE_SCROLL_TOP') {
+        window.scrollTo(0, 0);
+      }
+    };
+
+    navigator.serviceWorker?.addEventListener('message', handleServiceWorkerMessage);
+
+    return () => {
+      navigator.serviceWorker?.removeEventListener('message', handleServiceWorkerMessage);
+    };
+  }, []);
+
   const testimonials = [
     {
       name: "Budi Santoso",
       role: "Pasien",
-      image: "https://randomuser.me/api/portraits/men/32.jpg",
+      image: "/images/testimonial-1.jpg", // Use local fallback images
       text: "IllDetect membantu saya mengetahui risiko kardiovaskular yang selama ini tidak saya sadari. Berkat deteksi dini, saya bisa berkonsultasi dengan dokter tepat waktu."
     },
     {
       name: "Siti Rahma",
       role: "Dokter Umum",
-      image: "https://randomuser.me/api/portraits/women/44.jpg",
+      image: "/images/testimonial-2.jpg",
       text: "Sebagai dokter, saya merekomendasikan IllDetect untuk pasien saya. Tool ini membantu mereka memahami faktor risiko dan meningkatkan kesadaran tentang kesehatan kardiovaskular."
     },
     {
       name: "Agus Widodo",
       role: "Pengguna Rutin",
-      image: "https://randomuser.me/api/portraits/men/67.jpg",
+      image: "/images/testimonial-3.jpg",
       text: "Saya menggunakan IllDetect secara berkala untuk memantau kondisi jantung saya. Interface-nya mudah digunakan dan hasil prediksinya akurat."
     }
   ];
@@ -205,8 +266,58 @@ function HomePage() {
 
   return (
     <div className="min-h-screen">
+      {/* Offline Status Banner */}
+      <AnimatePresence>
+        {!isOnline && (
+          <motion.div
+            initial={{ opacity: 0, y: -50 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -50 }}
+            className="bg-amber-600 text-white py-2 px-4 text-center text-sm fixed top-0 left-0 right-0 z-50"
+          >
+            <i className="fas fa-wifi-slash mr-2"></i>
+            Anda sedang offline. Aplikasi tetap berjalan dengan fitur terbatas.
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* PWA Install Banner */}
+      <AnimatePresence>
+        {isInstallable && (
+          <motion.div
+            initial={{ opacity: 0, y: -50 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -50 }}
+            className="bg-blue-600 text-white py-3 px-4 text-center fixed top-0 left-0 right-0 z-40"
+            style={{ top: !isOnline ? '32px' : '0' }}
+          >
+            <div className="flex items-center justify-center space-x-4">
+              <span className="text-sm">
+                <i className="fas fa-download mr-2"></i>
+                Install IllDetect untuk akses lebih cepat dan offline
+              </span>
+              <button
+                onClick={handleInstallClick}
+                className="bg-white text-blue-600 px-3 py-1 rounded text-sm font-medium hover:bg-gray-100 transition-colors"
+              >
+                Install
+              </button>
+              <button
+                onClick={() => setIsInstallable(false)}
+                className="text-white hover:text-gray-200 transition-colors"
+              >
+                <i className="fas fa-times"></i>
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Hero Section with Parallax Effect */}
-      <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-red-50 via-white to-blue-50 py-20">
+      <section 
+        className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-red-50 via-white to-blue-50 py-20"
+        style={{ paddingTop: (!isOnline || isInstallable) ? '80px' : '20px' }}
+      >
         {/* Animated Background Elements */}
         <div className="absolute inset-0 overflow-hidden">
           <motion.div 
@@ -285,12 +396,17 @@ function HomePage() {
                     transition={{ duration: 1.5, repeat: Infinity }}
                   ></motion.i>
                   MULAI PREDIKSI SEKARANG
+                  {!isOnline && (
+                    <span className="ml-2 text-xs bg-white bg-opacity-20 px-2 py-1 rounded">
+                      Offline
+                    </span>
+                  )}
                   <i className="fas fa-arrow-right ml-3 group-hover:translate-x-1 transition-transform duration-300"></i>
                 </span>
               </Link>
             </motion.div>
 
-            {/* Trust Indicators with hover effects */}
+            {/* Enhanced Trust Indicators with offline status */}
             <motion.div 
               className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16"
               variants={fadeInUp}
@@ -316,8 +432,8 @@ function HomePage() {
                 className="flex items-center justify-center space-x-2 text-gray-600 bg-white p-3 rounded-lg shadow-sm hover:shadow-md transition-all"
                 whileHover={{ y: -5, scale: 1.03 }}
               >
-                <i className="fas fa-clock text-purple-600"></i>
-                <span className="font-medium">Hasil Cepat</span>
+                <i className={`fas ${isOnline ? 'fa-wifi' : 'fa-wifi-slash'} ${isOnline ? 'text-green-600' : 'text-orange-600'}`}></i>
+                <span className="font-medium">{isOnline ? 'Online' : 'Offline Mode'}</span>
               </motion.div>
             </motion.div>
             
@@ -530,12 +646,19 @@ function HomePage() {
                     transition={{ duration: 0.5 }}
                     className="text-center"
                   >
-                    <div className="w-20 h-20 mx-auto mb-4 rounded-full overflow-hidden border-4 border-red-100">
+                    <div className="w-20 h-20 mx-auto mb-4 rounded-full overflow-hidden border-4 border-red-100 bg-gray-200 flex items-center justify-center">
                       <img 
                         src={testimonials[activeTestimonial].image} 
                         alt={testimonials[activeTestimonial].name}
                         className="w-full h-full object-cover"
+                        onError={(e) => {
+                          e.target.style.display = 'none';
+                          e.target.nextSibling.style.display = 'flex';
+                        }}
                       />
+                      <div className="w-full h-full hidden items-center justify-center text-gray-400">
+                        <i className="fas fa-user text-2xl"></i>
+                      </div>
                     </div>
                     <p className="text-gray-600 italic text-lg mb-6">"{testimonials[activeTestimonial].text}"</p>
                     <h4 className="font-bold text-gray-800">{testimonials[activeTestimonial].name}</h4>
@@ -630,7 +753,9 @@ function HomePage() {
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
           >
-Bersama, kita membangun masa depan skrining kesehatan kardiovaskular          </motion.p>
+            Bersama, kita membangun masa depan skrining kesehatan kardiovaskular. 
+            {!isOnline && " Dapat digunakan offline kapan saja!"}
+          </motion.p>
           
           <motion.div
             variants={fadeInUp}
@@ -649,6 +774,11 @@ Bersama, kita membangun masa depan skrining kesehatan kardiovaskular          <
                 transition={{ duration: 1.5, repeat: Infinity }}
               ></motion.i>
               <span>Mulai Prediksi Gratis</span>
+              {!isOnline && (
+                <span className="ml-2 text-xs bg-red-100 text-red-600 px-2 py-1 rounded">
+                  Offline Ready
+                </span>
+              )}
               <i className="fas fa-arrow-right ml-3 group-hover:translate-x-1 transition-transform"></i>
             </Link>
           </motion.div>
@@ -662,6 +792,13 @@ Bersama, kita membangun masa depan skrining kesehatan kardiovaskular          <
           >
             <i className="fas fa-lock mr-2"></i>
             Tidak perlu registrasi. Gratis. Hasil instan.
+            {!isOnline && (
+              <>
+                <br />
+                <i className="fas fa-wifi-slash mr-2"></i>
+                Tersedia offline - tidak memerlukan koneksi internet
+              </>
+            )}
           </motion.p>
         </div>
       </section>
