@@ -19,6 +19,7 @@ function PredictionForm({ onResult }) {
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
   const [currentStep, setCurrentStep] = useState(1);
+  const [predictionResult, setPredictionResult] = useState(null);
   const totalSteps = 3;
 
   const handleInputChange = (e) => {
@@ -70,22 +71,120 @@ function PredictionForm({ onResult }) {
     setCurrentStep(prev => Math.max(prev - 1, 1));
   };
 
+  // Updated response handling for new backend format
+  const handlePredictionResponse = (response) => {
+    if (response.success) {
+      const prediction = response.prediction || response;
+      const patientData = response.patient_data || {};
+      
+      // Use consistent field names with fallbacks for compatibility
+      const result = {
+        risk: prediction.risk,
+        confidence: prediction.confidence,
+        riskLabel: prediction.risk_label,
+        bmi: prediction.bmi || calculateBMI(formData.height, formData.weight),
+        source: prediction.source || response.source,
+        // Patient data with correct mapping (with fallbacks)
+        gender: patientData.gender || (formData.gender === '1' ? 'Female' : 'Male'),
+        sex: patientData.sex || formData.gender, // 1 or 2 for frontend
+        bloodPressure: patientData.blood_pressure || `${formData.ap_hi}/${formData.ap_lo}`,
+        cholesterolLevel: patientData.cholesterol || formData.cholesterol,
+        glucoseLevel: patientData.glucose || formData.gluc,
+        // ML insights if available
+        mlInsights: response.ml_insights || null,
+        interpretation: response.data?.interpretation || null,
+        recommendation: response.data?.result_message || prediction.recommendations?.join('. ')
+      };
+      
+      setPredictionResult(result);
+      
+      // Call the parent component's onResult callback
+      if (onResult) {
+        onResult(result);
+      }
+    }
+  };
+
+  // Helper function to calculate BMI
+  const calculateBMI = (height, weight) => {
+    if (!height || !weight) return null;
+    const heightInM = height / 100;
+    return Math.round((weight / (heightInM * heightInM)) * 100) / 100;
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+    
+    // Validate all required fields with proper ranges
+    if (!formData.age || isNaN(formData.age) || formData.age < 1 || formData.age > 120) {
+      newErrors.age = 'Usia harus diisi dengan nilai antara 1-120 tahun';
+    }
+    if (!formData.gender || !['1', '2'].includes(formData.gender)) {
+      newErrors.gender = 'Jenis kelamin harus dipilih';
+    }
+    if (!formData.height || isNaN(formData.height) || formData.height < 100 || formData.height > 250) {
+      newErrors.height = 'Tinggi badan harus diisi dengan nilai antara 100-250 cm';
+    }
+    if (!formData.weight || isNaN(formData.weight) || formData.weight < 30 || formData.weight > 200) {
+      newErrors.weight = 'Berat badan harus diisi dengan nilai antara 30-200 kg';
+    }
+    if (!formData.ap_hi || isNaN(formData.ap_hi) || formData.ap_hi < 80 || formData.ap_hi > 250) {
+      newErrors.ap_hi = 'Tekanan darah sistolik harus diisi dengan nilai antara 80-250 mmHg';
+    }
+    if (!formData.ap_lo || isNaN(formData.ap_lo) || formData.ap_lo < 40 || formData.ap_lo > 150) {
+      newErrors.ap_lo = 'Tekanan darah diastolik harus diisi dengan nilai antara 40-150 mmHg';
+    }
+    if (!formData.cholesterol || !['1', '2', '3'].includes(formData.cholesterol)) {
+      newErrors.cholesterol = 'Level kolesterol harus dipilih';
+    }
+    if (!formData.gluc || !['1', '2', '3'].includes(formData.gluc)) {
+      newErrors.gluc = 'Level glukosa harus dipilih';
+    }
+    if (!formData.smoke || !['0', '1'].includes(formData.smoke)) {
+      newErrors.smoke = 'Status merokok harus dipilih';
+    }
+    if (!formData.alco || !['0', '1'].includes(formData.alco)) {
+      newErrors.alco = 'Status alkohol harus dipilih';
+    }
+    if (!formData.active || !['0', '1'].includes(formData.active)) {
+      newErrors.active = 'Status aktivitas fisik harus dipilih';
+    }
+
+    // Additional logical validation
+    if (formData.ap_hi && formData.ap_lo && parseInt(formData.ap_hi) <= parseInt(formData.ap_lo)) {
+      newErrors.ap_hi = 'Tekanan sistolik harus lebih tinggi dari diastolik';
+      newErrors.ap_lo = 'Tekanan diastolik harus lebih rendah dari sistolik';
+    }
+    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  // Handle form submission - Fixed to match backend validation schema exactly
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    if (!validateStep(currentStep)) {
+    if (!validateForm()) {
+      // Scroll to first error
+      const firstErrorField = document.querySelector('.border-red-500');
+      if (firstErrorField) {
+        firstErrorField.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
       return;
     }
-    
+
     setLoading(true);
-    
+    setErrors({});
+
     try {
-      // Convert form data to match API format
-      const apiData = {
+      // Format data according to backend API expectations
+      // Backend expects sex: 0=Female, 1=Male (frontend format)
+      // Frontend stores gender: 1=Female, 2=Male
+      const requestData = {
         age: parseInt(formData.age),
-        gender: parseInt(formData.gender),
+        sex: parseInt(formData.gender) === 1 ? 0 : 1, // Convert: 1(Perempuan)->0, 2(Laki-laki)->1
         height: parseInt(formData.height),
-        weight: parseInt(formData.weight),
+        weight: parseInt(formData.weight), // Backend expects integer
         ap_hi: parseInt(formData.ap_hi),
         ap_lo: parseInt(formData.ap_lo),
         cholesterol: parseInt(formData.cholesterol),
@@ -95,89 +194,86 @@ function PredictionForm({ onResult }) {
         active: parseInt(formData.active)
       };
 
-      console.log('📤 Submitting prediction data:', apiData);
-
-      let prediction;
+      // Validate that all values are properly converted and within expected ranges
+      const validationErrors = [];
       
-      try {
-        // Try backend API first
-        const result = await CardiovascularAPI.predict(apiData);
-        
-        // Convert API response to match expected format
-        const heightInM = apiData.height / 100;
-        const bmi = apiData.weight / (heightInM * heightInM);
-        
-        prediction = {
-          percentage: Math.round(result.prediction.confidence),
-          level: result.prediction.risk_label === 'High Risk' ? 'Tinggi' : 'Rendah',
-          color: result.prediction.risk === 1 ? 'red' : 'green',
-          bmi: bmi.toFixed(1),
-          risk: result.prediction.risk,
-          formData: apiData,
-          apiData: {
-            source: 'Hapi.js API',
-            probability: result.prediction.probability,
-            confidence: result.prediction.confidence,
-            risk: result.prediction.risk,
-            dataSaved: result.saved
-          }
-        };
-        
-        console.log('✅ API prediction successful:', prediction);
-        
-      } catch (error) {
-        console.warn('⚠️ API failed, using local prediction:', error);
-        
-        // Fallback to local prediction
-        const heightInM = apiData.height / 100;
-        const bmi = apiData.weight / (heightInM * heightInM);
-        
-        const riskFactors = [
-          apiData.age > 55 ? 25 : apiData.age > 45 ? 15 : 5,
-          apiData.gender === 2 ? 10 : 5,
-          bmi > 30 ? 20 : bmi > 25 ? 10 : 0,
-          apiData.ap_hi > 140 ? 25 : apiData.ap_hi > 120 ? 15 : 5,
-          apiData.ap_lo > 90 ? 20 : apiData.ap_lo > 80 ? 10 : 5,
-          apiData.cholesterol === 3 ? 25 : apiData.cholesterol === 2 ? 15 : 0,
-          apiData.gluc === 3 ? 20 : apiData.gluc === 2 ? 10 : 0,
-          apiData.smoke === 1 ? 15 : 0,
-          apiData.alco === 1 ? 5 : 0,
-          apiData.active === 0 ? 10 : 0
-        ];
-        
-        const totalRisk = riskFactors.reduce((sum, risk) => sum + risk, 0);
-        const confidence = Math.min(Math.max(totalRisk, 10), 95);
-        const risk = confidence >= 65 ? 1 : 0;
-        
-        prediction = {
-          percentage: confidence,
-          level: risk === 1 ? 'Tinggi' : 'Rendah',
-          color: risk === 1 ? 'red' : 'green',
-          bmi: bmi.toFixed(1),
-          risk: risk,
-          formData: apiData,
-          apiData: {
-            source: 'Local Prediction',
-            probability: confidence / 100,
-            confidence: confidence,
-            risk: risk,
-            dataSaved: false
-          }
-        };
-        
-        console.log('✅ Local prediction successful:', prediction);
+      if (isNaN(requestData.age) || requestData.age < 1 || requestData.age > 120) {
+        validationErrors.push('age');
+      }
+      if (isNaN(requestData.sex) || ![0, 1].includes(requestData.sex)) {
+        validationErrors.push('sex');
+      }
+      if (isNaN(requestData.height) || requestData.height < 100 || requestData.height > 250) {
+        validationErrors.push('height');
+      }
+      if (isNaN(requestData.weight) || requestData.weight < 30 || requestData.weight > 200) {
+        validationErrors.push('weight');
+      }
+      if (isNaN(requestData.ap_hi) || requestData.ap_hi < 80 || requestData.ap_hi > 250) {
+        validationErrors.push('ap_hi');
+      }
+      if (isNaN(requestData.ap_lo) || requestData.ap_lo < 40 || requestData.ap_lo > 150) {
+        validationErrors.push('ap_lo');
+      }
+      if (isNaN(requestData.cholesterol) || ![1, 2, 3].includes(requestData.cholesterol)) {
+        validationErrors.push('cholesterol');
+      }
+      if (isNaN(requestData.gluc) || ![1, 2, 3].includes(requestData.gluc)) {
+        validationErrors.push('gluc');
+      }
+      if (isNaN(requestData.smoke) || ![0, 1].includes(requestData.smoke)) {
+        validationErrors.push('smoke');
+      }
+      if (isNaN(requestData.alco) || ![0, 1].includes(requestData.alco)) {
+        validationErrors.push('alco');
+      }
+      if (isNaN(requestData.active) || ![0, 1].includes(requestData.active)) {
+        validationErrors.push('active');
+      }
+
+      if (validationErrors.length > 0) {
+        throw new Error(`Data validation failed for fields: ${validationErrors.join(', ')}`);
+      }
+
+      console.log('📤 Sending prediction data (Backend format):', requestData);
+      console.log('📋 Gender mapping: Frontend', formData.gender, '-> Backend sex:', requestData.sex);
+      
+      const result = await CardiovascularAPI.predictWithBackend(requestData);
+      
+      console.log('📥 Prediction result:', result);
+      
+      if (result && result.success) {
+        // Handle response with new format
+        handlePredictionResponse(result);
+        console.log('✅ Prediction successful');
+      } else {
+        // Handle specific backend error responses
+        if (result && result.error) {
+          throw new Error(result.message || result.error);
+        }
+        throw new Error('Prediction failed - Invalid response format');
+      }
+    } catch (error) {
+      console.error('❌ Prediction error:', error);
+      
+      let errorMessage = 'Terjadi kesalahan yang tidak diketahui';
+      
+      // Handle specific error types
+      if (error.message.includes('400') || error.message.includes('Bad Request')) {
+        errorMessage = 'Data yang dikirim tidak valid. Pastikan semua field telah diisi dengan benar.';
+      } else if (error.message.includes('validation failed')) {
+        errorMessage = 'Validasi data gagal. Periksa kembali semua input yang dimasukkan.';
+      } else if (error.message.includes('500') || error.message.includes('Internal Server Error')) {
+        errorMessage = 'Terjadi kesalahan server. Silakan coba lagi nanti.';
+      } else if (error.message.includes('network') || error.message.includes('fetch') || error.message.includes('Failed to fetch')) {
+        errorMessage = 'Tidak dapat terhubung ke server. Periksa koneksi internet Anda.';
+      } else if (error.message.includes('timeout')) {
+        errorMessage = 'Permintaan timeout. Server mungkin sedang sibuk, coba lagi nanti.';
+      } else {
+        errorMessage = error.message;
       }
       
-      // Store result in sessionStorage
-      sessionStorage.setItem('predictionResult', JSON.stringify(prediction));
-      console.log('💾 Prediction result saved to sessionStorage');
-      
-      // Call onResult callback
-      onResult(prediction);
-      
-    } catch (error) {
-      console.error('💥 Unexpected error during prediction:', error);
-      alert('Terjadi kesalahan saat melakukan prediksi. Silakan coba lagi.');
+      setErrors({ submit: errorMessage });
     } finally {
       setLoading(false);
     }
@@ -526,6 +622,19 @@ function PredictionForm({ onResult }) {
         {currentStep === 2 && renderStep2()}
         {currentStep === 3 && renderStep3()}
       </div>
+
+      {/* Error Display */}
+      {errors.submit && (
+        <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+          <div className="flex">
+            <i className="fas fa-exclamation-triangle text-red-400 mr-3 mt-0.5"></i>
+            <div>
+              <h3 className="text-sm font-medium text-red-800">Terjadi Kesalahan</h3>
+              <p className="text-sm text-red-700 mt-1">{errors.submit}</p>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Navigation Buttons */}
       <div className="flex justify-between pt-6 border-t border-gray-200">

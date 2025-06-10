@@ -1,5 +1,4 @@
 export const API_URL = 'https://backend-api-cgkk.onrender.com';
-export const ML_API_URL = 'https://api-ml-production.up.railway.app';
 
 // You can also add specific endpoints here
 export const ENDPOINTS = {
@@ -10,22 +9,26 @@ export const ENDPOINTS = {
   predict: `${API_URL}/api/predict`,
   predictions: `${API_URL}/api/predictions`,
   statistics: `${API_URL}/api/statistics`,
-  
-  // ML API endpoints - corrected
-  ml_root: `${ML_API_URL}/`,
-  ml_health: `${ML_API_URL}/`,
-  ml_predict: `${ML_API_URL}/predict`,
-  ml_model_info: `${ML_API_URL}/`
+  mlHealth: `${API_URL}/api/ml-health`
 };
 
-// Gender mapping constants
+// Gender mapping to match backend expectations
 export const GENDER_MAPPING = {
-  FRONTEND_TO_DATASET: {
-    0: 1, // Frontend Female (0) -> Dataset Female (1)
-    1: 2  // Frontend Male (1) -> Dataset Male (2)
+  // Frontend format: 1=Perempuan, 2=Laki-laki
+  // Backend expects: sex: 0=Female, 1=Male
+  FRONTEND_TO_BACKEND: {
+    1: 0, // Perempuan -> Female
+    2: 1  // Laki-laki -> Male
   },
-  DATASET_TO_FRONTEND: {
-    1: 0, // Dataset Female (1) -> Frontend Female (0)
-    2: 1  // Dataset Male (2) -> Frontend Male (1)
+  BACKEND_TO_FRONTEND: {
+    0: 1, // Female -> Perempuan
+    1: 2  // Male -> Laki-laki
   }
+};
+
+// API request defaults
+export const API_DEFAULTS = {
+  timeout: 30000,
+  retries: 3,
+  retryDelay: 1000
 };
