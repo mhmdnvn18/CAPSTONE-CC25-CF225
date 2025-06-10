@@ -1,5 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
-import { API_URL, ENDPOINTS } from '../config/api.js';
+import { API_URL, ML_API_URL, ENDPOINTS, GENDER_MAPPING } from '../config/api.js';
 
 // API Configuration - Updated to use deployed backend
 const API_BASE_URL = import.meta.env.VITE_API_URL || API_URL;
@@ -301,7 +301,52 @@ class CardiovascularAPI {
         }
     }
 
-    // Enhanced local prediction with better risk assessment
+    // New method for ML API predictions - Fix data format and gender mapping
+    async predictWithML(inputData) {
+        // Format data specifically for ML API with correct gender mapping
+        const mlData = {
+            age: inputData.age,
+            sex: GENDER_MAPPING.FRONTEND_TO_DATASET[inputData.gender], // Convert: 0->1, 1->2
+            height: inputData.height,
+            weight: inputData.weight,
+            ap_hi: inputData.systolic,
+            ap_lo: inputData.diastolic,
+            cholesterol: inputData.cholesterol,
+            gluc: inputData.glucose,
+            smoke: inputData.smoking,
+            alco: inputData.alcohol,
+            active: inputData.physical_activity
+        };
+
+        console.log('🧠 Gender mapping - Frontend:', inputData.gender, '-> Dataset:', mlData.sex);
+        console.log('🧠 Sending to ML API:', mlData);
+
+        try {
+            const response = await this.fetchWithTimeout(ML_API_URL, {
+                method: 'POST',
+                body: JSON.stringify(mlData)
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            }
+
+            const result = await response.json();
+            
+            if (!result.success) {
+                throw new Error(result.message || 'Prediction failed');
+            }
+
+            console.log('✅ ML API prediction successful:', result);
+            return result;
+
+        } catch (error) {
+            console.error('❌ ML API prediction failed:', error);
+            throw error;
+        }
+    }
+
+    // Enhanced local prediction with correct gender handling
     localPredict(formData) {
         const heightInM = formData.height / 100;
         const bmi = formData.weight / (heightInM * heightInM);
@@ -338,6 +383,12 @@ class CardiovascularAPI {
         if (formData.smoking === 1) {
             riskScore += 2;
             riskFactors.push('Merokok');
+        }
+        
+        // Gender risk factor (using frontend values: 0=Female, 1=Male)
+        if (formData.gender === 1) { // Male
+            riskScore += 1;
+            riskFactors.push('Jenis kelamin laki-laki (faktor risiko tambahan)');
         }
         
         const risk = riskScore >= 4 ? 1 : 0;
