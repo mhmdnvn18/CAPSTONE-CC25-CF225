@@ -79,21 +79,39 @@ function PredictionForm({ onResult }) {
       
       // Use consistent field names with fallbacks for compatibility
       const result = {
-        risk: prediction.risk,
-        confidence: prediction.confidence,
-        riskLabel: prediction.risk_label,
-        bmi: prediction.bmi || calculateBMI(formData.height, formData.weight),
-        source: prediction.source || response.source,
-        // Patient data with correct mapping (with fallbacks)
-        gender: patientData.gender || (formData.gender === '1' ? 'Female' : 'Male'),
-        sex: patientData.sex || formData.gender, // 1 or 2 for frontend
-        bloodPressure: patientData.blood_pressure || `${formData.ap_hi}/${formData.ap_lo}`,
-        cholesterolLevel: patientData.cholesterol || formData.cholesterol,
-        glucoseLevel: patientData.glucose || formData.gluc,
-        // ML insights if available
-        mlInsights: response.ml_insights || null,
-        interpretation: response.data?.interpretation || null,
-        recommendation: response.data?.result_message || prediction.recommendations?.join('. ')
+        success: true,
+        prediction: {
+          risk: prediction.risk,
+          confidence: prediction.confidence,
+          probability: prediction.probability,
+          risk_label: prediction.risk_label,
+          bmi: prediction.bmi || calculateBMI(formData.height, formData.weight),
+          source: prediction.source || response.source
+        },
+        patient_data: {
+          age: formData.age,
+          gender: formData.gender === '1' ? 'Perempuan' : 'Laki-laki',
+          sex: patientData.sex || (formData.gender === '1' ? 0 : 1),
+          height: formData.height,
+          weight: formData.weight,
+          bmi: prediction.bmi || calculateBMI(formData.height, formData.weight),
+          blood_pressure: `${formData.ap_hi}/${formData.ap_lo}`,
+          cholesterol: formData.cholesterol === '1' ? 'Normal' : formData.cholesterol === '2' ? 'Di atas normal' : 'Jauh di atas normal',
+          glucose: formData.gluc === '1' ? 'Normal' : formData.gluc === '2' ? 'Di atas normal' : 'Jauh di atas normal',
+          lifestyle: {
+            smoking: formData.smoke === '1' ? 'Yes' : 'No',
+            alcohol: formData.alco === '1' ? 'Yes' : 'No',
+            physical_activity: formData.active === '1' ? 'Yes' : 'No'
+          }
+        },
+        ml_insights: response.ml_insights || null,
+        data: {
+          interpretation: response.data?.interpretation || 'Prediksi berhasil dilakukan',
+          result_message: response.data?.result_message || prediction.risk_label,
+          recommendations: response.data?.recommendations || []
+        },
+        source: prediction.source || response.source || 'backend',
+        timestamp: new Date().toISOString()
       };
       
       setPredictionResult(result);

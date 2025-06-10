@@ -42,14 +42,22 @@ function ResultPage() {
 
   const handleShareResult = () => {
     if (navigator.share && result) {
+      const prediction = result.prediction || result;
+      const riskLabel = prediction.risk_label || (prediction.risk === 1 ? 'High Risk' : 'Low Risk');
+      const confidence = prediction.confidence || Math.round((prediction.probability || 0.5) * 100);
+      
       navigator.share({
         title: 'Hasil Prediksi Risiko Kardiovaskular - IllDetect',
-        text: `Hasil prediksi risiko kardiovaskular saya: ${result.level} (${result.percentage}%)`,
+        text: `Hasil prediksi risiko kardiovaskular saya: ${riskLabel} (${confidence}%)`,
         url: window.location.origin
       }).catch(console.error);
     } else {
       // Fallback for browsers without Web Share API
-      const shareText = `Hasil prediksi risiko kardiovaskular saya: ${result.level} (${result.percentage}%) via IllDetect`;
+      const prediction = result.prediction || result;
+      const riskLabel = prediction.risk_label || (prediction.risk === 1 ? 'High Risk' : 'Low Risk');
+      const confidence = prediction.confidence || Math.round((prediction.probability || 0.5) * 100);
+      const shareText = `Hasil prediksi risiko kardiovaskular saya: ${riskLabel} (${confidence}%) via IllDetect`;
+      
       navigator.clipboard.writeText(shareText).then(() => {
         alert('Hasil berhasil disalin ke clipboard!');
       }).catch(() => {

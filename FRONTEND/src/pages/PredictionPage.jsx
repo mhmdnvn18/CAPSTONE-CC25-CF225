@@ -14,13 +14,11 @@ const PredictionPage = () => {
     console.log('🎯 Prediction result received:', result);
     setPredictionResult(result);
     
-    // Navigate to result page with the prediction data
-    navigate('/result', { 
-      state: { 
-        predictionResult: result,
-        timestamp: new Date().toISOString()
-      } 
-    });
+    // Store result in sessionStorage for ResultPage
+    sessionStorage.setItem('predictionResult', JSON.stringify(result));
+    
+    // Navigate to result page
+    navigate('/result');
   };
 
   // Handle prediction error
