@@ -7,24 +7,33 @@ import ApiStatusMonitor from '../components/ApiStatusMonitor';
 const PredictionPage = () => {
   const [predictionResult, setPredictionResult] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [transitioning, setTransitioning] = useState(false);
   const navigate = useNavigate();
 
-  // Handle successful prediction
+  // Handle successful prediction with transition
   const handlePredictionResult = (result) => {
     console.log('🎯 Prediction result received:', result);
     setPredictionResult(result);
+    setTransitioning(true);
     
     // Store result in sessionStorage for ResultPage
     sessionStorage.setItem('predictionResult', JSON.stringify(result));
     
-    // Navigate to result page
-    navigate('/result');
+    // Add a smooth transition delay before navigation
+    setTimeout(() => {
+      navigate('/result', { 
+        state: { 
+          fromPrediction: true,
+          result: result 
+        } 
+      });
+    }, 1500);
   };
 
   // Handle prediction error
   const handlePredictionError = (error) => {
     console.error('❌ Prediction error in page:', error);
-    // Error is already handled in the form component
+    setTransitioning(false);
   };
 
   return (
@@ -60,14 +69,82 @@ const PredictionPage = () => {
           <ApiStatusMonitor />
         </div>
 
-        {/* Prediction Form */}
+        {/* Prediction Form with Transition Overlay */}
         <motion.div 
-          className="max-w-4xl mx-auto"
+          className="max-w-4xl mx-auto relative"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          <div className="bg-white rounded-2xl shadow-xl p-8">
+          <div className="bg-white rounded-2xl shadow-xl p-8 relative overflow-hidden">
+            {/* Success Transition Overlay */}
+            <AnimatePresence>
+              {transitioning && (
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-green-400 to-blue-500 flex items-center justify-center z-10"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 1.2 }}
+                  transition={{ duration: 0.6 }}
+                >
+                  <div className="text-center text-white">
+                    <motion.div
+                      className="w-16 h-16 mx-auto mb-4 bg-white bg-opacity-20 rounded-full flex items-center justify-center"
+                      animate={{ 
+                        rotate: [0, 360],
+                        scale: [1, 1.1, 1] 
+                      }}
+                      transition={{ 
+                        rotate: { duration: 1, repeat: Infinity, ease: "linear" },
+                        scale: { duration: 2, repeat: Infinity }
+                      }}
+                    >
+                      <i className="fas fa-check text-2xl"></i>
+                    </motion.div>
+                    <motion.h3 
+                      className="text-2xl font-bold mb-2"
+                      initial={{ y: 20, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      transition={{ delay: 0.3 }}
+                    >
+                      Prediksi Berhasil!
+                    </motion.h3>
+                    <motion.p
+                      initial={{ y: 20, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      transition={{ delay: 0.5 }}
+                    >
+                      Memproses hasil dan mengarahkan ke halaman hasil...
+                    </motion.p>
+                    <motion.div 
+                      className="mt-4 flex justify-center"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: 0.7 }}
+                    >
+                      <div className="flex space-x-1">
+                        {[0, 1, 2].map((i) => (
+                          <motion.div
+                            key={i}
+                            className="w-2 h-2 bg-white rounded-full"
+                            animate={{ 
+                              scale: [1, 1.5, 1],
+                              opacity: [0.5, 1, 0.5]
+                            }}
+                            transition={{ 
+                              duration: 1,
+                              repeat: Infinity,
+                              delay: i * 0.2
+                            }}
+                          />
+                        ))}
+                      </div>
+                    </motion.div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
             <PredictionForm 
               onResult={handlePredictionResult}
               onError={handlePredictionError}
