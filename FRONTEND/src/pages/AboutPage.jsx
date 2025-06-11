@@ -541,16 +541,28 @@ const AboutPage = () => {
       <AnimatedSection delay={0.4}>
         <div className="max-w-6xl mx-auto mt-20">
           <h2 className="text-2xl font-bold text-center mb-10">Teknologi yang Digunakan</h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-6">
+            <div className="bg-white p-6 rounded-xl shadow-md text-center hover-lift">
+              <motion.div 
+                whileHover={{ rotate: 10, scale: 1.1 }}
+                className="w-12 h-12 bg-cyan-100 rounded-lg flex items-center justify-center mx-auto mb-4"
+              >
+                <i className="fab fa-react text-cyan-500 text-2xl"></i>
+              </motion.div>
+              <h3 className="font-semibold">React</h3>
+              <p className="text-sm text-gray-500">Frontend Library</p>
+            </div>
             <div className="bg-white p-6 rounded-xl shadow-md text-center hover-lift">
               <motion.div 
                 whileHover={{ rotate: 10, scale: 1.1 }}
                 className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-4"
               >
-                <i className="fab fa-react text-blue-600 text-2xl"></i>
+                <svg className="w-8 h-8 text-blue-500" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12.001,4.8c-3.2,0-5.2,1.6-6,4.8c1.2-1.6,2.6-2.2,4.2-1.8c0.913,0.228,1.565,0.89,2.288,1.624 C13.666,10.618,15.027,12,18.001,12c3.2,0,5.2-1.6,6-4.8c-1.2,1.6-2.6,2.2-4.2,1.8c-0.913-0.228-1.565-0.89-2.288-1.624 C16.337,6.182,14.976,4.8,12.001,4.8z M6.001,12c-3.2,0-5.2,1.6-6,4.8c1.2-1.6,2.6-2.2,4.2-1.8c0.913,0.228,1.565,0.89,2.288,1.624 C7.666,17.818,9.027,19.2,12.001,19.2c3.2,0,5.2-1.6,6-4.8c-1.2,1.6-2.6,2.2-4.2,1.8c-0.913-0.228-1.565-0.89-2.288-1.624 C10.337,13.382,8.976,12,6.001,12z"/>
+                </svg>
               </motion.div>
-              <h3 className="font-semibold">React</h3>
-              <p className="text-sm text-gray-500">Frontend Library</p>
+              <h3 className="font-semibold">Tailwind CSS</h3>
+              <p className="text-sm text-gray-500">CSS Framework</p>
             </div>
             <div className="bg-white p-6 rounded-xl shadow-md text-center hover-lift">
               <motion.div 
@@ -565,19 +577,57 @@ const AboutPage = () => {
             <div className="bg-white p-6 rounded-xl shadow-md text-center hover-lift">
               <motion.div 
                 whileHover={{ rotate: 10, scale: 1.1 }}
+                className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mx-auto mb-4"
+              >
+                <svg className="w-8 h-8 text-orange-600" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M1.292 5.856L11.54 0v24l-4.095-2.378V7.603l-6.168 3.564L1.292 5.856zm21.416 5.311l-.015-5.285L12.46 12.04l4.911 2.849 5.322-3.08.015-.642zm-11.168 1.741l10.273-6.084L12.54 0 1.292 5.856l10.248 6.052z"/>
+                </svg>
+              </motion.div>
+              <h3 className="font-semibold">TensorFlow</h3>
+              <p className="text-sm text-gray-500">ML Framework</p>
+            </div>
+            <div className="bg-white p-6 rounded-xl shadow-md text-center hover-lift">
+              <motion.div 
+                whileHover={{ rotate: 10, scale: 1.1 }}
+                className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center mx-auto mb-4"
+              >
+                <svg className="w-8 h-8 text-gray-700" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 0C8.48 0 5.45 2.02 4.03 5.07L2.45 8.64c-.29.67.13 1.46.87 1.46h3.12c.74 0 1.16-.79.87-1.46L5.97 5.07C7.39 3.02 9.65 2 12 2s4.61 1.02 6.03 3.07l-1.34 3.57c-.29.67.13 1.46.87 1.46h3.12c.74 0 1.16-.79.87-1.46L19.97 5.07C18.55 2.02 15.52 0 12 0zm0 24c3.52 0 6.55-2.02 7.97-5.07l1.58-3.57c.29-.67-.13-1.46-.87-1.46h-3.12c-.74 0-1.16.79-.87 1.46l1.34 3.57C16.61 20.98 14.35 22 12 22s-4.61-1.02-6.03-3.07l1.34-3.57c.29-.67-.13-1.46-.87-1.46H3.32c-.74 0-1.16.79-.87 1.46L4.03 18.93C5.45 21.98 8.48 24 12 24z"/>
+                </svg>
+              </motion.div>
+              <h3 className="font-semibold">Flask</h3>
+              <p className="text-sm text-gray-500">API Framework</p>
+            </div>
+            <div className="bg-white p-6 rounded-xl shadow-md text-center hover-lift">
+              <motion.div 
+                whileHover={{ rotate: 10, scale: 1.1 }}
+                className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mx-auto mb-4"
+              >
+                <svg className="w-8 h-8 text-orange-600" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M20.9 10.7c0-.4-.1-.7-.3-1.1l-1.8-3.2c-.2-.4-.5-.8-.9-1L12 2 6.1 5.4c-.4.2-.7.6-.9 1L3.4 9.6c-.2.4-.3.7-.3 1.1v6.6c0 .4.1.7.3 1.1l1.8 3.2c.2.4.5.8.9 1L12 22l5.9-3.4c.4-.2.7-.6.9-1l1.8-3.2c.2-.4.3-.7.3-1.1v-6.6zM12 5.8c3.4 0 6.2 2.8 6.2 6.2s-2.8 6.2-6.2 6.2-6.2-2.8-6.2-6.2S8.6 5.8 12 5.8z"/>
+                </svg>
+              </motion.div>
+              <h3 className="font-semibold">Hapi.js</h3>
+              <p className="text-sm text-gray-500">Backend Framework</p>
+            </div>
+            <div className="bg-white p-6 rounded-xl shadow-md text-center hover-lift">
+              <motion.div 
+                whileHover={{ rotate: 10, scale: 1.1 }}
                 className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mx-auto mb-4"
               >
                 <i className="fab fa-node-js text-green-600 text-2xl"></i>
               </motion.div>
               <h3 className="font-semibold">Node.js</h3>
-              <p className="text-sm text-gray-500">Backend</p>
+              <p className="text-sm text-gray-500">Backend Runtime</p>
             </div>
             <div className="bg-white p-6 rounded-xl shadow-md text-center hover-lift">
               <motion.div 
                 whileHover={{ rotate: 10, scale: 1.1 }}
-                className="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center mx-auto mb-4"
+                className="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center mx-auto mb-4"
               >
-                <i className="fas fa-database text-indigo-600 text-2xl"></i>
+                <svg className="w-8 h-8 text-emerald-600" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M21.362 9.354H12V0h9.362v9.354zM21.362 24H12v-9.362h9.362V24zM10.189 24H.827v-9.362h9.362V24zM10.189 9.354H.827V0h9.362v9.354z"/>
+                </svg>
               </motion.div>
               <h3 className="font-semibold">Supabase</h3>
               <p className="text-sm text-gray-500">Database</p>
