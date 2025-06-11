@@ -1,0 +1,20 @@
+{
+  "name": "illdetect-backend",
+  "version": "1.0.0",
+  "description": "IllDetect Cardiovascular Prediction Backend API",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "@hapi/hapi": "^21.3.0",
+    "@hapi/joi": "^17.1.1",
+    "@supabase/supabase-js": "^2.38.0",
+    "axios": "^1.6.0",
+    "dotenv": "^16.3.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
