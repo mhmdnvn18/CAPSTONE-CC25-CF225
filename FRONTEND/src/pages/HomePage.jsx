@@ -642,7 +642,7 @@ function HomePage() {
               </div>
               
               <div className="relative z-10">
-                <AnimatePresence mode="wait">
+                <AnimatePresence>
                   <motion.div 
                     key={activeTestimonial}
                     initial={{ opacity: 0, x: 100 }}

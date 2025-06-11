@@ -308,7 +308,7 @@ const AboutPage = () => {
       <AnimatedSection>
         <div className="max-w-6xl mx-auto mb-24 relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-            <AnimatePresence mode="wait">
+            <AnimatePresence>
               {teamMembers[activeTab].map((member, index) => (
                 <motion.div
                   key={member.id}
@@ -316,6 +316,7 @@ const AboutPage = () => {
                   variants={cardVariants}
                   initial="hidden"
                   animate="visible"
+                  exit="hidden"
                   whileHover="hover"
                   whileTap="tap"
                   onClick={() => setSelectedMember(member)}
