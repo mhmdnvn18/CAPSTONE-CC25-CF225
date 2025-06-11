@@ -209,28 +209,10 @@ const PredictionPage = () => {
                 konsultasi medis profesional. Selalu konsultasikan dengan dokter untuk diagnosis dan perawatan yang tepat.
               </div>
             </div>
-          </div>
-
-          <div className="space-y-4">
-            <div className="bg-gray-50 rounded-lg p-4">
-              <h4 className="font-medium text-gray-700 mb-2">⚠️ Disclaimer Medis Penting</h4>
-              <div className="space-y-3 text-lg leading-relaxed">
-                <p>
-                  Hasil estimasi ini merupakan <strong className="text-amber-700">alat bantu skrining awal</strong> yang dikembangkan untuk tujuan edukasi dan informasi kesehatan.
-                </p>
-                <p>
-                  Tool ini <strong className="text-amber-700">TIDAK menggantikan</strong> konsultasi medis profesional, diagnosis dokter, atau pemeriksaan kesehatan komprehensif.
-                </p>
-                <p className="text-base opacity-90">
-                  Selalu konsultasikan hasil dengan dokter spesialis jantung untuk mendapatkan diagnosis yang akurat dan rencana perawatan yang tepat.
-                </p>
-              </div>
             </div>
-          </div>
         </motion.div>
       </div>
     </div>
   );
 };
-
 export default PredictionPage;

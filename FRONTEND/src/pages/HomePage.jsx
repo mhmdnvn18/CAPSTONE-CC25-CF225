@@ -541,16 +541,6 @@ function HomePage() {
           </motion.div>
 
           <div className="flex flex-col md:flex-row justify-between relative">
-            {/* Progress Line (desktop only) */}
-            <div className="hidden md:block absolute top-1/2 left-0 right-0 h-1 bg-gray-200 -translate-y-1/2 z-0">
-              <motion.div 
-                className="h-full bg-red-600" 
-                initial={{ width: "0%" }}
-                whileInView={{ width: "100%" }}
-                viewport={{ once: true }}
-                transition={{ duration: 1.5, ease: "easeInOut" }}
-              ></motion.div>
-            </div>
 
             {[
               {

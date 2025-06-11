@@ -1,0 +1,10 @@
+# Handle missing images - redirect to placeholder service
+/img/team/* https://ui-avatars.com/api/?name=Team+Member&background=random&color=fff&size=200 200
+/images/* https://ui-avatars.com/api/?name=Image&background=random&color=fff&size=400 200
+/assets/icon/* https://via.placeholder.com/64x64/ef4444/ffffff?text=❤️ 200
+
+# API routes - proxy to backend
+/api/* https://backend-api-cgkk.onrender.com/api/:splat 200
+
+# SPA routing - all other routes go to index.html
+/* /index.html 200
