@@ -133,161 +133,355 @@ const AboutPage = () => {
   };
 
   return (
-    <div className="px-4 sm:px-6 py-10 bg-gradient-to-br from-blue-50 via-white to-red-50 min-h-screen text-gray-800">
+    <div className="px-4 sm:px-6 py-10 bg-gradient-to-br from-red-50 via-white to-blue-50 min-h-screen text-gray-800 relative overflow-hidden">
+      {/* Enhanced Background Elements */}
+      <div className="absolute inset-0 pointer-events-none">
+        {/* Floating particles */}
+        {[...Array(12)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-2 h-2 bg-red-300 rounded-full opacity-20"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`
+            }}
+            animate={{
+              y: [0, -100, 0],
+              opacity: [0, 0.3, 0],
+              scale: [0, 1, 0]
+            }}
+            transition={{
+              duration: Math.random() * 10 + 15,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          />
+        ))}
+        
+        {/* Gradient orbs */}
+        <motion.div 
+          className="absolute top-20 left-10 w-96 h-96 rounded-full bg-gradient-to-r from-red-200/20 to-pink-200/20 blur-3xl"
+          animate={{ 
+            x: [0, 100, 0], 
+            y: [0, 50, 0],
+            scale: [1, 1.2, 1]
+          }}
+          transition={{ duration: 25, repeat: Infinity }}
+        />
+        <motion.div 
+          className="absolute bottom-20 right-10 w-80 h-80 rounded-full bg-gradient-to-r from-blue-200/20 to-cyan-200/20 blur-3xl"
+          animate={{ 
+            x: [0, -80, 0], 
+            y: [0, -60, 0],
+            scale: [1, 1.3, 1]
+          }}
+          transition={{ duration: 20, repeat: Infinity }}
+        />
+      </div>
+
       {/* Enhanced Header */}
       <AnimatedSection>
-        <div className="max-w-7xl mx-auto mb-12">
+        <div className="max-w-7xl mx-auto mb-16 relative z-10">
           <div className="text-center">
             <motion.div 
-              whileHover={{ scale: 1.05 }}
-              className="inline-block p-3 bg-red-50 rounded-full mb-4"
+              whileHover={{ scale: 1.1, rotate: [0, 5, -5, 0] }}
+              className="inline-block p-4 bg-gradient-to-br from-red-50 to-red-100 rounded-full mb-6 shadow-lg"
             >
               <motion.div 
                 animate={{ 
                   scale: [1, 1.1, 1],
                   rotate: [0, 5, 0, -5, 0]
                 }}
-                transition={{ duration: 3, repeat: Infinity }}
-                className="bg-gradient-to-br from-red-600 to-red-700 text-white rounded-full w-16 h-16 flex items-center justify-center shadow-md"
+                transition={{ duration: 4, repeat: Infinity }}
+                className="bg-gradient-to-br from-red-600 to-red-700 text-white rounded-full w-20 h-20 flex items-center justify-center shadow-xl relative"
               >
-                <i className="fas fa-heartbeat text-2xl"></i>
+                <i className="fas fa-heartbeat text-3xl"></i>
+                
+                {/* Pulsing rings */}
+                {[0, 1].map((i) => (
+                  <motion.div
+                    key={i}
+                    className="absolute inset-0 border-4 border-red-300 rounded-full"
+                    animate={{ 
+                      scale: [1, 1.5, 1], 
+                      opacity: [0.8, 0, 0.8] 
+                    }}
+                    transition={{ 
+                      duration: 2, 
+                      repeat: Infinity, 
+                      delay: i * 1 
+                    }}
+                  />
+                ))}
               </motion.div>
             </motion.div>
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">Bertemu dengan Tim Kami</h1>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+            
+            <motion.h1 
+              className="text-5xl font-bold text-gray-900 mb-6"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+            >
+              Bertemu dengan <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-red-700">Tim Kami</span>
+            </motion.h1>
+            
+            <motion.p 
+              className="text-2xl text-gray-600 max-w-4xl mx-auto leading-relaxed"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
               Tim terbaik kami yang mendedikasikan mengembangkan IllDetect untuk estimasi risiko
               penyakit kardiovaskular sebagai alat bantu skrining awal
-            </p>
+            </motion.p>
           </div>
         </div>
       </AnimatedSection>
 
-      {/* Team Navigation Tabs */}
-      <div className="max-w-6xl mx-auto mb-12">
+      {/* Enhanced Team Navigation Tabs */}
+      <div className="max-w-6xl mx-auto mb-16 relative z-10">
         <div className="flex justify-center">
-          <div className="bg-white rounded-full shadow-md p-1.5 inline-flex">
+          <motion.div 
+            className="bg-white rounded-full shadow-xl p-2 inline-flex border border-gray-100"
+            whileHover={{ scale: 1.02 }}
+          >
             <motion.button
-              className={`px-6 py-3 rounded-full font-medium text-sm transition ${
+              className={`px-8 py-4 rounded-full font-semibold text-base transition-all duration-300 relative overflow-hidden ${
                 activeTab === 'ml' 
-                  ? 'bg-red-600 text-white' 
+                  ? 'bg-gradient-to-r from-red-600 to-red-700 text-white shadow-lg' 
                   : 'bg-transparent text-gray-600 hover:bg-gray-100'
               }`}
               onClick={() => setActiveTab('ml')}
               whileHover={{ scale: activeTab !== 'ml' ? 1.05 : 1 }}
-              whileTap={{ scale: 0.97 }}
+              whileTap={{ scale: 0.95 }}
             >
-              <i className="fas fa-brain mr-2"></i>
-              Tim Machine Learning
+              {activeTab === 'ml' && (
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-red-700 to-red-800"
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ duration: 0.3 }}
+                />
+              )}
+              <span className="relative flex items-center">
+                <motion.i 
+                  className="fas fa-brain mr-3"
+                  animate={activeTab === 'ml' ? { rotate: [0, 360] } : {}}
+                  transition={{ duration: 2, repeat: activeTab === 'ml' ? Infinity : 0 }}
+                />
+                Tim Machine Learning
+              </span>
             </motion.button>
+            
             <motion.button
-              className={`px-6 py-3 rounded-full font-medium text-sm transition ${
+              className={`px-8 py-4 rounded-full font-semibold text-base transition-all duration-300 relative overflow-hidden ${
                 activeTab === 'fullstack' 
-                  ? 'bg-red-600 text-white' 
+                  ? 'bg-gradient-to-r from-red-600 to-red-700 text-white shadow-lg' 
                   : 'bg-transparent text-gray-600 hover:bg-gray-100'
               }`}
               onClick={() => setActiveTab('fullstack')}
               whileHover={{ scale: activeTab !== 'fullstack' ? 1.05 : 1 }}
-              whileTap={{ scale: 0.97 }}
+              whileTap={{ scale: 0.95 }}
             >
-              <i className="fas fa-code mr-2"></i>
-              Tim Full-Stack
+              {activeTab === 'fullstack' && (
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-red-700 to-red-800"
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ duration: 0.3 }}
+                />
+              )}
+              <span className="relative flex items-center">
+                <motion.i 
+                  className="fas fa-code mr-3"
+                  animate={activeTab === 'fullstack' ? { scale: [1, 1.2, 1] } : {}}
+                  transition={{ duration: 1.5, repeat: activeTab === 'fullstack' ? Infinity : 0 }}
+                />
+                Tim Full-Stack
+              </span>
             </motion.button>
-          </div>
+          </motion.div>
         </div>
       </div>
 
-      {/* Team Members Grid */}
+      {/* Enhanced Team Members Grid */}
       <AnimatedSection>
-        <div className="max-w-6xl mx-auto mb-20">
-          <div className="relative">
-            {/* Team Members grid with pagination indicator */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <AnimatePresence mode="wait">
-                {teamMembers[activeTab].map((member, index) => (
-                  <motion.div
-                    key={member.id}
-                    custom={index}
-                    variants={cardVariants}
-                    initial="hidden"
-                    animate="visible"
-                    whileHover="hover"
-                    whileTap="tap"
-                    onClick={() => setSelectedMember(member)}
-                    className="cursor-pointer"
+        <div className="max-w-6xl mx-auto mb-24 relative z-10">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+            <AnimatePresence mode="wait">
+              {teamMembers[activeTab].map((member, index) => (
+                <motion.div
+                  key={member.id}
+                  custom={index}
+                  variants={cardVariants}
+                  initial="hidden"
+                  animate="visible"
+                  whileHover="hover"
+                  whileTap="tap"
+                  onClick={() => setSelectedMember(member)}
+                  className="cursor-pointer group"
+                >
+                  <motion.div 
+                    className="bg-white rounded-3xl shadow-lg hover:shadow-2xl overflow-hidden h-full relative border border-gray-100"
+                    whileHover={{ 
+                      y: -20,
+                      boxShadow: "0 25px 50px -12px rgba(239, 68, 68, 0.25)"
+                    }}
                   >
-                    <div className="bg-white rounded-2xl shadow-md overflow-hidden h-full relative group">
-                      {/* Circular Mask with Gradient Border for Photo */}
-                      <div className="h-56 flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 relative">
-                        <div className="absolute inset-0 bg-gradient-to-br from-blue-600 to-red-600 opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
-                        <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-white shadow-lg relative z-10">
-                          <img 
-                            src={member.photo || `https://ui-avatars.com/api/?name=${encodeURIComponent(member.name)}&background=random`} 
-                            alt={member.name}
-                            className="w-full h-full object-cover"
-                            onError={(e) => {
-                              e.target.onerror = null;
-                              e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(member.name)}&background=random`;
-                            }}
-                          />
-                        </div>
-                        
-                        {/* Glowing effect on hover */}
-                        <motion.div 
-                          className="absolute inset-0 bg-gradient-to-r from-blue-500 to-red-500 opacity-0 group-hover:opacity-20 transition-all duration-500"
-                          initial={{ opacity: 0 }}
-                          whileHover={{ opacity: 0.2 }}
+                    {/* Enhanced Photo Section */}
+                    <div className="h-64 flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 relative overflow-hidden">
+                      {/* Background animation */}
+                      <motion.div 
+                        className="absolute inset-0 bg-gradient-to-br from-blue-600/10 to-red-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                        animate={{ 
+                          backgroundPosition: ['0% 0%', '100% 100%', '0% 0%']
+                        }}
+                        transition={{ duration: 8, repeat: Infinity }}
+                      />
+                      
+                      {/* Enhanced photo container */}
+                      <motion.div 
+                        className="w-36 h-36 rounded-full overflow-hidden border-4 border-white shadow-xl relative z-10"
+                        whileHover={{ scale: 1.1, rotate: 5 }}
+                      >
+                        <img 
+                          src={member.photo || `https://ui-avatars.com/api/?name=${encodeURIComponent(member.name)}&background=random&color=fff&size=200`} 
+                          alt={member.name}
+                          className="w-full h-full object-cover"
+                          onError={(e) => {
+                            e.target.onerror = null;
+                            e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(member.name)}&background=random&color=fff&size=200`;
+                          }}
                         />
-                      </div>
-
-                      {/* Member Info */}
-                      <div className="p-6 text-center">
-                        <h3 className="font-bold text-xl text-gray-900">{member.name}</h3>
-                        <p className="text-red-600 mb-3">{member.role}</p>
                         
-                        <div className="mb-4 px-6 py-1 bg-gray-50 rounded-lg mx-auto inline-block">
-                          <p className="text-sm text-gray-500">{member.university}</p>
-                        </div>
-                        
-                        <div className="flex justify-center space-x-3 mt-4">
-                          {Object.entries(member.social).map(([platform, url]) => (
-                            <motion.a
-                              key={platform}
-                              href={url}
-                              className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 text-gray-600 hover:bg-red-600 hover:text-white transition-all duration-300"
-                              whileHover={{ y: -3, scale: 1.1 }}
-                              whileTap={{ scale: 0.95 }}
-                              onClick={(e) => e.stopPropagation()}
-                            >
-                              <i className={`fab fa-${platform === 'portfolio' ? 'globe' : platform} text-lg`}></i>
-                            </motion.a>
-                          ))}
-                        </div>
-                        
-                        <div className="mt-5">
-                          <motion.button 
-                            className="text-sm font-medium text-red-600 hover:text-red-700 flex items-center justify-center mx-auto"
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                          >
-                            <i className="fas fa-circle-info mr-1"></i> Lihat Profil
-                          </motion.button>
-                        </div>
-                      </div>
-
-                      {/* Corner decoration */}
-                      <div className="absolute top-0 right-0 w-16 h-16 overflow-hidden">
-                        <div className="bg-red-600 rotate-45 transform origin-bottom-left w-24 h-24 -translate-y-12 translate-x-4"></div>
-                      </div>
+                        {/* Hover overlay */}
+                        <motion.div
+                          className="absolute inset-0 bg-gradient-to-t from-red-600/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                          initial={{ scale: 0 }}
+                          whileHover={{ scale: 1 }}
+                        />
+                      </motion.div>
+                      
+                      {/* Floating elements */}
+                      {[...Array(3)].map((_, i) => (
+                        <motion.div
+                          key={i}
+                          className="absolute w-2 h-2 bg-red-400 rounded-full opacity-60"
+                          style={{
+                            left: `${20 + i * 30}%`,
+                            top: `${30 + i * 20}%`
+                          }}
+                          animate={{
+                            y: [0, -20, 0],
+                            scale: [0.8, 1.2, 0.8],
+                            opacity: [0.6, 1, 0.6]
+                          }}
+                          transition={{
+                            duration: 3,
+                            repeat: Infinity,
+                            delay: i * 0.5
+                          }}
+                        />
+                      ))}
                     </div>
+
+                    {/* Enhanced Member Info */}
+                    <div className="p-8 text-center relative">
+                      <motion.h3 
+                        className="font-bold text-2xl text-gray-900 mb-2"
+                        whileHover={{ scale: 1.05 }}
+                      >
+                        {member.name}
+                      </motion.h3>
+                      
+                      <motion.p 
+                        className="text-red-600 font-semibold mb-4"
+                        animate={{ color: ['#dc2626', '#ef4444', '#dc2626'] }}
+                        transition={{ duration: 3, repeat: Infinity }}
+                      >
+                        {member.role}
+                      </motion.p>
+                      
+                      <motion.div 
+                        className="mb-6 px-4 py-2 bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl mx-auto inline-block"
+                        whileHover={{ scale: 1.05 }}
+                      >
+                        <p className="text-sm text-gray-600 font-medium">{member.university}</p>
+                      </motion.div>
+                      
+                      {/* Enhanced Social Links */}
+                      <div className="flex justify-center space-x-4 mb-6">
+                        {Object.entries(member.social).map(([platform, url]) => (
+                          <motion.a
+                            key={platform}
+                            href={url}
+                            className="w-12 h-12 flex items-center justify-center rounded-full bg-gray-100 text-gray-600 hover:bg-red-600 hover:text-white transition-all duration-300 relative overflow-hidden"
+                            whileHover={{ 
+                              y: -5, 
+                              scale: 1.2,
+                              boxShadow: "0 10px 20px -5px rgba(239, 68, 68, 0.3)"
+                            }}
+                            whileTap={{ scale: 0.9 }}
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <motion.div
+                              className="absolute inset-0 bg-gradient-to-r from-red-600 to-red-700 scale-0 rounded-full"
+                              whileHover={{ scale: 1 }}
+                              transition={{ duration: 0.3 }}
+                            />
+                            <i className={`fab fa-${platform === 'portfolio' ? 'globe' : platform} text-lg relative z-10`}></i>
+                          </motion.a>
+                        ))}
+                      </div>
+                      
+                      <motion.button 
+                        className="text-base font-semibold text-red-600 hover:text-red-700 flex items-center justify-center mx-auto group-hover:scale-105 transition-transform"
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <motion.i 
+                          className="fas fa-circle-info mr-2"
+                          animate={{ rotate: [0, 360] }}
+                          transition={{ duration: 4, repeat: Infinity }}
+                        />
+                        Lihat Profil Lengkap
+                      </motion.button>
+                    </div>
+
+                    {/* Enhanced Corner Decoration */}
+                    <motion.div 
+                      className="absolute top-0 right-0 w-20 h-20 overflow-hidden"
+                      whileHover={{ scale: 1.2, rotate: 45 }}
+                    >
+                      <motion.div 
+                        className="bg-gradient-to-bl from-red-600 to-red-700 rotate-45 transform origin-bottom-left w-28 h-28 -translate-y-14 translate-x-4"
+                        animate={{ 
+                          background: [
+                            'linear-gradient(to bottom left, #dc2626, #b91c1c)',
+                            'linear-gradient(to bottom left, #ef4444, #dc2626)',
+                            'linear-gradient(to bottom left, #dc2626, #b91c1c)'
+                          ]
+                        }}
+                        transition={{ duration: 3, repeat: Infinity }}
+                      />
+                    </motion.div>
+
+                    {/* Hover glow effect */}
+                    <motion.div
+                      className="absolute inset-0 bg-gradient-to-r from-red-500/5 via-red-600/5 to-red-700/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                      animate={{ 
+                        background: [
+                          'linear-gradient(45deg, rgba(239, 68, 68, 0.05), rgba(220, 38, 38, 0.05))',
+                          'linear-gradient(135deg, rgba(239, 68, 68, 0.05), rgba(220, 38, 38, 0.05))',
+                          'linear-gradient(45deg, rgba(239, 68, 68, 0.05), rgba(220, 38, 38, 0.05))'
+                        ]
+                      }}
+                      transition={{ duration: 4, repeat: Infinity }}
+                    />
                   </motion.div>
-                ))}
-              </AnimatePresence>
-            </div>
-            
-            {/* Page indicator dots */}
-            <div className="flex justify-center mt-8 space-x-2">
-              {/* In case we need pagination in the future */}
-            </div>
+                </motion.div>
+              ))}
+            </AnimatePresence>
           </div>
         </div>
       </AnimatedSection>

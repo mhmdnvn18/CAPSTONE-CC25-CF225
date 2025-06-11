@@ -405,120 +405,125 @@ function ResultPage() {
 
           {/* Enhanced Action Buttons with Red Theme */}
           <motion.div 
-            className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mt-8 no-print"
+            className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 mt-12 no-print"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: fromPrediction ? 1.5 : 0.5 }}
           >
-            {/*
-              { 
-                onClick: handleNewPrediction, 
-                gradient: "from-red-600 to-red-700", 
-                icon: "fa-redo", 
-                text: "Prediksi Ulang",
-                description: "Lakukan prediksi baru"
-              },
-              { 
-                onClick: handlePrint, 
-                gradient: "from-blue-600 to-blue-700", 
-                icon: "fa-print", 
-                text: "Cetak Hasil",
-                description: "Print laporan"
-              },
-              { 
-                onClick: handleDownloadPDF, 
-                gradient: "from-purple-600 to-purple-700", 
-                icon: "fa-download", 
-                text: "Download PDF",
-                description: "Simpan sebagai PDF"
-              },
-              { 
-                onClick: handleShareResult, 
-                gradient: "from-green-600 to-green-700", 
-                icon: "fa-share", 
-                text: "Bagikan",
-                description: "Share hasil"
-              },
-              { 
-                onClick: handleGoHome, 
-                gradient: "from-gray-600 to-gray-700", 
-                icon: "fa-home", 
-                text: "Beranda",
-                description: "Kembali ke home"
-              }
-            */}
             { [
               { 
                 onClick: handleNewPrediction, 
                 gradient: "from-red-600 to-red-700", 
                 icon: "fa-redo", 
                 text: "Prediksi Ulang",
-                description: "Lakukan prediksi baru"
+                description: "Lakukan prediksi baru",
+                hoverColor: "red"
               },
               { 
                 onClick: handlePrint, 
                 gradient: "from-blue-600 to-blue-700", 
                 icon: "fa-print", 
                 text: "Cetak Hasil",
-                description: "Print laporan"
+                description: "Print laporan",
+                hoverColor: "blue"
               },
               { 
                 onClick: handleDownloadPDF, 
                 gradient: "from-purple-600 to-purple-700", 
                 icon: "fa-download", 
                 text: "Download PDF",
-                description: "Simpan sebagai PDF"
+                description: "Simpan sebagai PDF",
+                hoverColor: "purple"
               },
               { 
                 onClick: handleShareResult, 
                 gradient: "from-green-600 to-green-700", 
                 icon: "fa-share", 
                 text: "Bagikan",
-                description: "Share hasil"
+                description: "Share hasil",
+                hoverColor: "green"
               },
               { 
                 onClick: handleGoHome, 
                 gradient: "from-gray-600 to-gray-700", 
                 icon: "fa-home", 
                 text: "Beranda",
-                description: "Kembali ke home"
+                description: "Kembali ke home",
+                hoverColor: "gray"
               }
             ].map((button, index) => (
               <motion.button
                 key={index}
                 onClick={button.onClick}
-                className={`relative group p-4 bg-gradient-to-r ${button.gradient} text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden`}
-                whileHover={{ scale: 1.05, y: -2 }}
+                className={`relative group p-6 bg-gradient-to-r ${button.gradient} text-white font-bold rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-white/10`}
+                whileHover={{ 
+                  scale: 1.08, 
+                  y: -8,
+                  boxShadow: `0 25px 50px -12px rgba(var(--${button.hoverColor}-500), 0.25)`
+                }}
                 whileTap={{ scale: 0.95 }}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: fromPrediction ? 1.7 + index * 0.1 : 0.7 + index * 0.1 }}
+                transition={{ delay: fromPrediction ? 1.7 + index * 0.15 : 0.7 + index * 0.15 }}
               >
-                {/* Background animation */}
-                <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
+                {/* Enhanced Background Effects */}
+                <motion.div 
+                  className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-300"
+                  initial={{ scale: 0 }}
+                  whileHover={{ scale: 1.5 }}
+                />
+                
+                {/* Shimmer effect */}
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100"
+                  animate={{ x: ['-100%', '100%'] }}
+                  transition={{ duration: 1.5, repeat: Infinity }}
+                />
                 
                 <div className="relative z-10 text-center">
-                  <motion.i 
-                    className={`fas ${button.icon} text-2xl mb-2 block`}
+                  <motion.div
+                    className="w-16 h-16 mx-auto mb-4 rounded-full bg-white/20 flex items-center justify-center"
                     animate={{ 
                       rotate: button.icon === 'fa-redo' ? [0, 360] : 0,
                       scale: [1, 1.1, 1]
                     }}
                     transition={{ 
-                      rotate: { duration: 2, repeat: Infinity, ease: "linear" },
+                      rotate: { duration: 3, repeat: Infinity, ease: "linear" },
                       scale: { duration: 2, repeat: Infinity }
                     }}
-                  />
-                  <span className="text-sm font-semibold block">{button.text}</span>
-                  <span className="text-xs opacity-80 mt-1 block">{button.description}</span>
+                    whileHover={{ scale: 1.2 }}
+                  >
+                    <i className={`fas ${button.icon} text-2xl`}></i>
+                  </motion.div>
+                  
+                  <motion.h3 
+                    className="text-lg font-bold mb-2"
+                    whileHover={{ scale: 1.05 }}
+                  >
+                    {button.text}
+                  </motion.h3>
+                  
+                  <motion.p 
+                    className="text-sm opacity-90"
+                    initial={{ opacity: 0.8 }}
+                    whileHover={{ opacity: 1 }}
+                  >
+                    {button.description}
+                  </motion.p>
                 </div>
 
-                {/* Hover effect */}
+                {/* Corner sparkle */}
                 <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                  initial={{ x: '-100%' }}
-                  whileHover={{ x: '100%' }}
-                  transition={{ duration: 0.6 }}
+                  className="absolute top-2 right-2 w-2 h-2 bg-white rounded-full opacity-0 group-hover:opacity-100"
+                  animate={{ 
+                    scale: [0, 1, 0],
+                    rotate: [0, 180, 360]
+                  }}
+                  transition={{ 
+                    duration: 2, 
+                    repeat: Infinity,
+                    delay: index * 0.2
+                  }}
                 />
               </motion.button>
             ))}
@@ -526,36 +531,67 @@ function ResultPage() {
 
           {/* Enhanced Additional Info Card */}
           <motion.div 
-            className="mt-8 bg-white rounded-xl shadow-lg p-6 border-l-4 border-red-500 relative overflow-hidden"
+            className="mt-12 bg-gradient-to-br from-white to-red-50 rounded-2xl shadow-xl p-8 border-l-4 border-red-500 relative overflow-hidden"
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: fromPrediction ? 2 : 0.7 }}
+            whileHover={{ scale: 1.02, y: -5 }}
           >
-            {/* Background decoration */}
-            <div className="absolute top-0 right-0 w-20 h-20 bg-red-50 rounded-bl-full opacity-50"></div>
+            {/* Enhanced Background decoration */}
+            <motion.div 
+              className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-red-100/50 to-transparent rounded-bl-full"
+              animate={{ 
+                scale: [1, 1.1, 1],
+                rotate: [0, 180, 360]
+              }}
+              transition={{ duration: 20, repeat: Infinity }}
+            />
             
             <div className="flex items-start relative z-10">
-              <motion.i 
-                className="fas fa-lightbulb text-red-500 text-2xl mr-4 mt-1"
-                animate={{ scale: [1, 1.1, 1] }}
-                transition={{ duration: 2, repeat: Infinity }}
-              />
+              <motion.div
+                className="w-16 h-16 bg-gradient-to-br from-red-500 to-red-600 rounded-full flex items-center justify-center mr-6 shadow-lg"
+                animate={{ 
+                  scale: [1, 1.1, 1],
+                  boxShadow: ["0 10px 20px rgba(239, 68, 68, 0.3)", "0 20px 40px rgba(239, 68, 68, 0.4)", "0 10px 20px rgba(239, 68, 68, 0.3)"]
+                }}
+                transition={{ duration: 3, repeat: Infinity }}
+              >
+                <i className="fas fa-lightbulb text-white text-2xl"></i>
+              </motion.div>
+              
               <div>
-                <h3 className="text-lg font-semibold text-gray-800 mb-2">Langkah Selanjutnya yang Disarankan</h3>
-                <ul className="text-gray-600 space-y-2">
+                <motion.h3 
+                  className="text-2xl font-bold text-gray-800 mb-4"
+                  whileHover={{ scale: 1.02 }}
+                >
+                  Langkah Selanjutnya yang Disarankan
+                </motion.h3>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {["Simpan atau cetak hasil ini untuk referensi dokter", "Konsultasikan hasil dengan tenaga medis profesional untuk evaluasi lebih lanjut", "Lakukan pemeriksaan medis komprehensif secara berkala", "Ikuti rekomendasi gaya hidup sehat yang disarankan"].map((step, index) => (
-                    <motion.li 
+                    <motion.div
                       key={index}
-                      className="flex items-center"
+                      className="flex items-start p-4 bg-white rounded-xl shadow-sm border border-gray-100"
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: fromPrediction ? 2.2 + index * 0.1 : 0.9 + index * 0.1 }}
+                      whileHover={{ 
+                        scale: 1.02, 
+                        x: 5,
+                        boxShadow: "0 10px 25px -10px rgba(239, 68, 68, 0.15)"
+                      }}
                     >
-                      <i className="fas fa-check-circle text-green-500 mr-2"></i>
-                      {step}
-                    </motion.li>
+                      <motion.div
+                        className="w-8 h-8 bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center mr-3 flex-shrink-0"
+                        animate={{ rotate: [0, 360] }}
+                        transition={{ duration: 8, repeat: Infinity, delay: index * 2 }}
+                      >
+                        <i className="fas fa-check text-white text-sm"></i>
+                      </motion.div>
+                      <span className="text-gray-700 font-medium">{step}</span>
+                    </motion.div>
                   ))}
-                </ul>
+                </div>
               </div>
             </div>
           </motion.div>
