@@ -113,13 +113,14 @@ const ContactPage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-red-50 py-16 px-4 sm:px-6">
-      {/* Page Header */}
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-red-50 py-20 px-4 sm:px-6">
+      {/* Page 
+      Header */}
       <AnimatedSection>
-        <div className="max-w-7xl mx-auto mb-16 text-center">
+        <div className="max-w-7xl mx-auto mb-20 text-center">
           <motion.div 
             whileHover={{ scale: 1.05 }}
-            className="inline-block p-3 bg-red-50 rounded-full mb-4"
+            className="inline-block p-3 bg-red-50 rounded-full mb-6"
           >
             <motion.div 
               animate={{ 
@@ -132,7 +133,7 @@ const ContactPage = () => {
               <i className="fas fa-paper-plane text-2xl"></i>
             </motion.div>
           </motion.div>
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">Hubungi Kami</h1>
+          <h1 className="text-4xl font-bold text-gray-900 mb-6">Hubungi Kami</h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
             Kami siap membantu Anda. Jangan ragu untuk menghubungi kami dengan pertanyaan, saran, atau masukan Anda.
           </p>
@@ -140,7 +141,7 @@ const ContactPage = () => {
       </AnimatedSection>
 
       <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20">
           {/* Contact Form Section */}
           <AnimatedSection delay={0.2}>
             <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
@@ -313,53 +314,33 @@ const ContactPage = () => {
           </AnimatedSection>
 
           {/* Contact Info Section */}
-          <div className="flex flex-col space-y-8">
+          <div className="flex flex-col space-y-10">
             {/* Map Section */}
             <AnimatedSection delay={0.3}>
-              <div className="bg-white rounded-2xl shadow-xl overflow-hidden h-80">
-                <div className="h-full w-full relative">
-                  <div className="absolute inset-0 bg-gray-200 flex items-center justify-center">
-                    {/* Simplified map implementation with better fallback */}
-                    <div className="w-full h-full bg-gray-100 flex items-center justify-center relative">
-                      {/* Map content with reliable fallback */}
-                      <div className="w-full h-full flex items-center justify-center bg-gray-200">
-                        <div className="text-center p-6">
-                          <div className="text-red-600 mb-3">
-                            <i className="fas fa-map-marker-alt text-4xl"></i>
-                          </div>
-                          <h3 className="font-bold text-gray-800 text-lg mb-1">Wisma Hartono</h3>
-                          <p className="text-gray-600">Jl. Urip Sumoharjo No. 43, Yogyakarta, Indonesia</p>
-                          <a 
-                            href="https://maps.google.com/?q=Wisma+Hartono,Yogyakarta,Indonesia" 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className="mt-3 inline-flex items-center text-sm text-red-600 hover:text-red-700"
-                          >
-                            <i className="fas fa-external-link mr-1"></i> Buka di Google Maps
-                          </a>
-                        </div>
+              <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
+                <div className="bg-gradient-to-r from-red-600 to-red-700 px-6 py-4">
+                  <h2 className="text-xl font-semibold text-white flex items-center">
+                    <i className="fas fa-map-marked-alt mr-3"></i>
+                    Lokasi Kami
+                  </h2>
+                </div>
+                <div className="h-80 w-full relative">
+                  <div className="w-full h-full bg-gray-100 flex items-center justify-center relative">
+                    <div className="text-center p-6">
+                      <div className="text-red-600 mb-4">
+                        <i className="fas fa-map-marker-alt text-4xl"></i>
                       </div>
-                      {/* Optional map overlay for better UX */}
-                      <div className="absolute bottom-4 right-4">
-                        <div className="bg-white p-2 rounded-lg shadow-md">
-                          <motion.a 
-                            href="https://maps.google.com/?q=Wisma+Hartono,Yogyakarta,Indonesia" 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className="text-xs text-gray-600 flex items-center"
-                            whileHover={{ scale: 1.05 }}
-                          >
-                            <i className="fas fa-directions text-red-600 mr-1"></i> Petunjuk Arah
-                          </motion.a>
-                        </div>
-                      </div>
+                      <h3 className="font-bold text-gray-800 text-lg mb-2">Wisma Hartono</h3>
+                      <p className="text-gray-600 mb-4">Jl. Urip Sumoharjo No. 43, Yogyakarta, Indonesia</p>
+                      <a 
+                        href="https://maps.google.com/?q=Wisma+Hartono,Yogyakarta,Indonesia" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center text-sm text-red-600 hover:text-red-700 bg-red-50 px-3 py-2 rounded-lg"
+                      >
+                        <i className="fas fa-external-link mr-2"></i> Buka di Google Maps
+                      </a>
                     </div>
-                  </div>
-                  <div className="absolute top-0 left-0 right-0 bg-gradient-to-r from-red-600 to-red-700 px-6 py-4">
-                    <h2 className="text-xl font-semibold text-white flex items-center">
-                      <i className="fas fa-map-marked-alt mr-3"></i>
-                      Lokasi Kami
-                    </h2>
                   </div>
                 </div>
               </div>
@@ -367,15 +348,15 @@ const ContactPage = () => {
 
             {/* Contact Info Cards */}
             <AnimatedSection delay={0.4}>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 gap-6">
                 {contactItems.map((item, index) => (
                   <motion.div
                     key={index}
-                    className="bg-white rounded-xl shadow-md p-4 flex items-start space-x-4"
+                    className="bg-white rounded-xl shadow-md p-6 flex items-start space-x-4"
                     whileHover={{ y: -5, boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)' }}
                   >
                     <div 
-                      className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0"
+                      className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0"
                       style={{ 
                         backgroundColor: item.color === 'blue' ? '#dbeafe' : 
                                         item.color === 'red' ? '#fee2e2' : 
@@ -383,7 +364,7 @@ const ContactPage = () => {
                       }}
                     >
                       <i 
-                        className={`fas ${item.icon}`}
+                        className={`fas ${item.icon} text-lg`}
                         style={{ 
                           color: item.color === 'blue' ? '#2563eb' : 
                                 item.color === 'red' ? '#dc2626' : 
@@ -391,9 +372,9 @@ const ContactPage = () => {
                         }}
                       ></i>
                     </div>
-                    <div>
-                      <h3 className="font-semibold text-gray-800">{item.title}</h3>
-                      <p className="text-gray-600 text-sm">{item.content}</p>
+                    <div className="flex-1">
+                      <h3 className="font-semibold text-gray-800 text-lg mb-1">{item.title}</h3>
+                      <p className="text-gray-600">{item.content}</p>
                     </div>
                   </motion.div>
                 ))}
@@ -409,7 +390,7 @@ const ContactPage = () => {
                     Media Sosial
                   </h2>
                 </div>
-                <div className="p-6 flex justify-center space-x-6">
+                <div className="p-8 flex justify-center space-x-8">
                   {socialMedia.map((social, index) => (
                     <motion.a
                       key={index}
@@ -449,19 +430,19 @@ const ContactPage = () => {
             {/* FAQ Link */}
             <AnimatedSection delay={0.6}>
               <motion.div 
-                className="bg-gradient-to-r from-purple-600 to-indigo-600 rounded-2xl shadow-xl p-6 text-white"
+                className="bg-gradient-to-r from-purple-600 to-indigo-600 rounded-2xl shadow-xl p-8 text-white"
                 whileHover={{ scale: 1.02 }}
               >
                 <div className="flex items-start space-x-4">
                   <div className="w-12 h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center flex-shrink-0">
                     <i className="fas fa-question-circle text-white text-2xl"></i>
                   </div>
-                  <div>
-                    <h3 className="font-bold text-xl mb-2">Punya Pertanyaan?</h3>
-                    <p className="mb-4 text-purple-100">Temukan jawaban untuk pertanyaan umum tentang IllDetect pada halaman utama kami.</p>
+                  <div className="flex-1">
+                    <h3 className="font-bold text-xl mb-3">Punya Pertanyaan?</h3>
+                    <p className="mb-6 text-purple-100">Temukan jawaban untuk pertanyaan umum tentang IllDetect pada halaman utama kami.</p>
                     <motion.a 
                       href="/#faq" 
-                      className="inline-flex items-center px-4 py-2 bg-white text-purple-700 rounded-lg font-medium text-sm hover:bg-purple-50 transition-colors"
+                      className="inline-flex items-center px-6 py-3 bg-white text-purple-700 rounded-lg font-medium hover:bg-purple-50 transition-colors"
                       whileHover={{ x: 5 }}
                     >
                       Lihat Pertanyaan yang Sering Diajukan
