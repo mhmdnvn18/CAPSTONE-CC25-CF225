@@ -111,7 +111,7 @@ function Layout({ children }) {
               </motion.div>
               <div>
                 <h1 className="text-xl font-bold text-gray-800 group-hover:text-red-600 transition-colors">IllDetect</h1>
-                <p className="text-xs text-gray-500">Cardiovascular Risk Detector</p>
+                <p className="text-xs text-gray-500">Cardiovascular Diagnosis Detector</p>
               </div>
             </Link>
 

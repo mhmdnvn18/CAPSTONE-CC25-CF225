@@ -27,9 +27,9 @@ export default defineConfig({
         ]
       },
       manifest: {
-        name: 'IllDetect - Cardiovascular Risk Detector',
+        name: 'IllDetect - Cardiovascular Diagnosis Detector',
         short_name: 'IllDetect',
-        description: 'AI-powered cardiovascular risk prediction app',
+        description: 'AI-powered Cardiovascular Diagnosis prediction app',
         theme_color: '#dc2626',
         background_color: '#ffffff',
         display: 'standalone',

@@ -155,8 +155,8 @@ const AboutPage = () => {
             </motion.div>
             <h1 className="text-4xl font-bold text-gray-900 mb-4">Bertemu dengan Tim Kami</h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              Tim terbaik kami yang mendedikasikan mengembangkan IllDetect untuk deteksi
-              dini risiko penyakit kardiovaskular
+              Tim terbaik kami yang mendedikasikan mengembangkan IllDetect untuk estimasi risiko
+              penyakit kardiovaskular sebagai alat bantu skrining awal
             </p>
           </div>
         </div>
@@ -299,10 +299,10 @@ const AboutPage = () => {
             <div className="p-8 flex flex-col justify-center">
               <h2 className="text-2xl font-bold text-gray-900 mb-4">Tentang IllDetect</h2>
               <p className="text-gray-600 mb-4">
-                IllDetect adalah aplikasi berbasis web yang memungkinkan pengguna untuk mendeteksi risiko penyakit kardiovaskular secara dini. Aplikasi ini menggunakan algoritma machine learning yang dikembangkan dan dilatih dengan dataset yang komprehensif.
+                IllDetect adalah aplikasi berbasis web yang memungkinkan pengguna untuk melakukan estimasi risiko penyakit kardiovaskular secara dini sebagai alat bantu skrining. Aplikasi ini menggunakan algoritma machine learning yang dikembangkan dan dilatih dengan dataset yang komprehensif.
               </p>
               <p className="text-gray-600 mb-4">
-                Proyek ini dikembangkan sebagai bagian dari Capstone Project untuk program DBS Foundation Coding Camp 2025 oleh tim kami yang terdiri dari mahasiswa berbagai universitas di Indonesia.
+                Proyek ini dikembangkan sebagai bagian dari Capstone Project untuk program DBS Foundation Coding Camp 2025 oleh tim kami yang terdiri dari mahasiswa berbagai universitas di Indonesia sebagai prototype dan alat edukasi.
               </p>
               <div className="flex space-x-4 mt-2">
                 <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
@@ -318,19 +318,19 @@ const AboutPage = () => {
               <ul className="space-y-3">
                 <li className="flex items-start">
                   <i className="fas fa-heart-circle-check mt-1 mr-3 text-red-200"></i>
-                  <span>Prediksi risiko penyakit kardiovaskular berdasarkan faktor risiko</span>
+                  <span>Estimasi risiko penyakit kardiovaskular berdasarkan faktor risiko</span>
                 </li>
                 <li className="flex items-start">
                   <i className="fas fa-brain mt-1 mr-3 text-red-200"></i>
-                  <span>Analisis data kesehatan menggunakan model AI terlatih</span>
+                  <span>Analisis data kesehatan menggunakan model AI untuk skrining awal</span>
                 </li>
                 <li className="flex items-start">
                   <i className="fas fa-bolt mt-1 mr-3 text-red-200"></i>
-                  <span>Hasil prediksi yang cepat dan akurat</span>
+                  <span>Hasil estimasi yang cepat sebagai alat bantu</span>
                 </li>
                 <li className="flex items-start">
                   <i className="fas fa-stethoscope mt-1 mr-3 text-red-200"></i>
-                  <span>Rekomendasi kesehatan berdasarkan hasil analisis</span>
+                  <span>Rekomendasi kesehatan umum berdasarkan hasil analisis</span>
                 </li>
                 <li className="flex items-start">
                   <i className="fas fa-wifi-slash mt-1 mr-3 text-red-200"></i>

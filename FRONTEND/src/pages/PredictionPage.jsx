@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import PredictionForm from '../components/PredictionForm';
-import ApiStatusMonitor from '../components/ApiStatusMonitor';
 
 const PredictionPage = () => {
   const [predictionResult, setPredictionResult] = useState(null);
@@ -58,16 +57,16 @@ const PredictionPage = () => {
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
             Prediksi Risiko Kardiovaskular
           </h1>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            Masukkan data kesehatan Anda untuk mendapatkan prediksi risiko penyakit kardiovaskular 
-            menggunakan teknologi AI yang akurat dan terpercaya.
-          </p>
+          <motion.p 
+            className="text-gray-600 max-w-3xl mx-auto text-xl leading-relaxed"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+          >
+            Masukkan data kesehatan Anda untuk mendapatkan estimasi risiko penyakit kardiovaskular 
+            sebagai alat bantu skrining awal menggunakan teknologi AI.
+          </motion.p>
         </motion.div>
-
-        {/* API Status Monitor */}
-        <div className="max-w-4xl mx-auto mb-6">
-          <ApiStatusMonitor />
-        </div>
 
         {/* Prediction Form with Transition Overlay */}
         <motion.div 
@@ -209,6 +208,23 @@ const PredictionPage = () => {
               <div className="text-sm text-amber-800">
                 <strong>Disclaimer:</strong> Hasil prediksi ini hanya untuk tujuan informasi dan tidak menggantikan 
                 konsultasi medis profesional. Selalu konsultasikan dengan dokter untuk diagnosis dan perawatan yang tepat.
+              </div>
+            </div>
+          </div>
+
+          <div className="space-y-4">
+            <div className="bg-gray-50 rounded-lg p-4">
+              <h4 className="font-medium text-gray-700 mb-2">⚠️ Disclaimer Medis Penting</h4>
+              <div className="space-y-3 text-lg leading-relaxed">
+                <p>
+                  Hasil estimasi ini merupakan <strong className="text-amber-700">alat bantu skrining awal</strong> yang dikembangkan untuk tujuan edukasi dan informasi kesehatan.
+                </p>
+                <p>
+                  Tool ini <strong className="text-amber-700">TIDAK menggantikan</strong> konsultasi medis profesional, diagnosis dokter, atau pemeriksaan kesehatan komprehensif.
+                </p>
+                <p className="text-base opacity-90">
+                  Selalu konsultasikan hasil dengan dokter spesialis jantung untuk mendapatkan diagnosis yang akurat dan rencana perawatan yang tepat.
+                </p>
               </div>
             </div>
           </div>

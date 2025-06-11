@@ -27,7 +27,7 @@ const AnimatedCounter = ({ target, duration = 2000, className = "" }) => {
     return () => cancelAnimationFrame(animationFrame);
   }, [target, duration]);
   
-  return <span className={className}>{count}%</span>;
+  return <span className={className}>{count}</span>;
 };
 
 // FAQ item component
@@ -190,21 +190,23 @@ function HomePage() {
   ];
   
   const stats = [
-    { value: 85, label: "Akurasi Prediksi", icon: "fa-chart-line" },
     { value: 95, label: "Kepuasan Pengguna", icon: "fa-heart" },
     { value: 99, label: "Ketersediaan Sistem", icon: "fa-server" },
+    { value: 10, label: "Ribu Pengguna", icon: "fa-users" },
+    { value: 3, label: "Detik Waktu Respons", icon: "fa-clock" },
+    { value: 24, label: "Jam Tersedia", icon: "fa-calendar-check" }
   ];
   
   const features = [
     { 
       icon: { name: "fa-bolt", color: "blue" }, 
       title: "Prediksi Cepat", 
-      description: "Hasil prediksi dalam hitungan detik dengan akurasi tinggi menggunakan algoritma AI terdepan" 
+      description: "Hasil estimasi risiko dalam hitungan detik menggunakan algoritma AI untuk skrining awal" 
     },
     { 
       icon: { name: "fa-user-md", color: "green" }, 
-      title: "Akurat & Terpercaya", 
-      description: "Dikembangkan berdasarkan data medis terpercaya dengan tingkat akurasi prediksi hingga 85%" 
+      title: "Berbasis Data Medis", 
+      description: "Dikembangkan berdasarkan dataset kardiovaskular yang komprehensif sebagai alat bantu edukasi" 
     },
     { 
       icon: { name: "fa-mobile-alt", color: "purple" }, 
@@ -219,19 +221,19 @@ function HomePage() {
     { 
       icon: { name: "fa-chart-pie", color: "indigo" }, 
       title: "Visualisasi Hasil", 
-      description: "Hasil prediksi disajikan dalam format visual yang mudah dipahami beserta rekomendasi" 
+      description: "Hasil estimasi disajikan dalam format visual yang mudah dipahami beserta rekomendasi umum" 
     },
     { 
       icon: { name: "fa-wifi", color: "yellow" }, 
       title: "Mode Offline", 
-      description: "Tetap bisa melakukan prediksi meskipun Anda sedang tidak terhubung dengan internet" 
+      description: "Tetap bisa melakukan estimasi meskipun Anda sedang tidak terhubung dengan internet" 
     }
   ];
   
   const faqs = [
     {
       question: "Bagaimana cara kerja prediksi IllDetect?",
-      answer: "IllDetect menggunakan algoritma machine learning yang dilatih dengan data kardiovaskular yang luas. Sistem menganalisis faktor risiko Anda seperti tekanan darah, kolesterol, dan gaya hidup untuk menghasilkan prediksi risiko kardiovaskular yang akurat."
+      answer: "IllDetect menggunakan algoritma machine learning yang dilatih dengan data kardiovaskular. Sistem menganalisis faktor risiko Anda seperti tekanan darah, kolesterol, dan gaya hidup untuk memberikan estimasi risiko kardiovaskular sebagai alat bantu skrining awal."
     },
     {
       question: "Apakah data saya aman?",
@@ -239,7 +241,7 @@ function HomePage() {
     },
     {
       question: "Seberapa akurat prediksi yang dihasilkan?",
-      answer: "Model prediksi kami memiliki tingkat akurasi sekitar 85%, berdasarkan validasi dengan dataset medis yang komprehensif. Namun, hasil prediksi tidak menggantikan diagnosis medis profesional."
+      answer: "Model prediksi kami dikembangkan menggunakan dataset medis yang komprehensif dan terus divalidasi. Namun, hasil prediksi ini hanya sebagai alat bantu skrining awal dan tidak menggantikan diagnosis medis profesional. Selalu konsultasikan dengan dokter untuk evaluasi yang lebih akurat."
     },
     {
       question: "Apakah saya perlu membuat akun untuk menggunakan IllDetect?",
@@ -247,7 +249,7 @@ function HomePage() {
     },
     {
       question: "Bagaimana jika saya tidak memiliki semua data yang diminta?",
-      answer: "Untuk hasil yang paling akurat, sebaiknya lengkapi semua data yang diminta. Namun, IllDetect masih bisa memberikan estimasi risiko berdasarkan data yang tersedia, meskipun akurasinya mungkin berkurang."
+      answer: "Untuk hasil yang optimal, sebaiknya lengkapi semua data yang diminta. Namun, IllDetect masih bisa memberikan estimasi risiko berdasarkan data yang tersedia, meskipun hasilnya mungkin kurang komprehensif."
     }
   ];
   
@@ -374,8 +376,8 @@ function HomePage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.5 }}
             >
-              Prediksi risiko penyakit kardiovaskular Anda secara cepat dan mudah menggunakan teknologi AI terbaru. 
-              Data Anda aman dan hanya digunakan untuk analisis prediksi yang akurat.
+              Estimasi risiko penyakit kardiovaskular Anda secara cepat dan mudah menggunakan teknologi AI sebagai alat bantu skrining awal. 
+              Data Anda aman dan hanya digunakan untuk analisis prediksi.
             </motion.p>
             
             {/* Animated CTA Button */}
@@ -462,11 +464,11 @@ function HomePage() {
       {/* Statistics Section */}
       <section className="py-16 bg-white border-b border-gray-100">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="flex flex-wrap justify-center gap-8 md:gap-12">
             {stats.map((stat, index) => (
               <motion.div 
                 key={index}
-                className="text-center"
+                className="text-center min-w-[120px]"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -476,9 +478,13 @@ function HomePage() {
                   <i className={`fas ${stat.icon} text-red-600 text-xl mr-3`}></i>
                   <span className="text-4xl font-bold text-gray-800">
                     <AnimatedCounter target={stat.value} />
+                    {stat.label.includes('Ribu') && 'K'}
+                    {stat.label.includes('Detik') && 's'}
+                    {stat.label.includes('Jam') && '/7'}
+                    {(stat.label.includes('Kepuasan') || stat.label.includes('Ketersediaan')) && '%'}
                   </span>
                 </div>
-                <p className="text-gray-600 font-medium">{stat.label}</p>
+                <p className="text-gray-600 font-medium text-sm">{stat.label}</p>
               </motion.div>
             ))}
           </div>
@@ -499,7 +505,7 @@ function HomePage() {
               Mengapa Memilih IllDetect?
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Platform terdepan untuk deteksi dini risiko kardiovaskular dengan teknologi machine learning
+              Platform untuk estimasi risiko kardiovaskular dengan teknologi machine learning sebagai alat bantu skrining awal
             </p>
           </motion.div>
 
@@ -558,14 +564,14 @@ function HomePage() {
               {
                 step: 2,
                 title: "Analisis AI",
-                description: "Sistem AI menganalisis data Anda menggunakan algoritma machine learning yang canggih",
+                description: "Sistem AI menganalisis data Anda menggunakan algoritma machine learning untuk estimasi risiko",
                 icon: "fa-cog",
                 color: "blue"
               },
               {
                 step: 3,
-                title: "Hasil Prediksi",
-                description: "Dapatkan hasil prediksi risiko lengkap dengan rekomendasi kesehatan yang personal",
+                title: "Hasil Estimasi",
+                description: "Dapatkan hasil estimasi risiko lengkap dengan rekomendasi kesehatan umum untuk skrining awal",
                 icon: "fa-chart-line",
                 color: "green"
               }

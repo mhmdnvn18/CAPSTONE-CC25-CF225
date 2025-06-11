@@ -10,6 +10,23 @@ function ResultPage() {
   const [loading, setLoading] = useState(true);
   const [showConfetti, setShowConfetti] = useState(false);
   const [fromPrediction, setFromPrediction] = useState(false);
+  const [showDetails, setShowDetails] = useState(false);
+  const [particles, setParticles] = useState([]);
+
+  // Generate floating particles for background
+  useEffect(() => {
+    const newParticles = [];
+    for (let i = 0; i < 15; i++) {
+      newParticles.push({
+        id: i,
+        x: Math.random() * 100,
+        y: Math.random() * 100,
+        size: Math.random() * 3 + 1,
+        duration: Math.random() * 15 + 10
+      });
+    }
+    setParticles(newParticles);
+  }, []);
 
   useEffect(() => {
     // Check if coming from prediction page
@@ -87,7 +104,7 @@ function ResultPage() {
 
   if (loading) {
     return (
-      <div className="bg-gradient-to-br from-blue-50 via-white to-red-50 min-h-screen flex items-center justify-center">
+      <div className="bg-gradient-to-br from-red-50 via-white to-blue-50 min-h-screen flex items-center justify-center">
         <motion.div 
           className="text-center"
           initial={{ opacity: 0, scale: 0.8 }}
@@ -96,7 +113,7 @@ function ResultPage() {
         >
           <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
             <motion.i 
-              className="fas fa-heart-pulse text-red-600 text-2xl"
+              className="fas fa-heartbeat text-red-600 text-2xl"
               animate={{ scale: [1, 1.2, 1] }}
               transition={{ duration: 1, repeat: Infinity }}
             ></motion.i>
@@ -109,7 +126,7 @@ function ResultPage() {
 
   if (!result) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-red-50">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-red-50 via-white to-blue-50">
         <motion.div 
           className="text-center"
           initial={{ opacity: 0, y: 20 }}
@@ -125,7 +142,7 @@ function ResultPage() {
             to="/prediction"
             className="inline-flex items-center px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
           >
-            <i className="fas fa-heart-pulse mr-2"></i>
+            <i className="fas fa-heartbeat mr-2"></i>
             Mulai Prediksi
           </Link>
         </motion.div>
@@ -134,15 +151,62 @@ function ResultPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-red-50 py-8 relative overflow-hidden">
-      {/* Confetti Animation */}
+    <div className="min-h-screen bg-gradient-to-br from-red-50 via-white to-blue-50 py-8 relative overflow-hidden">
+      {/* Enhanced Background Elements */}
+      <div className="absolute inset-0 pointer-events-none">
+        {/* Floating Particles */}
+        {particles.map((particle) => (
+          <motion.div
+            key={particle.id}
+            className="absolute w-2 h-2 bg-red-300 rounded-full opacity-20"
+            style={{
+              left: `${particle.x}%`,
+              top: `${particle.y}%`,
+              width: `${particle.size}px`,
+              height: `${particle.size}px`
+            }}
+            animate={{
+              y: [0, -100, 0],
+              opacity: [0, 0.3, 0],
+              scale: [0, 1, 0]
+            }}
+            transition={{
+              duration: particle.duration,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          />
+        ))}
+
+        {/* Large Gradient Orbs */}
+        <motion.div 
+          className="absolute top-20 left-10 w-96 h-96 rounded-full bg-gradient-to-r from-red-200/30 to-pink-200/30 blur-3xl"
+          animate={{ 
+            x: [0, 100, 0], 
+            y: [0, 50, 0],
+            scale: [1, 1.2, 1]
+          }}
+          transition={{ duration: 20, repeat: Infinity }}
+        />
+        <motion.div 
+          className="absolute bottom-20 right-10 w-80 h-80 rounded-full bg-gradient-to-r from-blue-200/30 to-cyan-200/30 blur-3xl"
+          animate={{ 
+            x: [0, -80, 0], 
+            y: [0, -60, 0],
+            scale: [1, 1.3, 1]
+          }}
+          transition={{ duration: 15, repeat: Infinity }}
+        />
+      </div>
+
+      {/* Enhanced Confetti Animation with Red Theme */}
       <AnimatePresence>
         {showConfetti && (
           <div className="fixed inset-0 pointer-events-none z-50">
-            {[...Array(50)].map((_, i) => (
+            {[...Array(60)].map((_, i) => (
               <motion.div
                 key={i}
-                className="absolute w-2 h-2 bg-gradient-to-r from-yellow-400 to-red-500 rounded-full"
+                className="absolute"
                 initial={{
                   x: Math.random() * window.innerWidth,
                   y: -10,
@@ -159,15 +223,22 @@ function ResultPage() {
                   delay: Math.random() * 2,
                   ease: "easeOut"
                 }}
-              />
+              >
+                <div 
+                  className="w-3 h-3 rounded-full"
+                  style={{
+                    background: ['#ef4444', '#f97316', '#eab308', '#22c55e', '#3b82f6'][i % 5]
+                  }}
+                />
+              </motion.div>
             ))}
           </div>
         )}
       </AnimatePresence>
 
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-4xl mx-auto">
-          {/* Header with Animation */}
+          {/* Enhanced Header with Red Theme */}
           <motion.div 
             className="text-center mb-8"
             initial={{ opacity: 0, y: -30 }}
@@ -175,133 +246,315 @@ function ResultPage() {
             transition={{ duration: 0.8, delay: fromPrediction ? 0.5 : 0 }}
           >
             <motion.div 
-              className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-blue-600 to-red-600 rounded-full shadow-lg mb-6"
+              className="inline-flex items-center justify-center w-24 h-24 bg-gradient-to-br from-red-600 to-red-700 rounded-full shadow-2xl mb-6 relative"
               animate={{ 
-                rotate: [0, 360],
                 scale: [1, 1.1, 1]
               }}
               transition={{ 
-                rotate: { duration: 2, ease: "linear" },
                 scale: { duration: 2, repeat: Infinity }
               }}
+              whileHover={{ scale: 1.15, rotate: 5 }}
             >
-              <i className="fas fa-chart-line text-white text-3xl"></i>
+              <motion.i 
+                className="fas fa-chart-line text-white text-4xl"
+                animate={{ 
+                  scale: [1, 1.2, 1],
+                }}
+                transition={{ duration: 1.5, repeat: Infinity }}
+              />
+              
+              {/* Pulsing ring effect */}
+              <motion.div
+                className="absolute inset-0 border-4 border-red-300 rounded-full"
+                animate={{ scale: [1, 1.3, 1], opacity: [1, 0, 1] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              />
             </motion.div>
             
-            <h1 className="text-4xl font-bold text-gray-800 mb-2">
-              Hasil Prediksi Kardiovaskular
-            </h1>
-            <p className="text-gray-600 text-lg">
-              Berikut adalah hasil analisis risiko berdasarkan data yang Anda berikan
-            </p>
+            <motion.h1 
+              className="text-5xl font-bold text-gray-900 mb-4"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+            >
+              Hasil Estimasi <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-red-700">Kardiovaskular</span>
+            </motion.h1>
+            <motion.p 
+              className="text-gray-600 text-xl"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 }}
+            >
+              Berikut adalah hasil estimasi risiko berdasarkan data yang Anda berikan sebagai alat bantu skrining awal
+            </motion.p>
           </motion.div>
 
-          {/* Result Component with Stagger Animation */}
+          {/* Enhanced Result Component */}
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: fromPrediction ? 1 : 0.2 }}
+            className="mb-8"
           >
-            <PredictionResult result={result} />
+            <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100 relative overflow-hidden">
+              {/* Background decoration */}
+              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-red-100 to-transparent rounded-bl-full opacity-50"></div>
+              <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-blue-100 to-transparent rounded-tr-full opacity-50"></div>
+              
+              <div className="relative z-10">
+                <PredictionResult result={result} />
+              </div>
+            </div>
           </motion.div>
 
-          {/* Action Buttons with Hover Effects */}
+          {/* Enhanced Details Toggle */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: fromPrediction ? 1.2 : 0.4 }}
+            className="mb-8"
+          >
+            <motion.button
+              onClick={() => setShowDetails(!showDetails)}
+              className="w-full bg-white rounded-xl p-4 border border-gray-200 hover:bg-gray-50 transition-all duration-300 group shadow-md"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              <div className="flex items-center justify-between">
+                <span className="text-lg font-semibold text-gray-800 group-hover:text-red-600 transition-colors">
+                  <i className="fas fa-info-circle mr-3 text-red-600"></i>
+                  Informasi Detail & Rekomendasi Umum
+                </span>
+                <motion.i 
+                  className={`fas fa-chevron-${showDetails ? 'up' : 'down'} text-gray-600 group-hover:text-red-600 transition-colors`}
+                  animate={{ rotate: showDetails ? 180 : 0 }}
+                  transition={{ duration: 0.3 }}
+                />
+              </div>
+            </motion.button>
+
+            <AnimatePresence>
+              {showDetails && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: 'auto', opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="overflow-hidden"
+                >
+                  <div className="bg-white rounded-xl p-6 mt-4 border border-gray-200 shadow-md">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div>
+                        <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                          <i className="fas fa-heart text-red-600 mr-2"></i>
+                          Rekomendasi Gaya Hidup Sehat Umum
+                        </h3>
+                        <ul className="space-y-2 text-gray-600">
+                          {/*
+                            "Lakukan olahraga ringan 30 menit setiap hari",
+                            "Konsumsi makanan rendah garam dan lemak jenuh",
+                            "Kelola stress dengan teknik relaksasi",
+                            "Berhenti merokok dan hindari alkohol berlebihan"
+                          */}
+                          {["Lakukan olahraga ringan 30 menit setiap hari", "Konsumsi makanan rendah garam dan lemak jenuh", "Kelola stress dengan teknik relaksasi", "Berhenti merokok dan hindari alkohol berlebihan"].map((tip, index) => (
+                            <motion.li 
+                              key={index}
+                              className="flex items-start"
+                              initial={{ opacity: 0, x: -20 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ delay: 0.1 * (index + 1) }}
+                            >
+                              <i className="fas fa-check-circle text-green-500 mr-2 mt-1 flex-shrink-0"></i>
+                              <span>{tip}</span>
+                            </motion.li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                          <i className="fas fa-calendar-alt text-blue-600 mr-2"></i>
+                          Saran Jadwal Pemeriksaan Umum
+                        </h3>
+                        <ul className="space-y-2 text-gray-600">
+                          {/*
+                            "Cek tekanan darah setiap 3 bulan",
+                            "Tes kolesterol setiap 6 bulan",
+                            "EKG dan echocardiogram tahunan",
+                            "Konsultasi rutin dengan dokter jantung"
+                          */}
+                          {["Cek tekanan darah setiap 3 bulan", "Tes kolesterol setiap 6 bulan", "EKG dan echocardiogram tahunan", "Konsultasi rutin dengan dokter jantung"].map((schedule, index) => (
+                            <motion.li 
+                              key={index}
+                              className="flex items-start"
+                              initial={{ opacity: 0, x: -20 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ delay: 0.1 * (index + 1) }}
+                            >
+                              <i className="fas fa-clock text-orange-500 mr-2 mt-1 flex-shrink-0"></i>
+                              <span>{schedule}</span>
+                            </motion.li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.div>
+
+          {/* Enhanced Action Buttons with Red Theme */}
           <motion.div 
-            className="flex flex-col md:flex-row gap-4 justify-center mt-8 no-print"
+            className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mt-8 no-print"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: fromPrediction ? 1.5 : 0.5 }}
           >
-            <motion.button
-              onClick={handleNewPrediction}
-              className="inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-red-600 to-red-700 text-white font-bold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 group"
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <motion.i 
-                className="fas fa-redo mr-2"
-                animate={{ rotate: [0, 360] }}
-                transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-              ></motion.i>
-              <span>Prediksi Ulang</span>
-              <motion.div
-                className="ml-2 opacity-0 group-hover:opacity-100 transition-opacity"
-                animate={{ x: [0, 5, 0] }}
-                transition={{ duration: 1, repeat: Infinity }}
+            {/*
+              { 
+                onClick: handleNewPrediction, 
+                gradient: "from-red-600 to-red-700", 
+                icon: "fa-redo", 
+                text: "Prediksi Ulang",
+                description: "Lakukan prediksi baru"
+              },
+              { 
+                onClick: handlePrint, 
+                gradient: "from-blue-600 to-blue-700", 
+                icon: "fa-print", 
+                text: "Cetak Hasil",
+                description: "Print laporan"
+              },
+              { 
+                onClick: handleDownloadPDF, 
+                gradient: "from-purple-600 to-purple-700", 
+                icon: "fa-download", 
+                text: "Download PDF",
+                description: "Simpan sebagai PDF"
+              },
+              { 
+                onClick: handleShareResult, 
+                gradient: "from-green-600 to-green-700", 
+                icon: "fa-share", 
+                text: "Bagikan",
+                description: "Share hasil"
+              },
+              { 
+                onClick: handleGoHome, 
+                gradient: "from-gray-600 to-gray-700", 
+                icon: "fa-home", 
+                text: "Beranda",
+                description: "Kembali ke home"
+              }
+            */}
+            { [
+              { 
+                onClick: handleNewPrediction, 
+                gradient: "from-red-600 to-red-700", 
+                icon: "fa-redo", 
+                text: "Prediksi Ulang",
+                description: "Lakukan prediksi baru"
+              },
+              { 
+                onClick: handlePrint, 
+                gradient: "from-blue-600 to-blue-700", 
+                icon: "fa-print", 
+                text: "Cetak Hasil",
+                description: "Print laporan"
+              },
+              { 
+                onClick: handleDownloadPDF, 
+                gradient: "from-purple-600 to-purple-700", 
+                icon: "fa-download", 
+                text: "Download PDF",
+                description: "Simpan sebagai PDF"
+              },
+              { 
+                onClick: handleShareResult, 
+                gradient: "from-green-600 to-green-700", 
+                icon: "fa-share", 
+                text: "Bagikan",
+                description: "Share hasil"
+              },
+              { 
+                onClick: handleGoHome, 
+                gradient: "from-gray-600 to-gray-700", 
+                icon: "fa-home", 
+                text: "Beranda",
+                description: "Kembali ke home"
+              }
+            ].map((button, index) => (
+              <motion.button
+                key={index}
+                onClick={button.onClick}
+                className={`relative group p-4 bg-gradient-to-r ${button.gradient} text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden`}
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.95 }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: fromPrediction ? 1.7 + index * 0.1 : 0.7 + index * 0.1 }}
               >
-                →
-              </motion.div>
-            </motion.button>
+                {/* Background animation */}
+                <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
+                
+                <div className="relative z-10 text-center">
+                  <motion.i 
+                    className={`fas ${button.icon} text-2xl mb-2 block`}
+                    animate={{ 
+                      rotate: button.icon === 'fa-redo' ? [0, 360] : 0,
+                      scale: [1, 1.1, 1]
+                    }}
+                    transition={{ 
+                      rotate: { duration: 2, repeat: Infinity, ease: "linear" },
+                      scale: { duration: 2, repeat: Infinity }
+                    }}
+                  />
+                  <span className="text-sm font-semibold block">{button.text}</span>
+                  <span className="text-xs opacity-80 mt-1 block">{button.description}</span>
+                </div>
 
-            <motion.button
-              onClick={handlePrint}
-              className="inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-bold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <i className="fas fa-print mr-2"></i>
-              Cetak Hasil
-            </motion.button>
-
-            <motion.button
-              onClick={handleDownloadPDF}
-              className="inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-purple-600 to-purple-700 text-white font-bold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <i className="fas fa-download mr-2"></i>
-              Download PDF
-            </motion.button>
-
-            <motion.button
-              onClick={handleShareResult}
-              className="inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-green-600 to-green-700 text-white font-bold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <i className="fas fa-share mr-2"></i>
-              Bagikan
-            </motion.button>
-
-            <motion.button
-              onClick={handleGoHome}
-              className="inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-gray-600 to-gray-700 text-white font-bold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <i className="fas fa-home mr-2"></i>
-              Kembali ke Beranda
-            </motion.button>
+                {/* Hover effect */}
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  initial={{ x: '-100%' }}
+                  whileHover={{ x: '100%' }}
+                  transition={{ duration: 0.6 }}
+                />
+              </motion.button>
+            ))}
           </motion.div>
 
-          {/* Additional Info Card */}
+          {/* Enhanced Additional Info Card */}
           <motion.div 
-            className="mt-8 bg-white rounded-xl shadow-lg p-6 border-l-4 border-blue-500"
+            className="mt-8 bg-white rounded-xl shadow-lg p-6 border-l-4 border-red-500 relative overflow-hidden"
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: fromPrediction ? 2 : 0.7 }}
           >
-            <div className="flex items-start">
-              <i className="fas fa-lightbulb text-blue-500 text-2xl mr-4 mt-1"></i>
+            {/* Background decoration */}
+            <div className="absolute top-0 right-0 w-20 h-20 bg-red-50 rounded-bl-full opacity-50"></div>
+            
+            <div className="flex items-start relative z-10">
+              <motion.i 
+                className="fas fa-lightbulb text-red-500 text-2xl mr-4 mt-1"
+                animate={{ scale: [1, 1.1, 1] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              />
               <div>
-                <h3 className="text-lg font-semibold text-gray-800 mb-2">Langkah Selanjutnya</h3>
+                <h3 className="text-lg font-semibold text-gray-800 mb-2">Langkah Selanjutnya yang Disarankan</h3>
                 <ul className="text-gray-600 space-y-2">
-                  <li className="flex items-center">
-                    <i className="fas fa-check-circle text-green-500 mr-2"></i>
-                    Simpan atau cetak hasil ini untuk referensi dokter
-                  </li>
-                  <li className="flex items-center">
-                    <i className="fas fa-check-circle text-green-500 mr-2"></i>
-                    Konsultasikan hasil dengan tenaga medis profesional
-                  </li>
-                  <li className="flex items-center">
-                    <i className="fas fa-check-circle text-green-500 mr-2"></i>
-                    Lakukan pemeriksaan ulang secara berkala
-                  </li>
-                  <li className="flex items-center">
-                    <i className="fas fa-check-circle text-green-500 mr-2"></i>
-                    Ikuti rekomendasi gaya hidup yang disarankan
-                  </li>
+                  {["Simpan atau cetak hasil ini untuk referensi dokter", "Konsultasikan hasil dengan tenaga medis profesional untuk evaluasi lebih lanjut", "Lakukan pemeriksaan medis komprehensif secara berkala", "Ikuti rekomendasi gaya hidup sehat yang disarankan"].map((step, index) => (
+                    <motion.li 
+                      key={index}
+                      className="flex items-center"
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: fromPrediction ? 2.2 + index * 0.1 : 0.9 + index * 0.1 }}
+                    >
+                      <i className="fas fa-check-circle text-green-500 mr-2"></i>
+                      {step}
+                    </motion.li>
+                  ))}
                 </ul>
               </div>
             </div>

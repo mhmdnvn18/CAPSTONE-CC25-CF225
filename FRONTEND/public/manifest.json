@@ -1,7 +1,7 @@
 {
-  "name": "IllDetect - Cardiovascular Risk Detector",
+  "name": "IllDetect - Cardiovascular Diagnosis Detector",
   "short_name": "IllDetect",
-  "description": "AI-powered cardiovascular risk prediction app with offline capabilities",
+  "description": "AI-powered Cardiovascular Diagnosis prediction app with offline capabilities",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
