@@ -63,8 +63,7 @@ const PredictionPage = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5 }}
           >
-            Masukkan data kesehatan Anda untuk mendapatkan estimasi risiko penyakit kardiovaskular 
-            sebagai alat bantu skrining awal menggunakan teknologi AI.
+            Masukkan data kesehatan Anda untuk mendapatkan prediksi risiko penyakit kardiovaskular menggunakan teknologi AI yang akurat dan terpercaya.
           </motion.p>
         </motion.div>
 

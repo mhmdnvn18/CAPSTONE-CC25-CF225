@@ -201,13 +201,13 @@ function HomePage() {
     { 
       icon: { name: "fa-bolt", color: "blue" }, 
       title: "Prediksi Cepat", 
-      description: "Hasil estimasi risiko dalam hitungan detik menggunakan algoritma AI untuk skrining awal" 
-    },
+      description: "Hasil prediksi dalam hitungan detik dengan akurasi tinggi menggunakan algoritma AI terdepan" 
+     },
     { 
       icon: { name: "fa-user-md", color: "green" }, 
-      title: "Berbasis Data Medis", 
-      description: "Dikembangkan berdasarkan dataset kardiovaskular yang komprehensif sebagai alat bantu edukasi" 
-    },
+      title: "Akurat & Terpercaya", 
+      description: "Dikembangkan berdasarkan data medis terpercaya" 
+     },
     { 
       icon: { name: "fa-mobile-alt", color: "purple" }, 
       title: "Mudah Digunakan", 
@@ -221,8 +221,8 @@ function HomePage() {
     { 
       icon: { name: "fa-chart-pie", color: "indigo" }, 
       title: "Visualisasi Hasil", 
-      description: "Hasil estimasi disajikan dalam format visual yang mudah dipahami beserta rekomendasi umum" 
-    },
+      description: "Hasil prediksi disajikan dalam format visual yang mudah dipahami beserta rekomendasi"
+      },
     { 
       icon: { name: "fa-wifi", color: "yellow" }, 
       title: "Mode Offline", 
@@ -376,8 +376,7 @@ function HomePage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.5 }}
             >
-              Estimasi risiko penyakit kardiovaskular Anda secara cepat dan mudah menggunakan teknologi AI sebagai alat bantu skrining awal. 
-              Data Anda aman dan hanya digunakan untuk analisis prediksi.
+             Prediksi risiko penyakit kardiovaskular Anda secara cepat dan mudah menggunakan teknologi AI terbaru. Data Anda aman dan hanya digunakan untuk analisis prediksi yang akurat.
             </motion.p>
             
             {/* Animated CTA Button */}
@@ -564,14 +563,14 @@ function HomePage() {
               {
                 step: 2,
                 title: "Analisis AI",
-                description: "Sistem AI menganalisis data Anda menggunakan algoritma machine learning untuk estimasi risiko",
+                description: "Sistem AI menganalisis data Anda menggunakan algoritma machine learning yang canggih",
                 icon: "fa-cog",
                 color: "blue"
               },
               {
                 step: 3,
                 title: "Hasil Estimasi",
-                description: "Dapatkan hasil estimasi risiko lengkap dengan rekomendasi kesehatan umum untuk skrining awal",
+                description: "Dapatkan hasil prediksi risiko lengkap dengan rekomendasi kesehatan yang personal",
                 icon: "fa-chart-line",
                 color: "green"
               }
