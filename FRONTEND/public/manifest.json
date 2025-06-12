@@ -1,7 +1,7 @@
 {
-  "name": "IllDetect - Cardiovascular Risk Detector",
+  "name": "IllDetect - Cardiovascular Diagnosis Detector",
   "short_name": "IllDetect",
-  "description": "AI-powered cardiovascular risk prediction app with offline capabilities",
+  "description": "AI-powered Cardiovascular Diagnosis prediction app with offline capabilities",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
@@ -12,7 +12,7 @@
   "categories": ["health", "medical", "productivity"],
   "icons": [
     {
-      "src": "/icon/hati.svg",
+      "src": "icon/hati.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any maskable"
@@ -26,7 +26,7 @@
       "url": "/prediction",
       "icons": [
         {
-          "src": "/icon/hati.svg",
+          "src": "icon/hati.svg",
           "sizes": "any",
           "type": "image/svg+xml"
         }
@@ -39,7 +39,7 @@
       "url": "/data",
       "icons": [
         {
-          "src": "/icon/hati.svg",
+          "src": "icon/hati.svg",
           "sizes": "any",
           "type": "image/svg+xml"
         }

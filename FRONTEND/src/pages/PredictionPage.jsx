@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import PredictionForm from '../components/PredictionForm';
-import ApiStatusMonitor from '../components/ApiStatusMonitor';
 
 const PredictionPage = () => {
   const [predictionResult, setPredictionResult] = useState(null);
@@ -58,16 +57,15 @@ const PredictionPage = () => {
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
             Prediksi Risiko Kardiovaskular
           </h1>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            Masukkan data kesehatan Anda untuk mendapatkan prediksi risiko penyakit kardiovaskular 
-            menggunakan teknologi AI yang akurat dan terpercaya.
-          </p>
+          <motion.p 
+            className="text-gray-600 max-w-3xl mx-auto text-xl leading-relaxed"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+          >
+            Masukkan data kesehatan Anda untuk mendapatkan prediksi risiko penyakit kardiovaskular menggunakan teknologi AI yang akurat dan terpercaya.
+          </motion.p>
         </motion.div>
-
-        {/* API Status Monitor */}
-        <div className="max-w-4xl mx-auto mb-6">
-          <ApiStatusMonitor />
-        </div>
 
         {/* Prediction Form with Transition Overlay */}
         <motion.div 
@@ -211,11 +209,10 @@ const PredictionPage = () => {
                 konsultasi medis profesional. Selalu konsultasikan dengan dokter untuk diagnosis dan perawatan yang tepat.
               </div>
             </div>
-          </div>
+            </div>
         </motion.div>
       </div>
     </div>
   );
 };
-
 export default PredictionPage;

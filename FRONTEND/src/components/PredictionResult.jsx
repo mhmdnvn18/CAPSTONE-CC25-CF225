@@ -42,7 +42,10 @@ const PredictionResult = ({ result }) => {
   };
 
   const risk = getRiskLevel();
+  // Fix: Use the actual prediction probability as confidence
   const confidence = prediction.confidence || Math.round((prediction.probability || 0.5) * 100);
+  // The confidence should represent the probability of having cardiovascular risk
+  const riskProbability = prediction.probability ? Math.round(prediction.probability * 100) : confidence;
   const bmi = prediction.bmi || patientData.bmi || 'N/A';
 
   // Enhanced recommendations based on risk factors
@@ -231,7 +234,7 @@ const PredictionResult = ({ result }) => {
           {risk.level}
         </motion.h2>
         
-        {/* Interactive Stats Grid */}
+        {/* Interactive Stats Grid with Dynamic Colors */}
         <motion.div 
           className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8 relative z-10"
           initial={{ y: 20, opacity: 0 }}
@@ -243,15 +246,18 @@ const PredictionResult = ({ result }) => {
             whileHover={{ scale: 1.05, y: -5 }}
             whileTap={{ scale: 0.95 }}
           >
-            <p className="text-gray-600 text-sm mb-2">Tingkat Keyakinan</p>
+            <p className="text-gray-600 text-sm mb-2">Probabilitas Risiko</p>
             <div className={`text-3xl font-bold ${risk.textColor}`}>
-              {confidence}%
+              {riskProbability}%
             </div>
+            <p className="text-xs text-gray-500 mt-1">
+              {prediction.risk === 1 ? 'Kemungkinan terkena risiko tinggi' : 'Kemungkinan terkena risiko rendah'}
+            </p>
             <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
               <motion.div 
                 className={`bg-${risk.color}-600 h-2 rounded-full`}
                 initial={{ width: 0 }}
-                animate={{ width: `${confidence}%` }}
+                animate={{ width: `${riskProbability}%` }}
                 transition={{ duration: 1.5, delay: 0.8 }}
               />
             </div>
@@ -263,7 +269,7 @@ const PredictionResult = ({ result }) => {
             whileTap={{ scale: 0.95 }}
           >
             <p className="text-gray-600 text-sm mb-2">BMI</p>
-            <div className={`text-3xl font-bold ${risk.textColor}`}>
+            <div className={`text-3xl font-bold ${bmiCategory.color}`}>
               {bmi}
             </div>
             <p className={`text-sm ${bmiCategory.color} font-medium`}>
@@ -276,10 +282,13 @@ const PredictionResult = ({ result }) => {
             whileHover={{ scale: 1.05, y: -5 }}
             whileTap={{ scale: 0.95 }}
           >
-            <p className="text-gray-600 text-sm mb-2">Status</p>
-            <div className={`text-lg font-bold ${risk.textColor}`}>
-              {prediction.source === 'local' ? 'Offline' : 'AI Powered'}
+            <p className="text-gray-600 text-sm mb-2">Status Analisis</p>
+            <div className="text-xl font-bold text-purple-600">
+              {prediction.source === 'local' ? 'Offline' : 'Online'}
             </div>
+            <p className="text-xs text-gray-500 mt-1">
+              {prediction.source === 'local' ? 'Analisis lokal' : 'Analisis server'}
+            </p>
             <div className="flex justify-center mt-1">
               <motion.div
                 className={`w-2 h-2 rounded-full ${prediction.source === 'local' ? 'bg-orange-500' : 'bg-green-500'}`}
@@ -291,7 +300,7 @@ const PredictionResult = ({ result }) => {
         </motion.div>
       </motion.div>
 
-      {/* Enhanced Interactive Tabs Navigation */}
+      {/* Enhanced Interactive Tabs Navigation with Dynamic Colors */}
       <motion.div 
         className="bg-white rounded-xl shadow-lg overflow-hidden"
         initial={{ opacity: 0, y: 20 }}
@@ -305,7 +314,7 @@ const PredictionResult = ({ result }) => {
               onClick={() => setActiveTab(tab.id)}
               className={`flex-1 min-w-fit px-6 py-4 text-sm font-medium transition-all duration-300 relative ${
                 activeTab === tab.id
-                  ? `${risk.textColor} bg-gray-50`
+                  ? 'text-red-600 bg-red-50'
                   : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'
               }`}
               whileHover={{ scale: 1.02 }}
@@ -321,7 +330,7 @@ const PredictionResult = ({ result }) => {
               </div>
               {activeTab === tab.id && (
                 <motion.div
-                  className={`absolute bottom-0 left-0 right-0 h-0.5 bg-${risk.color}-600`}
+                  className="absolute bottom-0 left-0 right-0 h-0.5 bg-red-600"
                   layoutId="activeTab"
                   initial={{ scaleX: 0 }}
                   animate={{ scaleX: 1 }}
@@ -341,7 +350,7 @@ const PredictionResult = ({ result }) => {
           >
             {activeTab === 'overview' && (
               <div className="space-y-6">
-                {/* Patient Data Summary with Interactive Cards */}
+                {/* Patient Data Summary with Varied Colors */}
                 <div>
                   <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center">
                     <motion.i 
@@ -355,7 +364,12 @@ const PredictionResult = ({ result }) => {
                     {patientDataItems.map((item, index) => (
                       <motion.div 
                         key={index}
-                        className="bg-gray-50 rounded-lg p-4 relative overflow-hidden cursor-pointer"
+                        className={`bg-gradient-to-br ${
+                          item.label === 'Usia' ? 'from-purple-50 to-purple-100 border-purple-200' :
+                          item.label === 'Jenis Kelamin' ? 'from-indigo-50 to-indigo-100 border-indigo-200' :
+                          item.label === 'Tekanan Darah' ? 'from-red-50 to-red-100 border-red-200' :
+                          'from-blue-50 to-blue-100 border-blue-200'
+                        } rounded-lg p-4 relative overflow-hidden cursor-pointer border`}
                         whileHover={{ scale: 1.05, y: -2 }}
                         whileTap={{ scale: 0.95 }}
                         initial={{ opacity: 0, y: 20 }}
@@ -365,11 +379,21 @@ const PredictionResult = ({ result }) => {
                         <div className="flex items-center justify-between mb-2">
                           <p className="text-sm text-gray-600">{item.label}</p>
                           <motion.i 
-                            className={`fas ${item.icon} text-${item.color}-500`}
+                            className={`fas ${item.icon} ${
+                              item.label === 'Usia' ? 'text-purple-600' :
+                              item.label === 'Jenis Kelamin' ? 'text-indigo-600' :
+                              item.label === 'Tekanan Darah' ? 'text-red-600' :
+                              'text-blue-600'
+                            }`}
                             whileHover={{ rotate: 10, scale: 1.2 }}
                           />
                         </div>
-                        <p className="font-semibold text-lg">{item.value}</p>
+                        <p className={`font-semibold text-lg ${
+                          item.label === 'Usia' ? 'text-purple-700' :
+                          item.label === 'Jenis Kelamin' ? 'text-indigo-700' :
+                          item.label === 'Tekanan Darah' ? 'text-red-700' :
+                          'text-blue-700'
+                        }`}>{item.value}</p>
                         {item.label === 'BMI' && (
                           <p className={`text-xs ${bmiCategory.color} mt-1`}>{bmiCategory.advice}</p>
                         )}
@@ -378,12 +402,12 @@ const PredictionResult = ({ result }) => {
                   </div>
                 </div>
 
-                {/* Risk Factors with Interactive Elements */}
+                {/* Risk Factors with Warning Colors */}
                 {mlInsights?.risk_factors && (
                   <div>
                     <h4 className="font-semibold text-gray-800 mb-3 flex items-center">
                       <motion.i 
-                        className="fas fa-exclamation-triangle text-amber-600 mr-2"
+                        className="fas fa-exclamation-triangle text-orange-600 mr-2"
                         animate={{ scale: [1, 1.1, 1] }}
                         transition={{ duration: 2, repeat: Infinity }}
                       />
@@ -393,7 +417,7 @@ const PredictionResult = ({ result }) => {
                       {mlInsights.risk_factors.map((factor, index) => (
                         <motion.div 
                           key={index} 
-                          className="flex items-center p-3 bg-amber-50 rounded-lg border border-amber-200 cursor-pointer"
+                          className="flex items-center p-3 bg-gradient-to-r from-orange-50 to-red-50 rounded-lg border border-orange-200 cursor-pointer"
                           whileHover={{ scale: 1.02, x: 5 }}
                           whileTap={{ scale: 0.98 }}
                           initial={{ opacity: 0, x: -20 }}
@@ -401,11 +425,11 @@ const PredictionResult = ({ result }) => {
                           transition={{ delay: index * 0.1 }}
                         >
                           <motion.i 
-                            className="fas fa-exclamation-triangle text-amber-600 mr-3"
+                            className="fas fa-exclamation-triangle text-orange-600 mr-3"
                             animate={{ rotate: [0, 5, -5, 0] }}
                             transition={{ duration: 2, repeat: Infinity, delay: index * 0.2 }}
                           />
-                          <span className="text-amber-800">{factor}</span>
+                          <span className="text-orange-800">{factor}</span>
                         </motion.div>
                       ))}
                     </div>
@@ -429,7 +453,7 @@ const PredictionResult = ({ result }) => {
                     {recommendations.immediate.map((rec, index) => (
                       <motion.div 
                         key={index}
-                        className="flex items-start p-4 bg-red-50 rounded-lg border border-red-200 cursor-pointer"
+                        className="flex items-start p-4 bg-gradient-to-r from-red-50 to-pink-50 rounded-lg border border-red-200 cursor-pointer"
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: index * 0.1 }}
@@ -460,7 +484,7 @@ const PredictionResult = ({ result }) => {
                     {recommendations.prevention.map((rec, index) => (
                       <motion.div 
                         key={index}
-                        className="flex items-start p-4 bg-green-50 rounded-lg border border-green-200 cursor-pointer"
+                        className="flex items-start p-4 bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg border border-green-200 cursor-pointer"
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: index * 0.1 }}
@@ -482,12 +506,12 @@ const PredictionResult = ({ result }) => {
 
             {activeTab === 'lifestyle' && (
               <div className="space-y-6">
-                {/* Current Lifestyle Status with Interactive Elements */}
+                {/* Current Lifestyle Status with Traffic Light Colors */}
                 {patientData.lifestyle && (
                   <div>
                     <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center">
                       <motion.i 
-                        className="fas fa-heart mr-3 text-red-600"
+                        className="fas fa-heart mr-3 text-pink-600"
                         animate={{ scale: [1, 1.2, 1] }}
                         transition={{ duration: 1.5, repeat: Infinity }}
                       />
@@ -497,7 +521,11 @@ const PredictionResult = ({ result }) => {
                       {lifestyleItems.map((item, index) => (
                         <motion.div 
                           key={index}
-                          className="bg-gray-50 rounded-lg p-4 cursor-pointer"
+                          className={`bg-gradient-to-br ${
+                            item.label === 'Aktivitas Fisik' 
+                              ? (item.status ? 'from-green-50 to-green-100 border-green-200' : 'from-red-50 to-red-100 border-red-200')
+                              : (item.status ? 'from-red-50 to-red-100 border-red-200' : 'from-green-50 to-green-100 border-green-200')
+                          } rounded-lg p-4 cursor-pointer border`}
                           whileHover={{ scale: 1.05, y: -2 }}
                           whileTap={{ scale: 0.95 }}
                           initial={{ opacity: 0, y: 20 }}
@@ -529,7 +557,7 @@ const PredictionResult = ({ result }) => {
                   </div>
                 )}
 
-                {/* Lifestyle Recommendations with Interactive Elements */}
+                {/* Lifestyle Recommendations with Varied Colors */}
                 <div>
                   <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center">
                     <motion.i 
@@ -543,7 +571,11 @@ const PredictionResult = ({ result }) => {
                     {recommendations.lifestyle.map((rec, index) => (
                       <motion.div 
                         key={index}
-                        className="flex items-start p-4 bg-blue-50 rounded-lg border border-blue-200 cursor-pointer"
+                        className={`flex items-start p-4 bg-gradient-to-r ${
+                          index % 3 === 0 ? 'from-blue-50 to-blue-100 border-blue-200' :
+                          index % 3 === 1 ? 'from-purple-50 to-purple-100 border-purple-200' :
+                          'from-indigo-50 to-indigo-100 border-indigo-200'
+                        } rounded-lg border cursor-pointer`}
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ delay: index * 0.1 }}
@@ -551,11 +583,19 @@ const PredictionResult = ({ result }) => {
                         whileTap={{ scale: 0.98 }}
                       >
                         <motion.i 
-                          className="fas fa-star text-blue-600 mt-1 mr-3"
+                          className={`fas fa-star ${
+                            index % 3 === 0 ? 'text-blue-600' :
+                            index % 3 === 1 ? 'text-purple-600' :
+                            'text-indigo-600'
+                          } mt-1 mr-3`}
                           animate={{ rotate: [0, 360] }}
                           transition={{ duration: 3, repeat: Infinity, delay: index * 0.2 }}
                         />
-                        <span className="text-blue-800">{rec}</span>
+                        <span className={`${
+                          index % 3 === 0 ? 'text-blue-800' :
+                          index % 3 === 1 ? 'text-purple-800' :
+                          'text-indigo-800'
+                        }`}>{rec}</span>
                       </motion.div>
                     ))}
                   </div>
@@ -578,7 +618,12 @@ const PredictionResult = ({ result }) => {
                     {recommendations.monitoring.map((rec, index) => (
                       <motion.div 
                         key={index}
-                        className="flex items-start p-4 bg-purple-50 rounded-lg border border-purple-200 cursor-pointer"
+                        className={`flex items-start p-4 bg-gradient-to-r ${
+                          index % 4 === 0 ? 'from-cyan-50 to-cyan-100 border-cyan-200' :
+                          index % 4 === 1 ? 'from-teal-50 to-teal-100 border-teal-200' :
+                          index % 4 === 2 ? 'from-emerald-50 to-emerald-100 border-emerald-200' :
+                          'from-lime-50 to-lime-100 border-lime-200'
+                        } rounded-lg border cursor-pointer`}
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: index * 0.1 }}
@@ -586,19 +631,29 @@ const PredictionResult = ({ result }) => {
                         whileTap={{ scale: 0.98 }}
                       >
                         <motion.i 
-                          className="fas fa-clipboard-check text-purple-600 mt-1 mr-3"
+                          className={`fas fa-clipboard-check ${
+                            index % 4 === 0 ? 'text-cyan-600' :
+                            index % 4 === 1 ? 'text-teal-600' :
+                            index % 4 === 2 ? 'text-emerald-600' :
+                            'text-lime-600'
+                          } mt-1 mr-3`}
                           animate={{ scale: [1, 1.1, 1] }}
                           transition={{ duration: 2, repeat: Infinity, delay: index * 0.3 }}
                         />
-                        <span className="text-purple-800">{rec}</span>
+                        <span className={`${
+                          index % 4 === 0 ? 'text-cyan-800' :
+                          index % 4 === 1 ? 'text-teal-800' :
+                          index % 4 === 2 ? 'text-emerald-800' :
+                          'text-lime-800'
+                        }`}>{rec}</span>
                       </motion.div>
                     ))}
                   </div>
                 </div>
 
-                {/* Enhanced Emergency Warning Signs */}
+                {/* Enhanced Emergency Warning Signs with Red Theme */}
                 <motion.div 
-                  className="bg-red-50 border border-red-200 rounded-lg p-6"
+                  className="bg-gradient-to-r from-red-50 to-orange-50 border border-red-200 rounded-lg p-6"
                   whileHover={{ scale: 1.02 }}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -606,7 +661,7 @@ const PredictionResult = ({ result }) => {
                 >
                   <h4 className="font-bold text-red-800 mb-3 flex items-center">
                     <motion.i 
-                      className="fas fa-ambulance mr-2"
+                      className="fas fa-ambulance mr-2 text-red-600"
                       animate={{ scale: [1, 1.2, 1] }}
                       transition={{ duration: 1, repeat: Infinity }}
                     />
@@ -638,26 +693,26 @@ const PredictionResult = ({ result }) => {
         </div>
       </motion.div>
 
-      {/* Enhanced Source Information with Interactive Elements */}
+      {/* Enhanced Source Information with Blue Theme */}
       <motion.div 
-        className="bg-gray-50 rounded-xl p-4 text-center cursor-pointer"
+        className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-4 text-center cursor-pointer border border-blue-200"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.9 }}
         whileHover={{ scale: 1.02, y: -2 }}
         whileTap={{ scale: 0.98 }}
       >
-        <p className="text-sm text-gray-600">
+        <p className="text-sm text-blue-700">
           <motion.i 
-            className="fas fa-info-circle mr-2"
+            className="fas fa-info-circle mr-2 text-blue-600"
             animate={{ rotate: [0, 360] }}
             transition={{ duration: 4, repeat: Infinity }}
           />
+          Hasil estimasi risiko kardiovaskular sebagai alat bantu skrining awal
         </p>
-        <p className="text-xs text-gray-500 mt-2">
+        <p className="text-xs text-blue-600 mt-2 font-medium">
           ⚠️ Hasil ini hanya untuk referensi. Konsultasikan dengan dokter untuk diagnosis yang akurat.
         </p>
-       
       </motion.div>
     </div>
   );
