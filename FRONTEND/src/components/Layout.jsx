@@ -111,7 +111,7 @@ function Layout({ children }) {
               </motion.div>
               <div>
                 <h1 className="text-xl font-bold text-gray-800 group-hover:text-red-600 transition-colors">IllDetect</h1>
-                <p className="text-xs text-gray-500">Cardiovascular Risk Detector</p>
+                <p className="text-xs text-gray-500">Cardiovascular Diagnosis Detector</p>
               </div>
             </Link>
 
@@ -256,25 +256,22 @@ function Layout({ children }) {
                 <p><i className="fas fa-headset mr-2"></i> +62 8123 4567 890</p>
                 <div className="flex space-x-4 mt-4">
                   <motion.a 
-                    href="#" 
+                    href="https://github.com/diazrahman21"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="text-gray-400 hover:text-white transition"
                     whileHover={{ scale: 1.2, rotate: 5 }}
                   >
                     <i className="fab fa-github text-xl"></i>
                   </motion.a>
                   <motion.a 
-                    href="#" 
+                    href="https://www.linkedin.com/in/muh-diaz-nazarudin-rahman-0aa85a2a0/"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="text-gray-400 hover:text-white transition"
                     whileHover={{ scale: 1.2, rotate: 5 }}
                   >
                     <i className="fab fa-linkedin-in text-xl"></i>
-                  </motion.a>
-                  <motion.a 
-                    href="#" 
-                    className="text-gray-400 hover:text-white transition"
-                    whileHover={{ scale: 1.2, rotate: 5 }}
-                  >
-                    <i className="fab fa-twitter text-xl"></i>
                   </motion.a>
                 </div>
               </div>
