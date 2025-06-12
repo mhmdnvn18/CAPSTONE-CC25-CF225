@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App';
+import App from './App.jsx';
 import './index.css';
 
 // Register Service Worker for PWA functionality
@@ -49,6 +49,17 @@ window.installApp = async () => {
     console.log('📱 Install outcome:', outcome);
     deferredPrompt = null;
   }
+};
+
+// Add global utility functions
+window.lockBodyScroll = () => {
+  document.body.style.overflow = 'hidden';
+  document.body.classList.add('modal-open');
+};
+
+window.unlockBodyScroll = () => {
+  document.body.style.overflow = '';
+  document.body.classList.remove('modal-open');
 };
 
 ReactDOM.createRoot(document.getElementById('root')).render(
