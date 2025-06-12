@@ -281,15 +281,33 @@ A: Dataset diambil dari Kaggle, lihat bagian Referensi di bawah.
 ## Tangkapan Layar Aplikasi
 
 <p align="center">
-  <img src="Images/WEB-Beranda.png" alt="Tampilan Beranda IllDetect" width="600"/>
+  <img src="Images/Home.png" alt="Tampilan Beranda IllDetect" width="600"/>
   <br>
   <i>Tampilan Beranda IllDetect</i>
 </p>
 
 <p align="center">
-  <img src="Images/WEB-Prediksi.png" alt="Tampilan Halaman Prediksi IllDetect" width="600"/>
+  <img src="Images/Prediksi.png" alt="Tampilan Halaman Prediksi IllDetect" width="600"/>
   <br>
   <i>Tampilan Halaman Prediksi IllDetect</i>
+</p>
+
+<p align="center">
+  <img src="Images/Tentang-kami.png" alt="Tampilan Halaman Tentang Kami IllDetect" width="600"/>
+  <br>
+  <i>Tampilan Halaman Tentang Kami IllDetect</i>
+</p>
+
+<p align="center">
+  <img src="Images/Kontak.png" alt="Tampilan Halaman Kontak IllDetect" width="600"/>
+  <br>
+  <i>Tampilan Halaman Kontak IllDetect</i>
+</p>
+
+<p align="center">
+  <img src="Images/Hasil.png" alt="Tampilan Halaman Hasil Prediksi IllDetect" width="600"/>
+  <br>
+  <i>Tampilan Halaman Hasil Prediksi IllDetect</i>
 </p>
 
 ---
