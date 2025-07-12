@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CardioRisk Predictor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+   
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <div class="gradient-bg text-white py-6 shadow-lg">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <i class="fas fa-heartbeat text-3xl floating"></i>
+                    <h1 class="text-2xl font-bold">CardioRisk Predictor</h1>
+                </div>
+                <div class="hidden md:flex space-x-4">
+                    <a href="#" class="hover:underline hover:text-gray-200 transition">Home</a>
+                    <a href="#" class="hover:underline hover:text-gray-200 transition">About</a>
+                    <a href="#" class="hover:underline hover:text-gray-200 transition">Contact</a>
+                    <button id="loginBtn" class="bg-white text-indigo-600 px-4 py-1 rounded-full font-medium hover:bg-gray-100 hover:scale-105 transition transform">Login</button>
+                </div>
+                <button class="md:hidden text-2xl hover:text-gray-200 transition" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mx-auto px-4 py-8">
+        <div class="max-w-4xl mx-auto">
+            <div class="bg-white rounded-xl shadow-md overflow-hidden mb-8 card-hover">
+                <div class="p-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6">Cardiovascular Risk Assessment</h2>
+                    <p class="text-gray-600 mb-6">Fill in your health information below to assess your risk of cardiovascular disease. All fields are required.</p>
+                    
+                    <div class="progress-bar mb-6">
+                        <div id="formProgress" class="progress-bar-fill" style="width: 0%"></div>
+                    </div>
+                    
+                    <form id="predictionForm" class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Age -->
+                            <div>
+                                <label for="age" class="block text-sm font-medium text-gray-700 mb-1 flex items-center">
+                                    Age (years)
+                                    <span class="tooltip ml-1">
+                                        <i class="fas fa-info-circle text-indigo-500 cursor-pointer"></i>
+                                        <span class="tooltip-text">Your age is an important factor in cardiovascular risk assessment</span>
+                                    </span>
+                                </label>
+                                <input type="number" id="age" name="age" min="18" max="120" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 input-highlight" required>
+                                <p class="mt-1 text-xs text-gray-500">Must be between 18-120 years</p>
+                            </div>
+                            
+                            <!-- Gender -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Gender</label>
+                                <div class="flex space-x-4">
+                                    <label class="inline-flex items-center">
+                                        <input type="radio" name="gender" value="male" class="text-indigo-600 focus:ring-indigo-500" checked required>
+                                        <span class="ml-2">Male</span>
+                                    </label>
+                                    <label class="inline-flex items-center">
+                                        <input type="radio" name="gender" value="female" class="text-indigo-600 focus:ring-indigo-500">
+                                        <span class="ml-2">Female</span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <!-- Blood Pressure -->
+                            <div>
+                                <label for="bloodPressure" class="block text-sm font-medium text-gray-700 mb-1 flex items-center">
+                                    Blood Pressure (mmHg)
+                                    <span class="tooltip ml-1">
+                                        <i class="fas fa-info-circle text-indigo-500 cursor-pointer"></i>
+                                        <span class="tooltip-text">Systolic blood pressure (the upper number in your reading)</span>
+                                    </span>
+                                </label>
+                                <input type="number" id="bloodPressure" name="bloodPressure" min="70" max="250" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 input-highlight" required>
+                                <p class="mt-1 text-xs text-gray-500">Systolic blood pressure (upper number)</p>
+                            </div>
+                            
+                            <!-- Cholesterol -->
+                            <div>
+                                <label for="cholesterol" class="block text-sm font-medium text-gray-700 mb-1">Cholesterol (mg/dL)</label>
+                                <select id="cholesterol" name="cholesterol" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 input-highlight" required>
+                                    <option value="">Select cholesterol level</option>
+                                    <option value="normal">Normal (< 200)</option>
+                                    <option value="borderline">Borderline high (200-239)</option>
+                                    <option value="high">High (≥ 240)</option>
+                                </select>
+                            </div>
+                            
+                            <!-- Smoking -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Smoking Status</label>
+                                <div class="flex space-x-4">
+                                    <label class="inline-flex items-center">
+                                        <input type="radio" name="smoking" value="yes" class="text-indigo-600 focus:ring-indigo-500">
+                                        <span class="ml-2">Smoker</span>
+                                    </label>
+                                    <label class="inline-flex items-center">
+                                        <input type="radio" name="smoking" value="no" class="text-indigo-600 focus:ring-indigo-500" checked>
+                                        <span class="ml-2">Non-smoker</span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <!-- Diabetes -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Diabetes</label>
+                                <div class="flex space-x-4">
+                                    <label class="inline-flex items-center">
+                                        <input type="radio" name="diabetes" value="yes" class="text-indigo-600 focus:ring-indigo-500">
+                                        <span class="ml-2">Yes</span>
+                                    </label>
+                                    <label class="inline-flex items-center">
+                                        <input type="radio" name="diabetes" value="no" class="text-indigo-600 focus:ring-indigo-500" checked>
+                                        <span class="ml-2">No</span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <!-- Physical Activity -->
+                            <div>
+                                <label for="activity" class="block text-sm font-medium text-gray-700 mb-1">Physical Activity</label>
+                                <select id="activity" name="activity" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 input-highlight" required>
+                                    <option value="">Select activity level</option>
+                                    <option value="sedentary">Sedentary (little or no exercise)</option>
+                                    <option value="moderate">Moderate (1-3 days/week)</option>
+                                    <option value="active">Active (3-5 days/week)</option>
+                                    <option value="very_active">Very Active (6-7 days/week)</option>
+                                </select>
+                            </div>
+                            
+                            <!-- BMI -->
+                            <div>
+                                <label for="bmi" class="block text-sm font-medium text-gray-700 mb-1 flex items-center">
+                                    Body Mass Index (BMI)
+                                    <span class="tooltip ml-1">
+                                        <i class="fas fa-info-circle text-indigo-500 cursor-pointer"></i>
+                                        <span class="tooltip-text">BMI = weight(kg) / height(m)<sup>2</sup></span>
+                                    </span>
+                                </label>
+                                <input type="number" id="bmi" name="bmi" min="10" max="50" step="0.1" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 input-highlight" required>
+                                <p class="mt-1 text-xs text-gray-500">Weight(kg) / Height(m)<sup>2</sup></p>
+                            </div>
+                            
+                            <!-- Family History -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Family History of Heart Disease</label>
+                                <div class="flex space-x-4">
+                                    <label class="inline-flex items-center">
+                                        <input type="radio" name="familyHistory" value="yes" class="text-indigo-600 focus:ring-indigo-500">
+                                        <span class="ml-2">Yes</span>
+                                    </label>
+                                    <label class="inline-flex items-center">
+                                        <input type="radio" name="familyHistory" value="no" class="text-indigo-600 focus:ring-indigo-500" checked>
+                                        <span class="ml-2">No</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="pt-4">
+                            <button type="submit" id="predictBtn" class="w-full gradient-bg text-white px-6 py-3 rounded-md font-medium hover:opacity-90 transition flex items-center justify-center space-x-2 pulse-animation hover:scale-105 transform">
+                                <i class="fas fa-heartbeat"></i>
+                                <span>Assess My Cardiovascular Risk</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Results Section (Initially Hidden) -->
+            <div id="resultsSection" class="hidden bg-white rounded-xl shadow-md overflow-hidden mb-8 card-hover">
+                <div class="p-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-2xl font-bold text-gray-800">Your Cardiovascular Risk Assessment</h2>
+                        <div class="flex space-x-2">
+                            <button id="exportPdfBtn" class="bg-gray-200 text-gray-700 px-3 py-1 rounded-md text-sm hover:bg-gray-300 transition flex items-center hover:scale-105 transform">
+                                <i class="fas fa-file-pdf mr-1"></i> PDF
+                            </button>
+                            <button id="exportCsvBtn" class="bg-gray-200 text-gray-700 px-3 py-1 rounded-md text-sm hover:bg-gray-300 transition flex items-center hover:scale-105 transform">
+                                <i class="fas fa-file-csv mr-1"></i> CSV
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div id="riskResult" class="p-4 rounded-md mb-6 fade-in">
+                        <!-- Risk level will be inserted here -->
+                    </div>
+                    
+                    <div class="mb-6 fade-in">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-3">Assessment Details</h3>
+                        <div class="bg-gray-50 p-4 rounded-md">
+                            <table class="w-full">
+                                <tbody id="assessmentDetails">
+                                    <!-- Details will be inserted here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div class="fade-in">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-3">Recommendations</h3>
+                        <div class="bg-gray-50 p-4 rounded-md">
+                            <ul class="list-disc pl-5 space-y-2" id="recommendations">
+                                <!-- Recommendations will be inserted here -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- History Section (For Logged-in Users) -->
+            <div id="historySection" class="hidden bg-white rounded-xl shadow-md overflow-hidden card-hover">
+                <div class="p-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6">Your Assessment History</h2>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Risk Level</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Age</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">BP</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="historyTableBody" class="bg-white divide-y divide-gray-200">
+                                <!-- History will be inserted here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Login Modal -->
+    <div id="loginModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg p-6 max-w-md w-full fade-in">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold text-gray-800">Login to Your Account</h3>
+                <button id="closeLoginModal" class="text-gray-500 hover:text-gray-700 hover:scale-110 transform transition">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="loginForm" class="space-y-4">
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                    <input type="email" id="email" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 input-highlight" required>
+                </div>
+                <div>
+                    <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                    <input type="password" id="password" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 input-highlight" required>
+                </div>
+                <div class="flex items-center justify-between">
+                    <label class="inline-flex items-center">
+                        <input type="checkbox" class="text-indigo-600 focus:ring-indigo-500">
+                        <span class="ml-2 text-sm text-gray-600">Remember me</span>
+                    </label>
+                    <a href="#" class="text-sm text-indigo-600 hover:underline">Forgot password?</a>
+                </div>
+                <button type="submit" class="w-full gradient-bg text-white px-4 py-2 rounded-md font-medium hover:opacity-90 transition hover:scale-105 transform">Login</button>
+            </form>
+            <div class="mt-4 text-center">
+                <p class="text-sm text-gray-600">Don't have an account? <a href="#" class="text-indigo-600 hover:underline">Sign up</a></p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden md:hidden">
+        <div class="bg-white h-full w-64 shadow-lg transform transition-transform duration-300 ease-in-out" id="mobileMenuContent">
+            <div class="p-4 border-b">
+                <div class="flex justify-between items-center">
+                    <h3 class="text-lg font-semibold">Menu</h3>
+                    <button id="closeMobileMenu" class="text-gray-500 hover:text-gray-700 hover:scale-110 transform transition">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="p-4 space-y-4">
+                <a href="#" class="block hover:text-indigo-600 transition">Home</a>
+                <a href="#" class="block hover:text-indigo-600 transition">About</a>
+                <a href="#" class="block hover:text-indigo-600 transition">Contact</a>
+                <button id="mobileLoginBtn" class="w-full gradient-bg text-white px-4 py-2 rounded-md font-medium hover:opacity-90 transition hover:scale-105 transform">Login</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM Elements
+            const predictionForm = document.getElementById('predictionForm');
+            const predictBtn = document.getElementById('predictBtn');
+            const resultsSection = document.getElementById('resultsSection');
+            const riskResult = document.getElementById('riskResult');
+            const assessmentDetails = document.getElementById('assessmentDetails');
+            const recommendations = document.getElementById('recommendations');
+            const loginBtn = document.getElementById('loginBtn');
+            const mobileLoginBtn = document.getElementById('mobileLoginBtn');
+            const loginModal = document.getElementById('loginModal');
+            const closeLoginModal = document.getElementById('closeLoginModal');
+            const loginForm = document.getElementById('loginForm');
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const mobileMenuContent = document.getElementById('mobileMenuContent');
+            const closeMobileMenu = document.getElementById('closeMobileMenu');
+            const exportPdfBtn = document.getElementById('exportPdfBtn');
+            const exportCsvBtn = document.getElementById('exportCsvBtn');
+            const historySection = document.getElementById('historySection');
+            const historyTableBody = document.getElementById('historyTableBody');
+            const formProgress = document.getElementById('formProgress');
+            
+            // Track form completion
+            let completedFields = 0;
+            const totalFields = 9; // Number of required fields
+            
+            // Form input tracking for progress bar
+            const formInputs = predictionForm.querySelectorAll('input[required], select[required]');
+            formInputs.forEach(input => {
+                input.addEventListener('input', updateProgress);
+                input.addEventListener('change', updateProgress);
+            });
+            
+            function updateProgress() {
+                let filledFields = 0;
+                formInputs.forEach(input => {
+                    if (input.type === 'radio' || input.type === 'checkbox') {
+                        if (predictionForm.querySelector(`input[name="${input.name}"]:checked`)) {
+                            filledFields++;
+                        }
+                    } else if (input.value.trim() !== '') {
+                        filledFields++;
+                    }
+                });
+                
+                const progressPercentage = (filledFields / totalFields) * 100;
+                formProgress.style.width = `${progressPercentage}%`;
+                
+                // Change color based on completion
+                if (progressPercentage < 30) {
+                    formProgress.style.backgroundColor = '#ef4444'; // red
+                } else if (progressPercentage < 70) {
+                    formProgress.style.backgroundColor = '#f59e0b'; // yellow
+                } else {
+                    formProgress.style.backgroundColor = '#10b981'; // green
+                }
+            }
+            
+            // Form submission
+            predictionForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Validate form
+                if (!validateForm()) {
+                    return;
+                }
+                
+                // Simulate processing
+                predictBtn.disabled = true;
+                predictBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+                
+                // Add loading animation to form
+                predictionForm.classList.add('opacity-75');
+                
+                // Simulate API call delay
+                setTimeout(function() {
+                    // Get form values
+                    const formData = {
+                        age: parseInt(document.getElementById('age').value),
+                        gender: document.querySelector('input[name="gender"]:checked').value,
+                        bloodPressure: parseInt(document.getElementById('bloodPressure').value),
+                        cholesterol: document.getElementById('cholesterol').value,
+                        smoking: document.querySelector('input[name="smoking"]:checked').value,
+                        diabetes: document.querySelector('input[name="diabetes"]:checked').value,
+                        activity: document.getElementById('activity').value,
+                        bmi: parseFloat(document.getElementById('bmi').value),
+                        familyHistory: document.querySelector('input[name="familyHistory"]:checked').value
+                    };
+                    
+                    // Calculate risk (simplified for demo)
+                    const riskLevel = calculateRisk(formData);
+                    
+                    // Display results
+                    displayResults(riskLevel, formData);
+                    
+                    // Reset button and form
+                    predictBtn.disabled = false;
+                    predictBtn.innerHTML = '<i class="fas fa-heartbeat"></i><span>Assess My Cardiovascular Risk</span>';
+                    predictionForm.classList.remove('opacity-75');
+                    
+                    // Show history if logged in (simulated)
+                    if (localStorage.getItem('loggedIn') === 'true') {
+                        historySection.classList.remove('hidden');
+                        loadHistory();
+                    }
+                }, 1500);
+            });
+            
+            // Form validation
+            function validateForm() {
+                let isValid = true;
+                
+                // Check all required fields
+                const requiredInputs = predictionForm.querySelectorAll('[required]');
+                requiredInputs.forEach(input => {
+                    if ((input.type === 'radio' && !predictionForm.querySelector(`input[name="${input.name}"]:checked`)) || 
+                        (input.type !== 'radio' && !input.value)) {
+                        input.classList.add('shake');
+                        setTimeout(() => input.classList.remove('shake'), 500);
+                        isValid = false;
+                    }
+                });
+                
+                // Validate age
+                const ageInput = document.getElementById('age');
+                if (ageInput.value < 18 || ageInput.value > 120) {
+                    ageInput.classList.add('shake', 'border-red-500');
+                    setTimeout(() => ageInput.classList.remove('shake'), 500);
+                    isValid = false;
+                } else {
+                    ageInput.classList.remove('border-red-500');
+                }
+                
+                // Validate blood pressure
+                const bpInput = document.getElementById('bloodPressure');
+                if (bpInput.value < 70 || bpInput.value > 250) {
+                    bpInput.classList.add('shake', 'border-red-500');
+                    setTimeout(() => bpInput.classList.remove('shake'), 500);
+                    isValid = false;
+                } else {
+                    bpInput.classList.remove('border-red-500');
+                }
+                
+                // Validate BMI
+                const bmiInput = document.getElementById('bmi');
+                if (bmiInput.value < 10 || bmiInput.value > 50) {
+                    bmiInput.classList.add('shake', 'border-red-500');
+                    setTimeout(() => bmiInput.classList.remove('shake'), 500);
+                    isValid = false;
+                } else {
+                    bmiInput.classList.remove('border-red-500');
+                }
+                
+                if (!isValid) {
+                    // Shake the form for attention
+                    predictionForm.classList.add('shake');
+                    setTimeout(() => predictionForm.classList.remove('shake'), 500);
+                    
+                    // Show error message
+                    const errorMessage = document.createElement('div');
+                    errorMessage.className = 'bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-4 fade-in';
+                    errorMessage.innerHTML = '<p>Please fill in all fields with valid values.</p>';
+                    
+                    // Remove any existing error messages
+                    const existingError = predictionForm.querySelector('.bg-red-100');
+                    if (existingError) {
+                        existingError.remove();
+                    }
+                    
+                    // Insert error message at the top of the form
+                    predictionForm.prepend(errorMessage);
+                    
+                    // Remove error message after 5 seconds
+                    setTimeout(() => {
+                        errorMessage.classList.add('opacity-0', 'transition-opacity', 'duration-300');
+                        setTimeout(() => errorMessage.remove(), 300);
+                    }, 5000);
+                }
+                
+                return isValid;
+            }
+            
+            // Simplified risk calculation (demo purposes)
+            function calculateRisk(data) {
+                let score = 0;
+                
+                // Age
+                if (data.age >= 60) score += 3;
+                else if (data.age >= 45) score += 2;
+                else if (data.age >= 30) score += 1;
+                
+                // Gender (male is higher risk)
+                if (data.gender === 'male') score += 1;
+                
+                // Blood Pressure
+                if (data.bloodPressure >= 180) score += 4;
+                else if (data.bloodPressure >= 160) score += 3;
+                else if (data.bloodPressure >= 140) score += 2;
+                else if (data.bloodPressure >= 130) score += 1;
+                
+                // Cholesterol
+                if (data.cholesterol === 'high') score += 2;
+                else if (data.cholesterol === 'borderline') score += 1;
+                
+                // Smoking
+                if (data.smoking === 'yes') score += 2;
+                
+                // Diabetes
+                if (data.diabetes === 'yes') score += 2;
+                
+                // Physical Activity
+                if (data.activity === 'sedentary') score += 2;
+                else if (data.activity === 'moderate') score += 1;
+                
+                // BMI
+                if (data.bmi >= 30) score += 2;
+                else if (data.bmi >= 25) score += 1;
+                
+                // Family History
+                if (data.familyHistory === 'yes') score += 1;
+                
+                // Determine risk level
+                if (score >= 10) return 'high';
+                else if (score >= 6) return 'medium';
+                else return 'low';
+            }
+            
+            // Display results
+            function displayResults(riskLevel, formData) {
+                // Show results section
+                resultsSection.classList.remove('hidden');
+                
+                // Scroll to results
+                resultsSection.scrollIntoView({ behavior: 'smooth' });
+                
+                // Set risk level display
+                riskResult.innerHTML = '';
+                riskResult.className = 'p-4 rounded-md mb-6 fade-in';
+                
+                let riskText, riskClass, riskIcon;
+                if (riskLevel === 'high') {
+                    riskText = 'High Risk';
+                    riskClass = 'risk-high';
+                    riskIcon = 'fa-exclamation-triangle';
+                } else if (riskLevel === 'medium') {
+                    riskText = 'Moderate Risk';
+                    riskClass = 'risk-medium';
+                    riskIcon = 'fa-info-circle';
+                } else {
+                    riskText = 'Low Risk';
+                    riskClass = 'risk-low';
+                    riskIcon = 'fa-check-circle';
+                }
+                
+                riskResult.classList.add(riskClass);
+                riskResult.innerHTML = `
+                    <div class="flex items-center">
+                        <i class="fas ${riskIcon} text-2xl mr-3"></i>
+                        <div>
+                            <h3 class="text-xl font-bold">${riskText}</h3>
+                            <p class="text-sm">${getRiskDescription(riskLevel)}</p>
+                        </div>
+                    </div>
+                `;
+                
+                // Add pulse animation to high risk result
+                if (riskLevel === 'high') {
+                    riskResult.classList.add('pulse-animation');
+                }
+                
+                // Set assessment details with staggered animation
+                assessmentDetails.innerHTML = '';
+                const details = [
+                    { label: 'Age', value: `${formData.age} years` },
+                    { label: 'Gender', value: formData.gender === 'male' ? 'Male' : 'Female' },
+                    { label: 'Blood Pressure', value: `${formData.bloodPressure} mmHg` },
+                    { label: 'Cholesterol', value: formatCholesterol(formData.cholesterol) },
+                    { label: 'Smoking Status', value: formData.smoking === 'yes' ? 'Smoker' : 'Non-smoker' },
+                    { label: 'Diabetes', value: formData.diabetes === 'yes' ? 'Yes' : 'No' },
+                    { label: 'Physical Activity', value: formatActivity(formData.activity) },
+                    { label: 'BMI', value: `${formData.bmi} (${getBmiCategory(formData.bmi)})` },
+                    { label: 'Family History', value: formData.familyHistory === 'yes' ? 'Yes' : 'No' }
+                ];
+                
+                details.forEach((detail, index) => {
+                    const row = document.createElement('tr');
+                    row.className = 'opacity-0';
+                    row.style.animation = `fadeIn 0.3s ease-in ${index * 0.1}s forwards`;
+                    row.innerHTML = `
+                        <td class="py-2 font-medium">${detail.label}</td>
+                        <td class="py-2">${detail.value}</td>
+                    `;
+                    assessmentDetails.appendChild(row);
+                });
+                
+                // Set recommendations with staggered animation
+                recommendations.innerHTML = '';
+                const recs = getRecommendations(riskLevel);
+                recs.forEach((rec, index) => {
+                    const li = document.createElement('li');
+                    li.className = 'opacity-0';
+                    li.style.animation = `fadeIn 0.3s ease-in ${index * 0.1}s forwards`;
+                    li.textContent = rec;
+                    recommendations.appendChild(li);
+                });
+                
+                // Save to history if logged in (simulated)
+                if (localStorage.getItem('loggedIn') === 'true') {
+                    saveToHistory(riskLevel, formData);
+                }
+            }
+            
+            // Helper functions
+            function getRiskDescription(riskLevel) {
+                if (riskLevel === 'high') {
+                    return 'You have a high risk of developing cardiovascular disease. Please consult with a healthcare professional immediately.';
+                } else if (riskLevel === 'medium') {
+                    return 'You have a moderate risk of developing cardiovascular disease. Consider lifestyle changes and regular check-ups.';
+                } else {
+                    return 'You have a low risk of developing cardiovascular disease. Maintain your healthy lifestyle!';
+                }
+            }
+            
+            function formatCholesterol(chol) {
+                if (chol === 'high') return 'High (≥ 240 mg/dL)';
+                if (chol === 'borderline') return 'Borderline high (200-239 mg/dL)';
+                return 'Normal (< 200 mg/dL)';
+            }
+            
+            function formatActivity(activity) {
+                switch(activity) {
+                    case 'sedentary': return 'Sedentary (little or no exercise)';
+                    case 'moderate': return 'Moderate (1-3 days/week)';
+                    case 'active': return 'Active (3-5 days/week)';
+                    case 'very_active': return 'Very Active (6-7 days/week)';
+                    default: return activity;
+                }
+            }
+            
+            function getBmiCategory(bmi) {
+                if (bmi < 18.5) return 'Underweight';
+                if (bmi < 25) return 'Normal weight';
+                if (bmi < 30) return 'Overweight';
+                return 'Obese';
+            }
+            
+            function getRecommendations(riskLevel) {
+                const baseRecs = [
+                    'Maintain a balanced diet rich in fruits, vegetables, and whole grains',
+                    'Limit intake of saturated fats, trans fats, and sodium',
+                    'Engage in regular physical activity (at least 150 minutes per week)',
+                    'Maintain a healthy weight',
+                    'Avoid tobacco use and limit alcohol consumption'
+                ];
+                
+                if (riskLevel === 'high') {
+                    return [
+                        'Schedule an appointment with a cardiologist as soon as possible',
+                        'Consider medication if recommended by your doctor',
+                        'Monitor blood pressure and cholesterol regularly',
+                        ...baseRecs
+                    ];
+                } else if (riskLevel === 'medium') {
+                    return [
+                        'Schedule a check-up with your primary care physician',
+                        'Consider more frequent health screenings',
+                        ...baseRecs
+                    ];
+                } else {
+                    return [
+                        'Continue with regular health check-ups',
+                        ...baseRecs
+                    ];
+                }
+            }
+            
+            // Login functionality
+            loginBtn.addEventListener('click', function() {
+                if (loginBtn.textContent === 'Logout') {
+                    localStorage.removeItem('loggedIn');
+                    loginBtn.textContent = 'Login';
+                    historySection.classList.add('hidden');
+                    return;
+                }
+                loginModal.classList.remove('hidden');
+            });
+            
+            mobileLoginBtn.addEventListener('click', function() {
+                mobileMenu.classList.add('hidden');
+                loginModal.classList.remove('hidden');
+            });
+            
+            closeLoginModal.addEventListener('click', function() {
+                loginModal.classList.add('hidden');
+            });
+            
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                // Simulate login
+                localStorage.setItem('loggedIn', 'true');
+                loginModal.classList.add('hidden');
+                loginBtn.textContent = 'Logout';
+                
+                // Show history
+                historySection.classList.remove('hidden');
+                loadHistory();
+                
+                // Show success message
+                const successMessage = document.createElement('div');
+                successMessage.className = 'bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-4 fade-in';
+                successMessage.innerHTML = '<p>Successfully logged in! Your assessment history is now available.</p>';
+                
+                // Insert message after the form
+                resultsSection.parentNode.insertBefore(successMessage, resultsSection.nextSibling);
+                
+                // Remove message after 5 seconds
+                setTimeout(() => {
+                    successMessage.classList.add('opacity-0', 'transition-opacity', 'duration-300');
+                    setTimeout(() => successMessage.remove(), 300);
+                }, 5000);
+            });
+            
+            // Mobile menu
+            mobileMenuBtn.addEventListener('click', function() {
+                mobileMenu.classList.remove('hidden');
+                mobileMenuContent.classList.add('translate-x-0');
+            });
+            
+            closeMobileMenu.addEventListener('click', function() {
+                mobileMenuContent.classList.remove('translate-x-0');
+                mobileMenuContent.classList.add('-translate-x-full');
+                setTimeout(() => mobileMenu.classList.add('hidden'), 300);
+            });
+            
+            // Export buttons
+            exportPdfBtn.addEventListener('click', function() {
+                // Show loading state
+                exportPdfBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating PDF...';
+                exportPdfBtn.disabled = true;
+                
+                // Simulate PDF generation
+                setTimeout(() => {
+                    exportPdfBtn.innerHTML = '<i class="fas fa-file-pdf mr-1"></i> PDF';
+                    exportPdfBtn.disabled = false;
+                    
+                    // Show success toast
+                    showToast('PDF successfully generated!', 'success');
+                }, 1500);
+            });
+            
+            exportCsvBtn.addEventListener('click', function() {
+                // Show loading state
+                exportCsvBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating CSV...';
+                exportCsvBtn.disabled = true;
+                
+                // Simulate CSV generation
+                setTimeout(() => {
+                    exportCsvBtn.innerHTML = '<i class="fas fa-file-csv mr-1"></i> CSV';
+                    exportCsvBtn.disabled = false;
+                    
+                    // Show success toast
+                    showToast('CSV successfully generated!', 'success');
+                }, 1500);
+            });
+            
+            // History functions
+            function saveToHistory(riskLevel, formData) {
+                const history = JSON.parse(localStorage.getItem('cardioHistory') || '[]');
+                history.unshift({
+                    date: new Date().toISOString(),
+                    riskLevel,
+                    age: formData.age,
+                    bloodPressure: formData.bloodPressure,
+                    data: formData
+                });
+                localStorage.setItem('cardioHistory', JSON.stringify(history));
+                loadHistory();
+            }
+            
+            function loadHistory() {
+                const history = JSON.parse(localStorage.getItem('cardioHistory') || '[]');
+                historyTableBody.innerHTML = '';
+                
+                if (history.length === 0) {
+                    historyTableBody.innerHTML = `
+                        <tr>
+                            <td colspan="5" class="px-6 py-4 text-center text-sm text-gray-500">No assessment history found</td>
+                        </tr>
+                    `;
+                    return;
+                }
+                
+                history.forEach((item, index) => {
+                    const date = new Date(item.date);
+                    const formattedDate = `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`;
+                    
+                    let riskClass, riskText;
+                    if (item.riskLevel === 'high') {
+                        riskClass = 'bg-red-100 text-red-800';
+                        riskText = 'High';
+                    } else if (item.riskLevel === 'medium') {
+                        riskClass = 'bg-yellow-100 text-yellow-800';
+                        riskText = 'Moderate';
+                    } else {
+                        riskClass = 'bg-green-100 text-green-800';
+                        riskText = 'Low';
+                    }
+                    
+                    const row = document.createElement('tr');
+                    row.className = 'opacity-0';
+                    row.style.animation = `fadeIn 0.3s ease-in ${index * 0.1}s forwards`;
+                    row.innerHTML = `
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${formattedDate}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${riskClass}">${riskText}</span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${item.age}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${item.bloodPressure}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            <button class="text-indigo-600 hover:text-indigo-900 view-history" data-index="${index}">View</button>
+                            <button class="text-red-600 hover:text-red-900 ml-2 delete-history" data-index="${index}">Delete</button>
+                        </td>
+                    `;
+                    historyTableBody.appendChild(row);
+                });
+                
+                // Add event listeners to view buttons
+                document.querySelectorAll('.view-history').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const index = this.getAttribute('data-index');
+                        const history = JSON.parse(localStorage.getItem('cardioHistory') || '[]');
+                        const item = history[index];
+                        
+                        // Display the historical assessment
+                        displayResults(item.riskLevel, item.data);
+                        
+                        // Show toast
+                        showToast(`Viewing assessment from ${new Date(item.date).toLocaleDateString()}`, 'info');
+                    });
+                });
+                
+                // Add event listeners to delete buttons
+                document.querySelectorAll('.delete-history').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const index = this.getAttribute('data-index');
+                        const history = JSON.parse(localStorage.getItem('cardioHistory') || '[]');
+                        
+                        // Remove item from history
+                        history.splice(index, 1);
+                        localStorage.setItem('cardioHistory', JSON.stringify(history));
+                        
+                        // Reload history
+                        loadHistory();
+                        
+                        // Show toast
+                        showToast('Assessment deleted from history', 'success');
+                    });
+                });
+            }
+            
+            // Toast notification function
+            function showToast(message, type) {
+                const toast = document.createElement('div');
+                toast.className = `fixed bottom-4 right-4 px-6 py-3 rounded-md shadow-lg text-white ${
+                    type === 'success' ? 'bg-green-500' : 
+                    type === 'error' ? 'bg-red-500' : 
+                    'bg-blue-500'
+                } fade-in`;
+                toast.textContent = message;
+                
+                document.body.appendChild(toast);
+                
+                // Remove toast after 3 seconds
+                setTimeout(() => {
+                    toast.classList.add('opacity-0', 'transition-opacity', 'duration-300');
+                    setTimeout(() => toast.remove(), 300);
+                }, 3000);
+            }
+            
+            // Check if user is logged in
+            if (localStorage.getItem('loggedIn') === 'true') {
+                loginBtn.textContent = 'Logout';
+                historySection.classList.remove('hidden');
+                loadHistory();
+            }
+            
+            // Initialize progress bar
+            updateProgress();
+        });
+    </script>
+</body>
+</html>
