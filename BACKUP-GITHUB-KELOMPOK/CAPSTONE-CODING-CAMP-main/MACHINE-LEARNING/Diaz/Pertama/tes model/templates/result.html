@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hasil Prediksi</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            max-width: 800px; 
+            margin: 0 auto; 
+            padding: 20px; 
+        }
+        .result { 
+            padding: 20px; 
+            margin-top: 20px; 
+            border-radius: 8px;
+        }
+        .positive {
+            background-color: #ffe6e6;
+            border: 2px solid #ff9999;
+        }
+        .negative {
+            background-color: #e6ffe6;
+            border: 2px solid #99ff99;
+        }
+        .recommendations {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f0f0f0;
+            border-radius: 8px;
+        }
+        .action-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        .action-btn:hover {
+            background-color: #45a049;
+        }
+        ul {
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Hasil Prediksi Penyakit Kardiovaskular</h1>
+    
+    <div class="result {% if 'Positif' in prediction %}positive{% else %}negative{% endif %}">
+        <h2>{{ prediction }}</h2>
+        
+        {% if 'Positif' in prediction %}
+        <div class="recommendations">
+            <h3>Rekomendasi Tindakan Segera:</h3>
+            <ul>
+                <li>Segera konsultasikan hasil ini dengan dokter spesialis jantung</li>
+                <li>Lakukan pemeriksaan lebih lanjut seperti EKG dan tes darah lengkap</li>
+                <li>Pantau tekanan darah secara teratur</li>
+            </ul>
+
+            <h3>Perubahan Gaya Hidup yang Disarankan:</h3>
+            <ul>
+                <li>Kurangi konsumsi garam dan lemak jenuh</li>
+                <li>Lakukan aktivitas fisik ringan secara teratur sesuai anjuran dokter</li>
+                <li>Hindari rokok dan minuman beralkohol</li>
+                <li>Kelola stres dengan baik</li>
+                <li>Kontrol berat badan</li>
+            </ul>
+        </div>
+        {% else %}
+        <div class="recommendations">
+            <h3>Rekomendasi Pencegahan:</h3>
+            <ul>
+                <li>Lakukan check-up rutin minimal 6 bulan sekali</li>
+                <li>Pertahankan pola hidup sehat</li>
+                <li>Olahraga teratur minimal 30 menit per hari</li>
+                <li>Konsumsi makanan sehat dan seimbang</li>
+                <li>Jaga berat badan ideal</li>
+                <li>Hindari kebiasaan merokok</li>
+            </ul>
+        </div>
+        {% endif %}
+
+        <h3>Catatan Penting:</h3>
+        <p>Hasil prediksi ini hanya bersifat indikatif dan tidak menggantikan diagnosis dokter. 
+           Selalu konsultasikan kondisi kesehatan Anda dengan profesional medis.</p>
+        
+        <a href="/" class="action-btn">Kembali ke Form</a>
+    </div>
+</body>
+</html>
